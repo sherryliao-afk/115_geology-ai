@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>防範土石違規採取智能應用計畫 - 地礦 AI 智能監測系統</title>
+<title>防範土石違規採取智能應用計畫 - 地礦 AI 範圍監測與稽催系統</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -57,7 +57,7 @@
         <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
       </div>
       <h1 class="text-3xl font-bold leading-tight mb-4">防範土石違規採取<br>智能應用計畫</h1>
-      <p class="text-white/70 text-sm leading-relaxed mb-2">地礦 AI 智能監測系統</p>
+      <p class="text-white/70 text-sm leading-relaxed mb-2">地礦 AI 範圍監測與稽催系統</p>
       <div class="w-12 h-0.5 bg-white/30 my-6"></div>
       <p class="text-white/60 text-sm leading-relaxed">整合衛星影像 AI 判釋、GIS 地圖平台與查勘管理，協助即時偵測疑似土石違規採取行為，強化地質資源保護效能。</p>
     </div>
@@ -84,6 +84,7 @@
           <input type="password" placeholder="請輸入密碼" class="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#007d6d]/30 focus:border-[#007d6d]">
         </div>
         <button class="w-full brand-primary text-white py-2.5 rounded-lg text-sm font-bold hover:opacity-90 transition shadow-sm">登入系統</button>
+        <button onclick="openRegisterModal()" class="w-full mt-3 border border-[#007d6d] text-[#007d6d] py-2.5 rounded-lg text-sm font-bold hover:bg-[#f4f7f6] transition">申請帳號註冊</button>
       </div>
 
       <!-- 分隔線 -->
@@ -116,6 +117,31 @@
 <!-- ════════════════════════════════════════
      主系統
 ════════════════════════════════════════ -->
+
+
+<!-- 帳號申請註冊頁面（雛型） -->
+<div id="register-modal" class="fixed inset-0 bg-slate-900/50 z-[60] hidden items-center justify-center p-6">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+      <div><h2 class="font-bold text-slate-800">帳號申請註冊</h2><p class="text-xs text-slate-400 mt-1">地方政府人員審核通過後，系統會自動加入所屬地方政府 email 名單。</p></div>
+      <button onclick="closeRegisterModal()" class="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-400">✕</button>
+    </div>
+    <div class="p-6 grid grid-cols-2 gap-4 text-xs">
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請角色</label><select id="register-role" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"><option>地方政府人員</option><option>空拍廠商</option><option>唯讀瀏覽</option></select></div>
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">所屬單位</label><input value="屏東縣政府" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">姓名</label><input value="林志明" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">Email</label><input value="lin@pthg.gov.tw" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">電話</label><input value="08-7320415" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+      <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">可瀏覽縣市</label><input value="屏東縣" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+      <div class="col-span-2 bg-[#f4f7f6] border border-[#007d6d]/20 rounded-xl p-4 text-slate-500">送出後會進入使用者管理的待審核清單；審核通過時同步更新地方政府 email 名單。</div>
+    </div>
+    <div class="px-6 py-4 border-t border-slate-100 flex justify-end gap-2">
+      <button onclick="closeRegisterModal()" class="px-4 py-2 border border-slate-200 rounded-lg text-xs text-slate-500">取消</button>
+      <button onclick="submitRegisterApplication()" class="px-4 py-2 bg-[#007d6d] text-white rounded-lg text-xs font-bold">送出申請</button>
+    </div>
+  </div>
+</div>
+
 <div id="main-app" class="h-screen overflow-hidden" style="display:none">
 
   <!-- Sidebar -->
@@ -164,15 +190,19 @@
       <div id="nav-group-bc">
         <a href="javascript:void(0)" onclick="showPage('ai-list')" id="nav-ai-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-          AI 判釋列表
+          AI 判釋範圍列表
         </a>
         <a href="javascript:void(0)" onclick="showPage('management-list')" id="nav-management-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-          建議監測點位清單
+          建議拍攝範圍清單
         </a>
         <a href="javascript:void(0)" onclick="showPage('suspect-list')" id="nav-suspect-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          判釋變異點清單
+          違規範圍管理
+        </a>
+        <a href="javascript:void(0)" onclick="showPage('manual-intake')" id="nav-manual-intake" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          案件進件管理
         </a>
       </div>
 
@@ -267,10 +297,20 @@
           <option value="A">系統管理員</option>
         </select>
         <div class="h-5 w-px bg-slate-200"></div>
-        <button class="text-slate-400 hover:text-slate-600 relative">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2"/></svg>
-          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full text-[8px] text-white flex items-center justify-center font-bold">3</span>
-        </button>
+        <div class="relative">
+          <button onclick="toggleNotifyDropdown()" class="text-slate-400 hover:text-slate-600 relative">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-width="2"/></svg>
+            <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full text-[8px] text-white flex items-center justify-center font-bold">3</span>
+          </button>
+          <div id="notify-dropdown" class="hidden absolute right-0 mt-3 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden">
+            <div class="px-4 py-3 bg-slate-50 border-b border-slate-100 text-xs font-bold text-slate-700">近期通知</div>
+            <div class="divide-y divide-slate-100 text-xs">
+              <div class="p-4"><p class="font-bold text-[#007d6d]">地礦中心通知</p><p class="text-slate-500 mt-1">115Q2_AR_001 已產生建議拍攝範圍，待確認空拍通知。</p></div>
+              <div class="p-4"><p class="font-bold text-orange-600">地方政府通知</p><p class="text-slate-500 mt-1">高雄市政府有 2 筆查勘回報即將逾期。</p></div>
+              <div class="p-4"><p class="font-bold text-blue-600">新註冊帳號通知</p><p class="text-slate-500 mt-1">屏東縣政府新帳號申請待審核，通過後會加入該府 email 名單。</p></div>
+            </div>
+          </div>
+        </div>
         <button class="text-slate-400 hover:text-slate-600">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-width="2"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2"/></svg>
         </button>
@@ -292,11 +332,11 @@
 
         <!-- 統計卡片：純數字版 -->
         <div class="grid grid-cols-3 gap-5 mb-8">
-          <!-- 卡片1：本季疑似點位總數 -->
+          <!-- 卡片1：本季疑似範圍總數 -->
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
             <div class="flex items-start justify-between">
               <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本季疑似點位總數</p>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本季疑似範圍總數</p>
                 <p class="text-4xl font-bold text-slate-800">142</p>
                 <p class="text-sm text-slate-400 mt-1">筆　較上季 <span class="text-red-500 font-bold">↑ 18</span></p>
               </div>
@@ -332,7 +372,7 @@
           <div class="bg-white rounded-xl shadow-sm border border-red-100 p-6">
             <div class="flex items-start justify-between">
               <div>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">逾期未查勘點位數</p>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">逾期未查勘範圍數</p>
                 <p class="text-4xl font-bold text-red-600">17</p>
                 <p class="text-sm text-slate-400 mt-1">筆　需立即處理</p>
               </div>
@@ -376,7 +416,7 @@
               <thead class="bg-slate-50/80">
                 <tr>
                   <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">縣市/鄉鎮</th>
-                  <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">點號</th>
+                  <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">範圍編號</th>
                   <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">稽催日期</th>
                   <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">逾期天數</th>
                   <th class="px-5 py-3 text-left font-bold text-slate-500 uppercase text-[10px]">狀態</th>
@@ -406,12 +446,12 @@
       </div>
 
       <!-- ── 其他頁面佔位 ── -->
-      <!-- ── AI 判釋列表 ── -->
+      <!-- ── AI 判釋範圍列表 ── -->
       <div id="page-ai-list" class="p-8 hidden fade-in">
 
         <!-- 第一層：專案選擇 -->
         <div id="ai-project-layer">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">AI 判釋列表</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">AI 判釋範圍列表</h1>
           <p class="text-sm text-slate-500 mb-6">請選擇要查看的監測專案年度</p>
           <div class="grid grid-cols-3 gap-5">
             <div onclick="showAiProject('115')" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 cursor-pointer hover:border-[#007d6d] hover:shadow-md transition group">
@@ -468,13 +508,13 @@
               返回專案列表
             </button>
             <span class="text-slate-300">/</span>
-            <span class="text-xs text-slate-400">AI 判釋列表</span>
+            <span class="text-xs text-slate-400">AI 判釋範圍列表</span>
             <span class="text-slate-300">/</span>
             <span id="ai-project-label" class="text-xs font-bold text-slate-700">115 年度監測專案</span>
           </div>
 
           <div class="flex justify-between items-end mb-6">
-            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">AI 判釋列表</h1>
+            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">AI 判釋範圍列表</h1>
           </div>
 
           <!-- 篩選區 -->
@@ -516,8 +556,11 @@
             <table class="min-w-full text-xs">
               <thead class="bg-slate-50/80 border-b border-slate-200">
                 <tr>
-                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">地段地號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍面積</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">內含點位</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">前期影像（T1）</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">後期影像（T2）</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">AI 判釋狀態</th>
@@ -545,12 +588,12 @@
       </div>
 
       <!-- AI 詳細資訊展開列（動態插入） -->
-      <!-- ── 建議監測點位清單 ── -->
+      <!-- ── 建議拍攝範圍清單 ── -->
       <div id="page-management-list" class="p-8 hidden fade-in">
 
         <!-- 第一層：專案選擇 -->
         <div id="mgmt-project-layer">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">建議監測點位清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">建議拍攝範圍清單</h1>
           <p class="text-sm text-slate-500 mb-6">請選擇要查看的監測專案年度</p>
           <div class="grid grid-cols-3 gap-5">
             <div onclick="showMgmtProject('115')" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 cursor-pointer hover:border-[#007d6d] hover:shadow-md transition group">
@@ -607,13 +650,13 @@
               返回專案列表
             </button>
             <span class="text-slate-300">/</span>
-            <span class="text-xs text-slate-400">建議監測點位清單</span>
+            <span class="text-xs text-slate-400">建議拍攝範圍清單</span>
             <span class="text-slate-300">/</span>
             <span id="mgmt-project-label" class="text-xs font-bold text-slate-700">115 年度監測專案</span>
           </div>
 
           <div class="flex justify-between items-end mb-5">
-            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">建議監測點位清單</h1>
+            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">建議拍攝範圍清單</h1>
             <div class="flex items-center gap-2 text-xs text-slate-400 bg-[#f4f7f6] px-3 py-2 rounded-lg border border-[#007d6d]/20">
               <svg class="w-3.5 h-3.5 text-[#007d6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               <span>目前角色：</span><span id="mgmt-role-label" class="font-bold text-[#007d6d]">地礦中心承辦</span>
@@ -657,14 +700,25 @@
             </div>
           </div>
 
+          <div class="bg-white rounded-xl shadow-sm border border-blue-100 p-4 mb-5">
+            <div class="flex justify-between items-center">
+              <div><h3 class="text-sm font-bold text-slate-700">批次上傳判釋報告</h3><p class="text-xs text-slate-400 mt-1">群立可一次上傳多筆，檔名符合範圍編號時自動配對，不符合時人工指定。</p></div>
+              <button onclick="openBatchReportUpload()" class="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg hover:opacity-90">開啟批次上傳</button>
+            </div>
+            <div id="batch-upload-preview" class="hidden mt-4 grid grid-cols-3 gap-3 text-xs"></div>
+          </div>
+
           <!-- 表格 -->
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <table class="min-w-full text-xs">
               <thead class="bg-slate-50/80 border-b border-slate-200">
                 <tr>
                   <th class="px-4 py-3 w-8"><input type="checkbox" class="rounded" onchange="toggleMgmtAll(this)"></th>
-                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">地段地號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">來源類型</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">預計執行日期</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">監測日期</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">監測方式</th>
                   <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">狀態</th>
@@ -686,12 +740,12 @@
           </div>
         </div>
       </div>
-      <!-- ── 判釋變異點清單 ── -->
+      <!-- ── 違規範圍管理 ── -->
       <div id="page-suspect-list" class="p-8 hidden fade-in">
 
         <!-- 第一層：專案選擇 -->
         <div id="suspect-project-layer">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">判釋變異點清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">違規範圍管理</h1>
           <p class="text-sm text-slate-500 mb-6">請選擇要查看的監測專案年度</p>
           <div class="grid grid-cols-3 gap-5">
             <div onclick="showSuspectProject('115')" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 cursor-pointer hover:border-[#007d6d] hover:shadow-md transition group">
@@ -734,12 +788,12 @@
               返回專案列表
             </button>
             <span class="text-slate-300">/</span>
-            <span class="text-xs text-slate-400">判釋變異點清單</span>
+            <span class="text-xs text-slate-400">違規範圍管理</span>
             <span class="text-slate-300">/</span>
             <span id="suspect-project-label" class="text-xs font-bold text-slate-700">115 年度監測專案</span>
           </div>
 
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-5">判釋變異點清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-5">違規範圍管理</h1>
 
           <!-- 篩選區 -->
           <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
@@ -950,7 +1004,7 @@
             <thead class="bg-slate-50/80 border-b border-slate-200">
               <tr>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
-                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">稽催日期</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">逾期天數</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
@@ -1099,16 +1153,73 @@
                 <p class="text-xs text-slate-400 mb-2">多個 email 請以逗號分隔</p>
                 <textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2.5 h-16 resize-none focus:outline-none focus:border-[#007d6d]">bmgeo_admin@moeacgs.gov.tw</textarea>
               </div>
-              <button onclick="showToast('逾期通知設定已儲存')" class="px-5 py-2.5 bg-[#007d6d] text-white text-sm font-bold rounded-lg hover:opacity-90">儲存設定</button>
+              <div class="mt-5 grid grid-cols-3 gap-4 text-xs">
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">第一次稽催天數</label><input type="number" value="14" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+                <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">第二次起自動稽催間隔</label><input type="number" value="7" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+                <label class="flex items-center gap-2 mt-5"><input type="checkbox" checked class="rounded"><span class="font-bold text-slate-600">啟用自動二次稽催</span></label>
+              </div>
+              <p class="text-xs text-slate-400 mt-3">第一次稽催以通知單預計執行日期 + 14 天且地方政府未回報為準；第二次起依設定自動補發。</p>
+              <button onclick="showToast('稽催設定已儲存：第一次 14 天，第二次起每 7 天自動補發')" class="px-5 py-2.5 bg-[#007d6d] text-white text-sm font-bold rounded-lg hover:opacity-90 mt-5">儲存設定</button>
             </div>
           </div>
         </div>
       </div>
 
-            <!-- ── 查勘回報 ── -->
+      
+
+      <!-- ── 案件進件管理 ── -->
+      <div id="page-manual-intake" class="p-8 hidden fade-in">
+        <div class="flex justify-between items-end mb-5">
+          <div>
+            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">案件進件管理</h1>
+            <p class="text-xs text-slate-400 mt-2 pl-5">支援承辦手動新增、地方政府通報與固定拍攝區域三種非 AI 來源。</p>
+          </div>
+          <button onclick="submitManualIntake()" class="px-5 py-2.5 bg-[#007d6d] text-white text-sm font-bold rounded-lg hover:opacity-90">建立範圍案件</button>
+        </div>
+        <div class="grid grid-cols-3 gap-5 mb-5">
+          <button onclick="switchIntakeType('承辦手動新增')" id="intake-type-承辦手動新增" class="intake-type-btn bg-white border-2 border-[#007d6d] text-[#007d6d] rounded-xl p-5 text-left shadow-sm">
+            <p class="text-sm font-bold">手動新增疑似範圍</p><p class="text-xs text-slate-400 mt-1">承辦自行建立疑似盜採範圍。</p>
+          </button>
+          <button onclick="switchIntakeType('地方政府通報')" id="intake-type-地方政府通報" class="intake-type-btn bg-white border border-slate-200 rounded-xl p-5 text-left shadow-sm">
+            <p class="text-sm font-bold">地方政府通報確定盜採</p><p class="text-xs text-slate-400 mt-1">地方政府來文或系統通報後建檔。</p>
+          </button>
+          <button onclick="switchIntakeType('固定拍攝區域')" id="intake-type-固定拍攝區域" class="intake-type-btn bg-white border border-slate-200 rounded-xl p-5 text-left shadow-sm">
+            <p class="text-sm font-bold">固定拍攝區域</p><p class="text-xs text-slate-400 mt-1">例行性或高風險區域固定監測。</p>
+          </button>
+        </div>
+        <div class="grid grid-cols-3 gap-5">
+          <div class="col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <h2 class="text-sm font-bold text-slate-700 mb-4">範圍資料</h2>
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">行政區</label><input value="高雄市 美濃區" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">地段地號</label><input value="美濃段 123-4、124-1" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">來源類型</label><input id="intake-source-type" value="承辦手動新增" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">違規類型</label><select class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"><option>疑似土石盜濫採</option><option>違反區域計畫法</option><option>違反水土保持法</option><option>其他違規</option></select></div>
+              <div class="col-span-2"><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">範圍 polygon / 座標</label><textarea class="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 font-mono" spellcheck="false">POLYGON((120.5432 22.8821,120.5480 22.8824,120.5484 22.8788,120.5428 22.8781,120.5432 22.8821))</textarea></div>
+              <div class="col-span-2"><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">備註</label><textarea class="w-full h-20 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2">此範圍由承辦依甲方回饋新增，後續可流轉至建議拍攝範圍。</textarea></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <h2 class="text-sm font-bold text-slate-700 mb-4">地方政府 email 名單</h2>
+            <p class="text-xs text-slate-400 mb-3">地方政府帳號審核通過後，自動綁定所屬政府名單。</p>
+            <div id="gov-email-list" class="space-y-2 text-xs"></div>
+            <div class="mt-5 p-3 rounded-lg bg-[#f4f7f6] border border-[#007d6d]/20 text-xs text-slate-500">
+              新註冊帳號通知會出現在右上角小鈴鐺；審核通過後同步更新此名單。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 查勘回報 ── -->
       <div id="page-survey-report" class="p-8 hidden fade-in">
         <div class="flex justify-between items-end mb-5">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">查勘回報</h1>
+          <div>
+            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">查勘回報</h1>
+            <div class="flex gap-2 mt-3 pl-5">
+              <button class="px-3 py-1.5 text-xs font-bold bg-[#007d6d] text-white rounded-lg">查勘回報案件</button>
+              <button onclick="showToast('切換至違規行為後續處理總表（雛型示意）')" class="px-3 py-1.5 text-xs font-bold border border-slate-200 text-slate-500 rounded-lg hover:bg-slate-50">違規行為後續處理總表</button>
+            </div>
+          </div>
           <div class="flex items-center gap-2 text-xs text-slate-400 bg-[#f4f7f6] px-3 py-2 rounded-lg border border-[#007d6d]/20">
             <span>目前角色：</span><span id="survey-role-label" class="font-bold text-[#007d6d]">地礦中心承辦</span>
           </div>
@@ -1141,7 +1252,7 @@
           <table class="min-w-full text-xs">
             <thead class="bg-slate-50/80 border-b border-slate-200">
               <tr>
-                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">稽催通知日期</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">應查勘截止日</th>
@@ -1262,10 +1373,10 @@
         <!-- 圖例 -->
         <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:30">
           <div class="bg-white border border-slate-200 rounded-lg shadow" style="padding:8px 16px;display:flex;align-items:center;gap:16px;font-size:11px">
-            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#ef4444;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>疑似點位（未回報）</span></div>
-            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#f59e0b;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>疑似點位（逾期）</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#ef4444;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>疑似範圍（未回報）</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#f59e0b;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>疑似範圍（逾期）</span></div>
             <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>已完成</span></div>
-            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>列管點位</span></div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div><span>列管範圍</span></div>
           </div>
         </div>
 
@@ -1275,7 +1386,7 @@
           <!-- Tab 書籤條 -->
           <div class="bg-white border-l border-slate-200" style="display:flex;flex-direction:column;padding:8px 0;flex-shrink:0">
             <button class="gis-tab-btn" id="gisTbBtn-layer" onclick="gisTabSwitch('layer')" style="writing-mode:vertical-lr;font-size:11px;font-weight:700;padding:16px 9px;cursor:pointer;border-left:3px solid #007d6d;color:#007d6d;background:#f0faf8;white-space:nowrap;border-top:none;border-right:none;border-bottom:none;transition:all 0.15s">圖層管理</button>
-            <button class="gis-tab-btn" id="gisTbBtn-search" onclick="gisTabSwitch('search')" style="writing-mode:vertical-lr;font-size:11px;font-weight:700;padding:16px 9px;cursor:pointer;border-left:3px solid transparent;color:#64748b;background:transparent;white-space:nowrap;border-top:none;border-right:none;border-bottom:none;transition:all 0.15s">點位搜尋</button>
+            <button class="gis-tab-btn" id="gisTbBtn-search" onclick="gisTabSwitch('search')" style="writing-mode:vertical-lr;font-size:11px;font-weight:700;padding:16px 9px;cursor:pointer;border-left:3px solid transparent;color:#64748b;background:transparent;white-space:nowrap;border-top:none;border-right:none;border-bottom:none;transition:all 0.15s">範圍搜尋</button>
             <button class="gis-tab-btn" id="gisTbBtn-aerial" onclick="gisTabSwitch('aerial')" style="writing-mode:vertical-lr;font-size:11px;font-weight:700;padding:16px 9px;cursor:pointer;border-left:3px solid transparent;color:#64748b;background:transparent;white-space:nowrap;border-top:none;border-right:none;border-bottom:none;transition:all 0.15s">空拍影像列表</button>
             <button class="gis-tab-btn" id="gisTbBtn-compare" onclick="gisTabSwitch('compare')" style="writing-mode:vertical-lr;font-size:11px;font-weight:700;padding:16px 9px;cursor:pointer;border-left:3px solid transparent;color:#64748b;background:transparent;white-space:nowrap;border-top:none;border-right:none;border-bottom:none;transition:all 0.15s">前後期影像比對</button>
             <div style="flex:1"></div>
@@ -1315,7 +1426,7 @@
             <!-- ── 點位搜尋 ── -->
             <div id="gis-tab-search" class="gis-tab-content" style="display:none;flex-direction:column;height:100%">
               <div class="bg-slate-50 border-b border-slate-100" style="padding:12px 16px;flex-shrink:0">
-                <p style="font-size:11px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em">點位搜尋</p>
+                <p style="font-size:11px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em">範圍搜尋</p>
               </div>
               <div class="custom-scrollbar" style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:12px">
                 <div>
@@ -1369,7 +1480,7 @@
                     <option>低</option><option>中</option><option>高</option><option>極高</option>
                   </select>
                 </div>
-                <button onclick="gisRunSearch()" class="brand-primary text-white rounded-lg" style="padding:8px;font-size:11px;font-weight:700;letter-spacing:0.05em;width:100%">搜尋點位</button>
+                <button onclick="gisRunSearch()" class="brand-primary text-white rounded-lg" style="padding:8px;font-size:11px;font-weight:700;letter-spacing:0.05em;width:100%">搜尋範圍</button>
                 <div id="gis-search-results" style="display:flex;flex-direction:column;gap:6px"></div>
               </div>
             </div>
@@ -1470,14 +1581,14 @@
               </div>
             </div>
 
-            <!-- ── 點位詳情（子頁面層疊）── -->
+            <!-- ── 範圍詳情（子頁面層疊）── -->
             <div id="gis-detail-panel" style="display:none;position:absolute;inset:0;background:white;flex-direction:column;z-index:10">
               <div class="bg-slate-50 border-b border-slate-100" style="padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0">
                 <button onclick="gisCloseDetail()" style="display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#64748b;background:none;border:none;cursor:pointer;padding:0" onmouseover="this.style.color='#007d6d'" onmouseout="this.style.color='#64748b'">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   返回
                 </button>
-                <span id="gis-detail-title" style="font-size:11px;font-weight:700;color:#334155">點位詳情</span>
+                <span id="gis-detail-title" style="font-size:11px;font-weight:700;color:#334155">範圍詳情</span>
               </div>
               <div class="custom-scrollbar" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start">
@@ -1509,7 +1620,7 @@
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px;padding-top:4px">
                   <button onclick="showToast('導向查勘紀錄（雛型示意）','#007d6d')" class="brand-primary text-white rounded-lg" style="padding:8px;font-size:11px;font-weight:700;width:100%;cursor:pointer">查看查勘紀錄</button>
-                  <button onclick="showToast('已標記為列管點位（雛型示意）','#007d6d')" style="border:1px solid #007d6d;color:#007d6d;background:white;border-radius:8px;padding:8px;font-size:11px;font-weight:700;width:100%;cursor:pointer">標記為列管點位</button>
+                  <button onclick="showToast('已標記為列管範圍（雛型示意）','#007d6d')" style="border:1px solid #007d6d;color:#007d6d;background:white;border-radius:8px;padding:8px;font-size:11px;font-weight:700;width:100%;cursor:pointer">標記為列管範圍</button>
                 </div>
               </div>
             </div>
@@ -1520,9 +1631,18 @@
       </div><!-- /page-gis -->
       <!-- ── 統計分析儀表板 ── -->
       <div id="page-stats" class="p-5 hidden fade-in">
+        <div id="stats-export-panel" class="hidden mb-4 bg-white border border-slate-200 rounded-xl shadow-sm p-4 text-xs">
+          <div class="grid grid-cols-4 gap-4">
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label><select class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2"><option>115年度</option><option>114年度</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">欄位</label><select multiple class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 h-20"><option selected>範圍編號</option><option selected>行政區</option><option selected>違規類型</option><option>處理狀態</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label><select multiple class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 h-20"><option selected>高雄市</option><option>屏東縣</option><option>台中市</option><option>花蓮縣</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">違規類型</label><select multiple class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 h-20"><option selected>土石盜濫採</option><option>區域計畫法</option><option>水土保持法</option><option>其他</option></select></div>
+          </div>
+          <div class="flex justify-end mt-3"><button onclick="showToast('已依年度、欄位、縣市與違規類型產生匯出檔（雛型示意）')" class="px-4 py-2 bg-[#007d6d] text-white rounded-lg font-bold">確認匯出</button></div>
+        </div>
         <div class="flex justify-between items-end mb-3">
           <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">統計分析儀表板</h1>
-          <button onclick="showToast('統計結果匯出（雛型示意）')" class="flex items-center gap-2 px-4 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">
+          <button onclick="openStatsExport()" class="flex items-center gap-2 px-4 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             匯出統計結果
           </button>
@@ -1553,7 +1673,7 @@
         <div id="stats-tab-report-content">
           <div class="grid grid-cols-4 gap-3 mb-4">
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
-              <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">總查勘點位數</p>
+              <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">總查勘範圍數</p>
               <p class="text-2xl font-bold text-slate-800">142</p>
               <p class="text-xs text-slate-400 mt-1">115年度全台</p>
             </div>
@@ -1563,7 +1683,7 @@
               <p class="text-xs text-slate-400 mt-1">佔 62.7%</p>
             </div>
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
-              <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">確認違規點位</p>
+              <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">確認違規範圍</p>
               <p class="text-2xl font-bold text-red-600">36</p>
               <p class="text-xs text-slate-400 mt-1">佔 25.4%</p>
             </div>
@@ -1610,7 +1730,7 @@
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                   <tr>
                     <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
-                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>
                     <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">違反法規</th>
                     <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">移交單位</th>
                     <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">移交日期</th>
@@ -2032,8 +2152,8 @@ function updateRoleUI(role) {
 
 // ── 頁面切換 ──
 const pageMap = {
-  'home': '首頁', 'ai-list': 'AI 判釋列表', 'management-list': '列管點位清單',
-  'suspect-list': '判釋變異點清單', 'urge-overdue': '逾期未查勘', 'urge-history': '歷史稽催紀錄', 'urge-settings': '稽催設定',
+  'home': '首頁', 'ai-list': 'AI 判釋範圍列表', 'management-list': '建議拍攝範圍清單',
+  'suspect-list': '違規範圍管理', 'manual-intake': '案件進件管理', 'urge-overdue': '逾期未查勘', 'urge-history': '歷史稽催紀錄', 'urge-settings': '稽催設定',
   'survey-report': '查勘回報', 'gis': '盜濫採影像圖台', 'stats': '統計分析儀表板',
   'user-mgmt': '使用者管理', 'sys-log': '系統日誌'
 };
@@ -2077,6 +2197,7 @@ function showPage(pageId) {
   if (pageId === 'sys-log') renderSyslogTable();
   if (pageId === 'suspect-list') renderSuspectTable();
   if (pageId === 'management-list') renderMgmtTable();
+  if (pageId === 'manual-intake') renderGovEmailList();
 }
 
 // ── Accordion ──
@@ -2183,7 +2304,7 @@ function toggleUrgeNotify(btn) {
   btn.querySelector('span').style.transform = isOn ? 'translateX(0)' : '';
 }
 
-// ── 判釋變異點清單資料 ──
+// ── 違規範圍管理資料 ──
 const suspectData = [
   { id:'115Q2_KP_001', city:'高雄市 美濃區', exec:'2026-03-12', notify:'2026-03-15', urgeCount:2, status:'稽催通知已發送', statusClass:'status-processing',
     dataComplete:true, coord:'X:219847 Y:2528631', latlng:'22.8821N, 120.5432E', land:'美濃段 123-4', approx:'高雄市美濃區廣林里山區', area:'1,250', vol:'3,800',
@@ -2230,7 +2351,7 @@ function renderSuspectTable() {
   if (role === 'C') {
     // 空拍廠商：聚焦資料填寫
     thead.innerHTML = '<tr>' +
-      '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>' +
+      '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">執行日期</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">資料完整度</th>' +
@@ -2255,7 +2376,7 @@ function renderSuspectTable() {
     // 地礦中心承辦 / 系統管理員：聚焦稽催決策
     thead.innerHTML = '<tr>' +
       '<th class="px-4 py-3 w-8"><input type="checkbox" class="rounded" onchange="toggleSuspectAll(this)"></th>' +
-      '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>' +
+      '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">範圍編號</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">通報日期</th>' +
       '<th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">稽催次數</th>' +
@@ -2422,24 +2543,19 @@ function openSuspectDrawer(i) {
       : '<span class="text-xs text-slate-400">尚未上傳</span>';
   }
 
-  // 現場描述區
+  // 空拍廠商填報：只保留判釋報告與選填備註，不要求現地照片。
   var descArea = document.getElementById('d-desc-area');
   if (currentRole === 'C') {
-    descArea.innerHTML = '<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2.5 h-20 resize-none focus:outline-none focus:border-[#007d6d]" placeholder="請填寫現場描述...">' + d.desc + '</textarea>';
+    descArea.innerHTML = '<textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2.5 h-20 resize-none focus:outline-none focus:border-[#007d6d]" placeholder="必要備註（選填，例如影像品質、無法判釋原因）">' + (d.desc || '') + '</textarea>';
   } else {
     descArea.innerHTML = d.desc
       ? '<p class="text-xs text-slate-600 bg-slate-50 rounded-lg p-3">' + d.desc + '</p>'
       : '<p class="text-xs text-slate-400">尚未填寫</p>';
   }
 
-  // 現場照片區
   var photoArea = document.getElementById('d-photo-area');
   if (currentRole === 'C') {
-    photoArea.innerHTML = '<label class="block border-2 border-dashed border-slate-200 rounded-lg p-4 text-center text-xs text-slate-400 hover:border-[#007d6d] transition cursor-pointer">' +
-      '<input type="file" accept="image/*" multiple class="hidden" onchange="handlePhotoSelect(this)">' +
-      '<svg class="w-6 h-6 mx-auto mb-1 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
-      '<span id="photo-filenames">點擊上傳照片（最多 5 張）</span></label>' +
-      '<div id="photo-preview" class="flex flex-wrap gap-2 mt-2"></div>';
+    photoArea.innerHTML = '<div class="bg-slate-50 border border-slate-200 rounded-lg p-4 text-xs text-slate-500"><p class="font-bold text-slate-700 mb-1">現地照片與描述不需上傳</p><p>空拍廠商僅需上傳判釋報告；地方政府查勘回報才需要照片與文字說明。</p></div>';
   } else {
     photoArea.innerHTML = d.hasReport
       ? '<div class="flex gap-2">' +
@@ -2519,18 +2635,13 @@ function switchDrawerTab(tab) {
     : 'px-4 py-3 text-xs text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px';
 }
 
-// ── 建議監測點位清單資料 ──
+// ── 建議拍攝範圍清單資料 ──
 const mgmtData = [
-  { id:'115Q2_KP_001', city:'高雄市 美濃區', date:'2026-03-12', method:'衛星快速監測', status:'--', statusClass:'status-pending' },
-  { id:'115Q2_KP_002', city:'屏東縣 里港鄉', date:'2026-03-12', method:'衛星快速監測', status:'建議拍攝', statusClass:'status-processing' },
-  { id:'115Q2_KP_003', city:'台中市 石岡區', date:'2026-03-15', method:'精確判釋', status:'--', statusClass:'status-pending' },
-  { id:'115Q2_KP_004', city:'花蓮縣 壽豐鄉', date:'2026-03-18', method:'衛星快速監測', status:'已確認', statusClass:'status-closed' },
-  { id:'115Q2_KP_005', city:'南投縣 仁愛鄉', date:'2026-03-20', method:'精確判釋', status:'--', statusClass:'status-pending' },
-  { id:'115Q1_KP_006', city:'宜蘭縣 蘇澳鎮', date:'2025-09-15', method:'衛星快速監測', status:'已確認', statusClass:'status-closed' },
-  { id:'115Q1_KP_007', city:'高雄市 桃源區', date:'2025-09-18', method:'精確判釋', status:'建議拍攝', statusClass:'status-processing' },
-  { id:'115Q1_KP_008', city:'屏東縣 三地門鄉', date:'2025-09-20', method:'衛星快速監測', status:'--', statusClass:'status-pending' },
-  { id:'115Q1_KP_009', city:'台中市 和平區', date:'2025-09-22', method:'精確判釋', status:'建議拍攝', statusClass:'status-processing' },
-  { id:'115Q1_KP_010', city:'花蓮縣 光復鄉', date:'2025-09-25', method:'衛星快速監測', status:'--', statusClass:'status-pending' },
+  { id:'115Q2_AR_001', city:'高雄市 美濃區', land:'美濃段 123-4、124-1', sourceType:'AI判釋', plannedDate:'2026-07-05', date:'2026-03-12', method:'空拍', status:'建議拍攝', statusClass:'status-processing', pointCount:6, folder:['KML_115Q2_AR_001.kml','拍攝通知單_115Q2_AR_001.pdf','範圍圖_115Q2_AR_001.png'] },
+  { id:'115Q2_AR_002', city:'屏東縣 里港鄉', land:'里港段 88-2、88-5', sourceType:'地方政府通報', plannedDate:'2026-07-08', date:'2026-03-12', method:'衛星影像', status:'已確認', statusClass:'status-closed', pointCount:4, folder:['KML_115Q2_AR_002.kml','地方政府通報單.pdf','查勘回報草稿.docx'] },
+  { id:'115Q2_AR_003', city:'台中市 石岡區', land:'石岡段 45-1', sourceType:'承辦手動新增', plannedDate:'2026-07-10', date:'2026-03-15', method:'空拍', status:'--', statusClass:'status-pending', pointCount:9, folder:['範圍草稿.geojson'] },
+  { id:'115Q2_AR_004', city:'花蓮縣 壽豐鄉', land:'壽豐段 201-3', sourceType:'固定拍攝區域', plannedDate:'2026-07-12', date:'2026-03-18', method:'空拍', status:'建議拍攝', statusClass:'status-processing', pointCount:3, folder:['固定拍攝區域.kml','年度拍攝排程.xlsx'] },
+  { id:'115Q2_AR_005', city:'南投縣 仁愛鄉', land:'仁愛段 78-5', sourceType:'AI判釋', plannedDate:'2026-07-15', date:'2026-03-20', method:'衛星影像', status:'僅列管', statusClass:'status-pending', pointCount:5, folder:['KML_115Q2_AR_005.kml'] }
 ];
 
 function renderMgmtTable() {
@@ -2541,84 +2652,49 @@ function renderMgmtTable() {
   mgmtData.forEach(function(d, i) {
     const row = document.createElement('tr');
     row.className = 'hover:bg-slate-50/60 transition cursor-pointer';
-    row.onclick = function(idx){ return function(e){ if (!e.target.closest('button') && !e.target.closest('input')) toggleMgmtDetail(idx); }; }(i);
-
-    // 依角色+狀態決定操作按鈕
+    row.onclick = function(e){ if (!e.target.closest('button') && !e.target.closest('input')) toggleMgmtDetail(i); };
     var opBtn = getMgmtOpBtn(i, d, role);
-
     row.innerHTML =
       '<td class="px-4 py-3"><input type="checkbox" class="rounded"></td>' +
-      '<td class="px-4 py-3 font-mono font-bold text-slate-700">' + d.id + '</td>' +
+      '<td class="px-4 py-3 font-mono font-bold text-slate-700">📁 ' + d.id + '</td>' +
       '<td class="px-4 py-3">' + d.city + '</td>' +
+      '<td class="px-4 py-3 text-slate-500">' + d.land + '</td>' +
+      '<td class="px-4 py-3"><span class="status-badge status-processing">' + d.sourceType + '</span></td>' +
+      '<td class="px-4 py-3 text-slate-500">' + d.plannedDate + '</td>' +
       '<td class="px-4 py-3 text-slate-500">' + d.date + '</td>' +
       '<td class="px-4 py-3 text-slate-500">' + d.method + '</td>' +
       '<td class="px-4 py-3"><span class="status-badge ' + d.statusClass + '">' + d.status + '</span></td>' +
       '<td class="px-4 py-3"><div class="flex items-center gap-1">' + opBtn + '</div></td>';
     tbody.appendChild(row);
-    // 詳細資訊展開列（建議監測點位清單）
     if (mgmtExpandedRow === i) {
       var detailRow = document.createElement('tr');
       detailRow.className = 'bg-[#f4f7f6]/60';
       detailRow.innerHTML =
-        '<td colspan="7" class="px-6 py-5">' +
-        '<div class="grid grid-cols-3 gap-6 text-xs">' +
-          '<div class="space-y-2">' +
-            '<h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">座標資訊</h4>' +
-            '<div><span class="text-slate-400">TWD97 坐標：</span><span class="font-mono">X:219847 Y:2528631</span></div>' +
-            '<div><span class="text-slate-400">經緯度：</span><span class="font-mono">22.8821N, 120.5432E</span></div>' +
-            '<div><span class="text-slate-400">地段/地號：</span><span>' + d.id.replace('KP_','') + '段 123-4</span></div>' +
-            '<div><span class="text-slate-400">大約地點：</span><span>' + d.city + '山區</span></div>' +
-            '<div><span class="text-slate-400">監測方式：</span><span>' + d.method + '</span></div>' +
-          '</div>' +
-          '<div>' +
-            '<h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">前期影像（T1）</h4>' +
-            '<div class="w-full h-24 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-xs border border-slate-300"><span>Polygon 示意圖</span></div>' +
-          '</div>' +
-          '<div>' +
-            '<h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">後期影像（T2）</h4>' +
-            '<div class="w-full h-24 bg-slate-300 rounded-lg flex items-center justify-center text-slate-500 text-xs border border-slate-400"><span>Polygon 示意圖</span></div>' +
-          '</div>' +
-        '</div>' +
-        '</td>';
+        '<td colspan="10" class="px-6 py-5">' +
+        '<div class="grid grid-cols-4 gap-4 text-xs">' +
+          '<div class="bg-white border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-700 mb-2">內含點位</p><p class="text-3xl font-bold text-[#007d6d]">' + d.pointCount + '</p><p class="text-slate-400 mt-1">可展開逐點查看地段地號</p></div>' +
+          '<div class="col-span-3 bg-white border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-700 mb-3">資料夾檔案</p><div class="grid grid-cols-3 gap-2">' +
+            d.folder.map(function(f){ return '<div class="border border-slate-100 rounded-lg p-3 bg-slate-50 text-slate-600">📄 ' + f + '</div>'; }).join('') +
+          '</div></div>' +
+        '</div></td>';
       tbody.appendChild(detailRow);
     }
   });
-  // 更新角色提示
   const label = document.getElementById('mgmt-role-label');
   if (label) label.textContent = roles[role].label;
 }
 
 function getMgmtOpBtn(i, d, role) {
-  if (d.status === '已確認') {
-    return '<span class="text-[10px] text-slate-400">已流轉至判釋變異點清單</span>';
-  }
-  var btn = document.createElement('button');
   if (role === 'C') {
-    if (d.status === '--') {
-      btn.className = 'px-3 py-1 text-[10px] font-bold border border-blue-500 text-blue-600 rounded hover:bg-blue-500 hover:text-white transition whitespace-nowrap';
-      btn.textContent = '建議拍攝';
-      btn.setAttribute('onclick', 'mgmtAction(' + i + ',"suggest")');
-      return btn.outerHTML;
-    } else if (d.status === '建議拍攝') {
-      btn.className = 'px-3 py-1 text-[10px] font-bold border border-slate-400 text-slate-500 rounded hover:bg-slate-100 transition whitespace-nowrap';
-      btn.textContent = '取消建議';
-      btn.setAttribute('onclick', 'mgmtAction(' + i + ',"unsuggest")');
-      return btn.outerHTML;
-    }
-  } else if (role === 'B' || role === 'A') {
-    if (d.status === '建議拍攝') {
-      var confirmBtn = document.createElement('button');
-      confirmBtn.className = 'px-3 py-1 text-[10px] font-bold bg-[#007d6d] text-white rounded hover:opacity-90 transition whitespace-nowrap mr-1';
-      confirmBtn.textContent = '確定拍攝';
-      confirmBtn.setAttribute('onclick', 'mgmtAction(' + i + ',"confirm")');
-      var rejectBtn = document.createElement('button');
-      rejectBtn.className = 'px-3 py-1 text-[10px] font-bold border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white transition whitespace-nowrap';
-      rejectBtn.textContent = '僅列管';
-      rejectBtn.setAttribute('onclick', 'mgmtAction(' + i + ',"reject")');
-      return confirmBtn.outerHTML + rejectBtn.outerHTML;
+    return '<button onclick="event.stopPropagation();openBatchReportUpload()" class="px-3 py-1 text-[10px] font-bold border border-blue-500 text-blue-600 rounded hover:bg-blue-500 hover:text-white transition whitespace-nowrap">上傳判釋報告</button>';
+  }
+  if (role === 'B' || role === 'A') {
+    if (d.status === '建議拍攝' || d.status === '--') {
+      return '<button onclick="event.stopPropagation();mgmtAction(' + i + ',&quot;confirm&quot;)" class="px-3 py-1 text-[10px] font-bold bg-[#007d6d] text-white rounded hover:opacity-90 transition whitespace-nowrap mr-1">確定空拍</button>' +
+        '<button onclick="event.stopPropagation();mgmtAction(' + i + ',&quot;reject&quot;)" class="px-3 py-1 text-[10px] font-bold border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white transition whitespace-nowrap">僅列管</button>';
     }
   }
-  return '<span class="text-slate-300 text-[10px]">—</span>';
+  return '<span class="text-[10px] text-slate-400">已流轉</span>';
 }
 
 function mgmtAction(i, action) {
@@ -2631,7 +2707,7 @@ function mgmtAction(i, action) {
     showToast(d.id + ' 已取消建議拍攝');
   } else if (action === 'confirm') {
     d.status = '已確認'; d.statusClass = 'status-closed';
-    showToast('已確認 ' + d.id + '，點位已流轉至判釋變異點清單', '#2563eb');
+    showToast('已確認 ' + d.id + ' 空拍任務，系統將寄送 email（含通知單、公文與 KML）給空拍廠商', '#2563eb');
   } else if (action === 'reject') {
     d.status = '僅列管'; d.statusClass = 'status-pending';
     showToast(d.id + ' 已設為僅列管');
@@ -2655,18 +2731,13 @@ function backToMgmtProjects() {
   document.getElementById('mgmt-project-layer').classList.remove('hidden');
 }
 
-// ── AI 判釋列表資料 ──
+// ── AI 判釋範圍列表資料 ──
 const aiData = [
-  { id:'115Q2_KP_001', city:'高雄市 美濃區', t1:'2025-10-05', t2:'2026-03-12', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:219847 Y:2528631', latlng:'22.8821N, 120.5432E', land:'美濃段 123-4', approx:'高雄市美濃區廣林里山區', method:'衛星快速監測' },
-  { id:'115Q2_KP_002', city:'屏東縣 里港鄉', t1:'2025-10-05', t2:'2026-03-12', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:204312 Y:2531204', latlng:'22.9012N, 120.4121E', land:'里港段 88-2', approx:'屏東縣里港鄉田中央', method:'衛星快速監測' },
-  { id:'115Q2_KP_003', city:'台中市 石岡區', t1:'2025-10-06', t2:'2026-03-15', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:238741 Y:2671853', latlng:'24.1234N, 120.7823E', land:'石岡段 45-1', approx:'台中市石岡區溪岸旁', method:'精確判釋' },
-  { id:'115Q2_KP_004', city:'花蓮縣 壽豐鄉', t1:'2025-10-08', t2:'2026-03-18', status:'未列管', statusClass:'status-pending', coord:'TWD97 X:308421 Y:2641023', latlng:'23.8743N, 121.5231E', land:'壽豐段 201-3', approx:'花蓮縣壽豐鄉河床地', method:'衛星快速監測' },
-  { id:'115Q2_KP_005', city:'南投縣 仁愛鄉', t1:'2025-10-10', t2:'2026-03-20', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:245831 Y:2638412', latlng:'23.8421N, 120.9123E', land:'仁愛段 78-5', approx:'南投縣仁愛鄉山坡地', method:'精確判釋' },
-  { id:'115Q1_KP_006', city:'宜蘭縣 蘇澳鎮', t1:'2025-04-02', t2:'2025-09-15', status:'未列管', statusClass:'status-pending', coord:'TWD97 X:331204 Y:2703412', latlng:'24.5921N, 121.8321E', land:'蘇澳段 156-8', approx:'宜蘭縣蘇澳鎮溪床', method:'衛星快速監測' },
-  { id:'115Q1_KP_007', city:'高雄市 桃源區', t1:'2025-04-05', t2:'2025-09-18', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:212043 Y:2563871', latlng:'23.1532N, 120.6821E', land:'桃源段 33-2', approx:'高雄市桃源區山谷河床', method:'精確判釋' },
-  { id:'115Q1_KP_008', city:'屏東縣 三地門鄉', t1:'2025-04-05', t2:'2025-09-20', status:'未列管', statusClass:'status-pending', coord:'TWD97 X:201832 Y:2551234', latlng:'22.9873N, 120.6412E', land:'三地門段 99-1', approx:'屏東縣三地門鄉溪谷', method:'衛星快速監測' },
-  { id:'115Q1_KP_009', city:'台中市 和平區', t1:'2025-04-08', t2:'2025-09-22', status:'已建議列管', statusClass:'status-danger', coord:'TWD97 X:241732 Y:2683421', latlng:'24.2341N, 120.8123E', land:'和平段 67-3', approx:'台中市和平區山坡地', method:'精確判釋' },
-  { id:'115Q1_KP_010', city:'花蓮縣 光復鄉', t1:'2025-04-10', t2:'2025-09-25', status:'未列管', statusClass:'status-pending', coord:'TWD97 X:312834 Y:2631204', latlng:'23.7234N, 121.6023E', land:'光復段 44-7', approx:'花蓮縣光復鄉農地旁', method:'衛星快速監測' },
+  { id:'115Q2_AR_001', city:'高雄市 美濃區', land:'美濃段 123-4、124-1', area:'12.5 ha', pointCount:6, t1:'群立歷史影像 2025-10-05', t2:'年度採購影像 2026-03-12', status:'已建議拍攝', statusClass:'status-danger', coord:'TWD97 X:219847 Y:2528631', latlng:'22.8821N, 120.5432E', approx:'高雄市美濃區廣林里山區', method:'AI polygon 判釋', sourceType:'AI判釋', violationType:'疑似土石盜濫採', imageSource:'群立歷史影像 / 年度採購範圍影像' },
+  { id:'115Q2_AR_002', city:'屏東縣 里港鄉', land:'里港段 88-2、88-5', area:'9.8 ha', pointCount:4, t1:'群立歷史影像 2025-10-05', t2:'年度採購影像 2026-03-12', status:'已建議拍攝', statusClass:'status-danger', coord:'TWD97 X:204312 Y:2531204', latlng:'22.9012N, 120.4121E', approx:'屏東縣里港鄉田中央', method:'AI polygon 判釋', sourceType:'AI判釋', violationType:'疑似土石盜濫採', imageSource:'群立歷史影像 / 年度採購範圍影像' },
+  { id:'115Q2_AR_003', city:'台中市 石岡區', land:'石岡段 45-1', area:'21.0 ha', pointCount:9, t1:'群立歷史影像 2025-10-06', t2:'年度採購影像 2026-03-15', status:'已建議拍攝', statusClass:'status-danger', coord:'TWD97 X:238741 Y:2671853', latlng:'24.1234N, 120.7823E', approx:'台中市石岡區溪岸旁', method:'AI polygon 判釋', sourceType:'AI判釋', violationType:'違反水土保持法', imageSource:'群立歷史影像 / 年度採購範圍影像' },
+  { id:'115Q2_AR_004', city:'花蓮縣 壽豐鄉', land:'壽豐段 201-3', area:'7.5 ha', pointCount:3, t1:'群立歷史影像 2025-10-08', t2:'年度採購影像 2026-03-18', status:'未列管', statusClass:'status-pending', coord:'TWD97 X:308421 Y:2641023', latlng:'23.8743N, 121.5231E', approx:'花蓮縣壽豐鄉河床地', method:'AI polygon 判釋', sourceType:'AI判釋', violationType:'待判定', imageSource:'群立歷史影像 / 年度採購範圍影像' },
+  { id:'115Q2_AR_005', city:'南投縣 仁愛鄉', land:'仁愛段 78-5', area:'16.0 ha', pointCount:5, t1:'群立歷史影像 2025-10-10', t2:'年度採購影像 2026-03-20', status:'已建議拍攝', statusClass:'status-danger', coord:'TWD97 X:245831 Y:2638412', latlng:'23.8421N, 120.9123E', approx:'南投縣仁愛鄉山坡地', method:'AI polygon 判釋', sourceType:'AI判釋', violationType:'違反區域計畫法', imageSource:'群立歷史影像 / 年度採購範圍影像' }
 ];
 
 let expandedRow = null;
@@ -2682,53 +2753,38 @@ function renderAiTable() {
     row.className = 'hover:bg-slate-50/60 transition cursor-pointer';
     row.onclick = function(e) { if (!e.target.closest('button')) toggleAiDetail(i); };
     const addBtn = d.status === '未列管'
-      ? '<button onclick="addToManagement(' + i + ')" class="flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition whitespace-nowrap">＋ 加入列管</button>'
+      ? '<button onclick="addToManagement(' + i + ')" class="flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition whitespace-nowrap">＋ 納入建議拍攝範圍</button>'
       : '';
     row.innerHTML =
       '<td class="px-4 py-3 font-mono font-bold text-slate-700">' + d.id + '</td>' +
       '<td class="px-4 py-3">' + d.city + '</td>' +
+      '<td class="px-4 py-3 text-slate-500">' + d.land + '</td>' +
+      '<td class="px-4 py-3 text-slate-500">' + d.area + '</td>' +
+      '<td class="px-4 py-3 text-center font-bold text-[#007d6d]">' + d.pointCount + '</td>' +
       '<td class="px-4 py-3 text-slate-500">' + d.t1 + '</td>' +
       '<td class="px-4 py-3 text-slate-500">' + d.t2 + '</td>' +
       '<td class="px-4 py-3"><div class="flex items-center gap-2"><span class="status-badge ' + d.statusClass + '">' + d.status + '</span>' + addBtn + '</div></td>' +
-      '<td class="px-4 py-3"><div class="flex items-center gap-1">' +
-        '<button class="action-btn action-btn-primary" title="預覽"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>' +
-        '<button class="action-btn" title="下載"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>' +
-        '<button class="action-btn action-btn-primary" title="跳轉圖台" onclick="showPage(&quot;gis&quot;)"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg></button>' +
-      '</div></td>';
+      '<td class="px-4 py-3"><div class="flex items-center gap-1"><button class="action-btn action-btn-primary" title="跳轉圖台" onclick="event.stopPropagation();showPage(&quot;gis&quot;)">圖台</button></div></td>';
     tbody.appendChild(row);
-    // 詳細資訊展開列
     if (isExpanded) {
       const detailRow = document.createElement('tr');
       detailRow.className = 'bg-[#f4f7f6]/60';
-      detailRow.innerHTML = `
-        <td colspan="6" class="px-6 py-5">
-          <div class="grid grid-cols-3 gap-6 text-xs">
-            <div class="space-y-3">
-              <h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">座標資訊</h4>
-              <div><span class="text-slate-400">TWD97 坐標：</span><span class="font-mono font-medium">${d.coord}</span></div>
-              <div><span class="text-slate-400">經緯度：</span><span class="font-mono font-medium">${d.latlng}</span></div>
-              <div><span class="text-slate-400">地段/地號：</span><span class="font-medium">${d.land}</span></div>
-              <div><span class="text-slate-400">大約地點：</span><span class="font-medium">${d.approx}</span></div>
-              <div><span class="text-slate-400">監測方式：</span><span class="font-medium">${d.method}</span></div>
-            </div>
-            <div>
-              <h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">前期影像（T1：${d.t1}）</h4>
-              <div class="w-full h-28 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-xs border border-slate-300">
-                <div class="text-center"><svg class="w-8 h-8 mx-auto mb-1 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Polygon 示意圖</div>
-              </div>
-            </div>
-            <div>
-              <h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">後期影像（T2：${d.t2}）</h4>
-              <div class="w-full h-28 bg-slate-300 rounded-lg flex items-center justify-center text-slate-500 text-xs border border-slate-400">
-                <div class="text-center"><svg class="w-8 h-8 mx-auto mb-1 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Polygon 示意圖</div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-4 pt-4 border-t border-slate-200 text-xs">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">AI 判釋說明：</span>
-            <span class="text-slate-500 italic ml-2">⚠ 待忠晏確認欄位內容</span>
-          </div>
-        </td>`;
+      detailRow.innerHTML =
+        '<td colspan="9" class="px-6 py-5">' +
+        '<div class="grid grid-cols-4 gap-5 text-xs">' +
+          '<div class="space-y-2">' +
+            '<h4 class="font-bold text-slate-600 uppercase text-[10px] tracking-wider mb-2">範圍基本資料</h4>' +
+            '<div><span class="text-slate-400">來源類型：</span><span class="font-medium">' + d.sourceType + '</span></div>' +
+            '<div><span class="text-slate-400">違規類型：</span><span class="font-medium">' + d.violationType + '</span></div>' +
+            '<div><span class="text-slate-400">影像來源：</span><span class="font-medium">' + d.imageSource + '</span></div>' +
+            '<div><span class="text-slate-400">內含點位：</span><span class="font-bold text-[#007d6d]">' + d.pointCount + ' 點</span></div>' +
+          '</div>' +
+          '<div class="col-span-3 grid grid-cols-3 gap-4">' +
+            '<div class="h-28 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-center text-blue-500 text-xs">AI 判釋 polygon</div>' +
+            '<div class="h-28 bg-orange-50 rounded-lg border border-orange-100 flex items-center justify-center text-orange-500 text-xs">前後期影像差異</div>' +
+            '<div class="h-28 bg-emerald-50 rounded-lg border border-emerald-100 flex items-center justify-center text-emerald-600 text-xs">建議拍攝範圍</div>' +
+          '</div>' +
+        '</div></td>';
       tbody.appendChild(detailRow);
     }
   });
@@ -2739,7 +2795,7 @@ function addToManagement(i) {
   aiData[i].status = '已建議列管';
   aiData[i].statusClass = 'status-danger';
   renderAiTable();
-  showToast('已將 ' + aiData[i].id + ' 手動加入建議監測點位清單');
+  showToast('已將 ' + aiData[i].id + ' 手動加入建議拍攝範圍清單');
 }
 
 function toggleMgmtDetail(i) {
@@ -3010,6 +3066,12 @@ function openSurveyDrawer(i) {
             '<input type="file" accept=".pdf,.doc,.docx" class="hidden">' +
             '<svg class="w-6 h-6 mx-auto mb-1 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>' +
             '上傳逾期說明公文</label>' +
+          '<label class="block text-[10px] font-bold text-slate-500 uppercase mt-4 mb-1.5">逾期未查勘照片</label>' +
+          '<label class="block border-2 border-dashed border-orange-200 rounded-lg p-4 text-center text-xs text-slate-400 hover:border-orange-400 transition cursor-pointer">' +
+            '<input type="file" accept="image/*" multiple class="hidden">' +
+            '上傳圖片</label>' +
+          '<label class="block text-[10px] font-bold text-slate-500 uppercase mt-4 mb-1.5">文字說明</label>' +
+          '<textarea class="w-full h-20 bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 resize-none" placeholder="請填寫逾期原因或地方政府補充說明"></textarea>' +
         '</div>' +
       '</div>' +
 
@@ -3387,7 +3449,7 @@ const syslogData = [
   { time:'2026-06-08 17:30:00', account:'bmgeo_wang', name:'王大明', type:'登出', typeClass:'status-pending', target:'系統登出', ip:'192.168.1.101', note:'正常登出' },
   { time:'2026-06-08 16:55:21', account:'kaohsiung_chen', name:'陳小華', type:'資料新增', typeClass:'status-closed', target:'查勘回報 115Q2_KP_001', ip:'210.65.32.44', note:'新增查勘回報資料' },
   { time:'2026-06-08 14:12:09', account:'aerial_li', name:'李建志', type:'資料新增', typeClass:'status-closed', target:'疑似點位 115Q2_KP_005', ip:'203.74.12.88', note:'建立新疑似點位' },
-  { time:'2026-06-08 11:28:44', account:'bmgeo_chen', name:'陳志偉', type:'資料修改', typeClass:'status-processing', target:'建議監測點位清單 115Q2_KP_002', ip:'192.168.1.102', note:'確認列管點位建議拍攝' },
+  { time:'2026-06-08 11:28:44', account:'bmgeo_chen', name:'陳志偉', type:'資料修改', typeClass:'status-processing', target:'建議拍攝範圍清單 115Q2_KP_002', ip:'192.168.1.102', note:'確認列管範圍建議拍攝' },
   { time:'2026-06-08 10:05:17', account:'admin', name:'系統管理員', type:'帳號審核', typeClass:'status-pending', target:'帳號 taichung_wang', ip:'192.168.1.100', note:'拒絕申請：資料不完整' },
   { time:'2026-06-07 15:42:38', account:'bmgeo_wang', name:'王大明', type:'檔案下載', typeClass:'status-warning', target:'查勘結果報告_115Q1.xlsx', ip:'192.168.1.101', note:'匯出查勘結果 Excel' },
   { time:'2026-06-07 14:20:11', account:'aerial_li', name:'李建志', type:'登入', typeClass:'status-closed', target:'系統登入', ip:'203.74.12.88', note:'登入成功' },
@@ -3433,6 +3495,14 @@ let gisPrevTab = 'layer';
 let gisTool = null;
 let gisMeasureCount = 0;
 
+
+const GIS_RANGES = [
+  { id:'115Q2_AR_001', city:'高雄市', district:'美濃區', sourceType:'AI判釋', violationType:'疑似土石盜濫採', imageSource:'群立歷史影像 / 年度採購範圍影像', pointCount:6, status:'ai', color:'#2563eb', land:'美濃段 123-4、124-1', coords:[[22.8821,120.5432],[22.8846,120.5502],[22.8798,120.5530],[22.8774,120.5451]] },
+  { id:'115Q2_AR_002', city:'屏東縣', district:'里港鄉', sourceType:'地方政府通報', violationType:'確定土石盜濫採', imageSource:'UAV 航拍', pointCount:4, status:'confirmed', color:'#dc2626', land:'里港段 88-2、88-5', coords:[[22.9012,120.4121],[22.9048,120.4182],[22.8992,120.4210],[22.8965,120.4140]] },
+  { id:'115Q2_AR_004', city:'花蓮縣', district:'壽豐鄉', sourceType:'固定拍攝區域', violationType:'高風險監測', imageSource:'農航所正射影像', pointCount:3, status:'fixed', color:'#f59e0b', land:'壽豐段 201-3', coords:[[23.8743,121.5231],[23.8780,121.5310],[23.8708,121.5354],[23.8675,121.5260]] },
+  { id:'EXCLUDE-RIVER-001', city:'中央管理河川', district:'排除範圍', sourceType:'排除範圍', violationType:'中央管理河川', imageSource:'河川圖層', pointCount:0, status:'exclude', color:'#64748b', land:'中央管河川範圍', coords:[[23.8600,121.5000],[23.8650,121.5600],[23.8500,121.5650],[23.8450,121.5050]] }
+];
+
 const GIS_POINTS = [
   { id:'HUA-2026-001', city:'花蓮縣', district:'壽豐鄉', lat:23.82, lng:121.48, status:'pending',  variation:'高',  imgdate:'2026/03/15', coord:'X: 310245.8，Y: 2641092.1' },
   { id:'HUA-2026-002', city:'花蓮縣', district:'吉安鄉', lat:23.95, lng:121.56, status:'overdue',  variation:'極高',imgdate:'2026/03/10', coord:'X: 318542.3，Y: 2652981.4' },
@@ -3474,7 +3544,20 @@ function initGisMap() {
     { attribution:'© OpenStreetMap contributors', maxZoom:19 }
   );
 
-  // 點位
+  // 範圍 polygon
+  GIS_RANGES.forEach(r => {
+    const poly = L.polygon(r.coords, {
+      color: r.color,
+      weight: r.status === 'exclude' ? 2 : 3,
+      fillColor: r.color,
+      fillOpacity: r.status === 'exclude' ? 0.12 : 0.22,
+      dashArray: r.status === 'exclude' ? '6 6' : null
+    }).addTo(gisMap);
+    poly.bindTooltip('<div style="font-size:11px"><b>' + r.id + '</b><br>' + r.sourceType + '｜' + r.violationType + '</div>', { sticky:true });
+    poly.on('click', function(){ gisOpenRangeDetail(r); });
+  });
+
+  // 範圍內點位
   GIS_POINTS.forEach(p => {
     const color = GIS_STATUS_COLOR[p.status] || '#ef4444';
     const icon = L.divIcon({
@@ -3662,10 +3745,10 @@ function gisToggleDrawer() {
   setTimeout(() => { if (gisMap) gisMap.invalidateSize(); }, 350);
 }
 
-// 點位詳情
+// 範圍詳情
 function gisOpenDetail(p) {
   gisPrevTab = document.querySelector('.gis-tab-btn[style*="007d6d"]')?.id.replace('gisTbBtn-','') || 'layer';
-  document.getElementById('gis-detail-title').textContent = `點位詳情｜${p.id}`;
+  document.getElementById('gis-detail-title').textContent = `範圍詳情｜${p.id}`;
   document.getElementById('gis-d-id').textContent = p.id;
   document.getElementById('gis-d-loc').textContent = `${p.city} ${p.district}`;
   document.getElementById('gis-d-no').textContent = p.id;
@@ -3694,14 +3777,8 @@ function gisCloseDetail() {
 
 // 圖層列表
 function gisInitLayers() {
-  const topLayers = [
-    { label:'疑似點位', hasOpacity:true },
-    { label:'列管點位', hasOpacity:true },
-    { label:'衛星影像底圖', hasOpacity:true },
-    { label:'行政區界', hasOpacity:false },
-    { label:'地籍圖', hasOpacity:false },
-  ];
-  const otherLayers = ['1/1000 地形圖','1/5000 基本地形圖','像片基本圖','地理版地形圖','航照影像','空載光達正射影像','UAS（UAV）空拍影像','衛星影像','環境圖層','生物多樣性','國土利用現況調查成果','交通路線','歷史圖層'];
+  const topLayers = ['AI判釋階段 polygon','建議拍攝範圍','固定拍攝區域','高風險監測範圍','回報後確定違規範圍','違規類型圖層','排除範圍：中央管理河川'];
+  const otherLayers = ['農航所正射影像','通用版電子地圖','OSM 圖資','1/1000 地形圖','1/5000 基本地形圖','UAS（UAV）空拍影像','衛星影像','歷史圖層'];
   const topEl = document.getElementById('gis-layer-top');
   const otherEl = document.getElementById('gis-layer-other');
   if (!topEl || topEl.children.length > 0) return;
@@ -3907,6 +3984,100 @@ function gisInitSwipeDrag() {
     gisUpdateSwipe(pct);
   }, { passive: true });
 }
+
+
+function openRegisterModal() {
+  var el = document.getElementById('register-modal');
+  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+}
+
+function closeRegisterModal() {
+  var el = document.getElementById('register-modal');
+  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+}
+
+function submitRegisterApplication() {
+  closeRegisterModal();
+  showToast('帳號申請已送出，審核通過後將自動加入所屬地方政府 email 名單');
+}
+
+function toggleNotifyDropdown() {
+  var el = document.getElementById('notify-dropdown');
+  if (el) el.classList.toggle('hidden');
+}
+
+var currentIntakeType = '承辦手動新增';
+function switchIntakeType(type) {
+  currentIntakeType = type;
+  document.getElementById('intake-source-type').value = type;
+  document.querySelectorAll('.intake-type-btn').forEach(function(btn) {
+    btn.classList.remove('border-2','border-[#007d6d]','text-[#007d6d]');
+    btn.classList.add('border','border-slate-200');
+  });
+  var active = document.getElementById('intake-type-' + type);
+  if (active) {
+    active.classList.remove('border','border-slate-200');
+    active.classList.add('border-2','border-[#007d6d]','text-[#007d6d]');
+  }
+}
+
+function submitManualIntake() {
+  showToast('已建立「' + currentIntakeType + '」範圍案件，並可流轉至建議拍攝範圍');
+}
+
+function renderGovEmailList() {
+  var el = document.getElementById('gov-email-list');
+  if (!el) return;
+  var rows = [
+    ['高雄市政府', 'kaohsiung_chen@gov.tw', '已綁定'],
+    ['屏東縣政府', 'pending_pingtung@gov.tw', '新註冊待審核'],
+    ['台中市政府', 'taichung_lee@gov.tw', '已綁定']
+  ];
+  el.innerHTML = rows.map(function(r) {
+    return '<div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-lg p-3"><div><p class="font-bold text-slate-700">' + r[0] + '</p><p class="text-slate-400 mt-0.5">' + r[1] + '</p></div><span class="status-badge ' + (r[2] === '已綁定' ? 'status-closed' : 'status-warning') + '">' + r[2] + '</span></div>';
+  }).join('');
+}
+
+function openBatchReportUpload() {
+  var el = document.getElementById('batch-upload-preview');
+  if (!el) {
+    showToast('批次上傳：115Q2_AR_001.docx 已自動配對，未知檔案需人工指定');
+    return;
+  }
+  el.classList.remove('hidden');
+  el.innerHTML =
+    '<div class="border border-emerald-100 bg-emerald-50 rounded-lg p-3"><p class="font-bold text-emerald-700">115Q2_AR_001.docx</p><p class="text-emerald-600 mt-1">自動配對：115Q2_AR_001</p></div>' +
+    '<div class="border border-emerald-100 bg-emerald-50 rounded-lg p-3"><p class="font-bold text-emerald-700">115Q2_AR_004.pdf</p><p class="text-emerald-600 mt-1">自動配對：115Q2_AR_004</p></div>' +
+    '<div class="border border-orange-100 bg-orange-50 rounded-lg p-3"><p class="font-bold text-orange-700">report_final.docx</p><p class="text-orange-600 mt-1">無法辨識，請人工選擇範圍</p></div>';
+  showToast('已載入 3 份判釋報告，2 份自動配對、1 份待人工指定');
+}
+
+function openStatsExport() {
+  var el = document.getElementById('stats-export-panel');
+  if (el) el.classList.toggle('hidden');
+}
+
+function gisOpenRangeDetail(r) {
+  gisTabSwitch('search');
+  var panel = document.getElementById('gis-detail-panel');
+  if (!panel) return;
+  document.getElementById('gis-detail-title').textContent = '範圍詳情｜' + r.id;
+  document.getElementById('gis-d-id').textContent = r.id;
+  document.getElementById('gis-d-loc').textContent = r.city + ' ' + r.district;
+  document.getElementById('gis-d-no').textContent = r.id;
+  document.getElementById('gis-d-status').textContent = r.sourceType;
+  document.getElementById('gis-d-city').textContent = r.city;
+  document.getElementById('gis-d-dist').textContent = r.district;
+  document.getElementById('gis-d-coord').textContent = 'Polygon：' + r.coords.map(function(c){ return '[' + c[1].toFixed(4) + ',' + c[0].toFixed(4) + ']'; }).join(' ');
+  document.getElementById('gis-d-var').textContent = r.violationType;
+  document.getElementById('gis-d-img').textContent = r.imageSource;
+  var badge = document.getElementById('gis-d-badge');
+  badge.textContent = r.pointCount + ' 點';
+  badge.style.background = r.color + '22';
+  badge.style.color = r.color;
+  panel.style.display = 'flex';
+}
+
 </script>
 </body>
 </html>
