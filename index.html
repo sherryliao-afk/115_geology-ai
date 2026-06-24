@@ -168,11 +168,11 @@
         </a>
         <a href="javascript:void(0)" onclick="showPage('management-list')" id="nav-management-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-          列管點位清單
+          建議監測點位清單
         </a>
         <a href="javascript:void(0)" onclick="showPage('suspect-list')" id="nav-suspect-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          疑似點位清單
+          判釋變異點清單
         </a>
       </div>
 
@@ -185,8 +185,11 @@
         </button>
         <div id="acc-urge" class="accordion-content">
           <div class="pl-10 pr-2 py-1 space-y-0.5">
-            <a href="javascript:void(0)" onclick="showPage('urge-work')" id="nav-urge-work" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">稽催作業</a>
-            <a href="javascript:void(0)" onclick="showPage('urge-settings')" id="nav-urge-settings" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">設定</a>
+            <a href="javascript:void(0)" onclick="showPage('urge-overdue')" id="nav-urge-overdue" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">
+              逾期未查勘 <span class="ml-auto bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">17</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showPage('urge-history')" id="nav-urge-history" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">歷史稽催紀錄</a>
+            <a href="javascript:void(0)" onclick="showPage('urge-settings')" id="nav-urge-settings" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">稽催設定</a>
           </div>
         </div>
       </div>
@@ -349,13 +352,13 @@
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
             <h3 class="text-sm font-bold text-slate-700 mb-1">各縣市違規點位數</h3>
             <p class="text-xs text-slate-400 mb-4">115年度統計</p>
-            <canvas id="chart-county" height="180"></canvas>
+            <div style="height:180px;position:relative"><canvas id="chart-county"></canvas></div>
           </div>
           <!-- 月度疑似點位趨勢 -->
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
             <h3 class="text-sm font-bold text-slate-700 mb-1">月度疑似點位趨勢</h3>
             <p class="text-xs text-slate-400 mb-4">115年度逐月統計</p>
-            <canvas id="chart-monthly" height="180"></canvas>
+            <div style="height:180px;position:relative"><canvas id="chart-monthly"></canvas></div>
           </div>
         </div>
 
@@ -542,12 +545,12 @@
       </div>
 
       <!-- AI 詳細資訊展開列（動態插入） -->
-      <!-- ── 列管清單 ── -->
+      <!-- ── 建議監測點位清單 ── -->
       <div id="page-management-list" class="p-8 hidden fade-in">
 
         <!-- 第一層：專案選擇 -->
         <div id="mgmt-project-layer">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">列管清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">建議監測點位清單</h1>
           <p class="text-sm text-slate-500 mb-6">請選擇要查看的監測專案年度</p>
           <div class="grid grid-cols-3 gap-5">
             <div onclick="showMgmtProject('115')" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 cursor-pointer hover:border-[#007d6d] hover:shadow-md transition group">
@@ -604,13 +607,13 @@
               返回專案列表
             </button>
             <span class="text-slate-300">/</span>
-            <span class="text-xs text-slate-400">列管清單</span>
+            <span class="text-xs text-slate-400">建議監測點位清單</span>
             <span class="text-slate-300">/</span>
             <span id="mgmt-project-label" class="text-xs font-bold text-slate-700">115 年度監測專案</span>
           </div>
 
           <div class="flex justify-between items-end mb-5">
-            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">列管清單</h1>
+            <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">建議監測點位清單</h1>
             <div class="flex items-center gap-2 text-xs text-slate-400 bg-[#f4f7f6] px-3 py-2 rounded-lg border border-[#007d6d]/20">
               <svg class="w-3.5 h-3.5 text-[#007d6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
               <span>目前角色：</span><span id="mgmt-role-label" class="font-bold text-[#007d6d]">地礦中心承辦</span>
@@ -683,12 +686,12 @@
           </div>
         </div>
       </div>
-      <!-- ── 疑似點位清單 ── -->
+      <!-- ── 判釋變異點清單 ── -->
       <div id="page-suspect-list" class="p-8 hidden fade-in">
 
         <!-- 第一層：專案選擇 -->
         <div id="suspect-project-layer">
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">疑似點位清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">判釋變異點清單</h1>
           <p class="text-sm text-slate-500 mb-6">請選擇要查看的監測專案年度</p>
           <div class="grid grid-cols-3 gap-5">
             <div onclick="showSuspectProject('115')" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 cursor-pointer hover:border-[#007d6d] hover:shadow-md transition group">
@@ -731,12 +734,12 @@
               返回專案列表
             </button>
             <span class="text-slate-300">/</span>
-            <span class="text-xs text-slate-400">疑似點位清單</span>
+            <span class="text-xs text-slate-400">判釋變異點清單</span>
             <span class="text-slate-300">/</span>
             <span id="suspect-project-label" class="text-xs font-bold text-slate-700">115 年度監測專案</span>
           </div>
 
-          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-5">疑似點位清單</h1>
+          <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-5">判釋變異點清單</h1>
 
           <!-- 篩選區 -->
           <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
@@ -918,104 +921,114 @@
         </div>
       </div>
       <!-- ── 稽催作業 ── -->
-      <div id="page-urge-work" class="p-8 hidden fade-in">
-        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">稽催作業</h1>
-
-        <!-- Tab 切換 -->
-        <div class="flex border-b border-slate-200 mb-6">
-          <button onclick="switchUrgeWorkTab('history')" id="urgework-tab-history" class="tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]">歷史稽催紀錄</button>
-          <button onclick="switchUrgeWorkTab('overdue')" id="urgework-tab-overdue" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px flex items-center gap-2">逾期未查勘 <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">17</span></button>
-        </div>
-
-        <!-- Tab：歷史稽催紀錄 -->
-        <div id="urgework-tab-history-content">
-          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
-            <div class="grid grid-cols-4 gap-4">
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">專案年度</label>
-                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部年度</option><option>115年</option><option>114年</option></select></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
-                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部縣市</option><option>高雄市</option><option>屏東縣</option><option>台中市</option></select></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">發送日期起</label>
-                <input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2"></div>
-              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">是否已回報</label>
-                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>已回報</option><option>未回報</option></select></div>
-            </div>
-            <div class="flex justify-end mt-4 gap-2">
-              <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
-              <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
-            </div>
+      <!-- ── 逾期未查勘 ── -->
+      <div id="page-urge-overdue" class="p-8 hidden fade-in">
+        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">逾期未查勘</h1>
+        <!-- 搜尋列 -->
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">專案年度</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部年度</option><option>115年</option><option>114年</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部縣市</option><option>高雄市</option><option>屏東縣</option><option>台中市</option><option>花蓮縣</option><option>南投縣</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">稽催日期起</label>
+              <input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">是否已回報</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>已回報</option><option>未回報</option></select></div>
           </div>
-          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <table class="min-w-full text-xs">
-              <thead class="bg-slate-50/80 border-b border-slate-200">
-                <tr>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">發送日期</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">發送對象縣市</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號數量</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">收件人數</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">是否已回報</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">詳情</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-50">
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-04-01</td><td class="px-5 py-3">高雄市</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3 text-center">4</td><td class="px-5 py-3"><span class="status-badge status-closed">已回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-03-15</td><td class="px-5 py-3">屏東縣</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-danger">逾期未回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-02-20</td><td class="px-5 py-3">台中市</td><td class="px-5 py-3 text-center">4</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-processing">部分回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2025-11-10</td><td class="px-5 py-3">花蓮縣</td><td class="px-5 py-3 text-center">5</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3"><span class="status-badge status-closed">已回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2025-09-05</td><td class="px-5 py-3">南投縣</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-danger">逾期未回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
-              </tbody>
-            </table>
-            <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
-              <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 5 筆</span>
-              <div class="flex gap-1">
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
-                <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
-              </div>
+          <div class="flex justify-end mt-4 gap-2">
+            <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
+            <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+            <h2 class="text-sm font-bold text-slate-700 flex items-center gap-2"><span class="w-2 h-2 bg-red-500 rounded-full"></span>逾期未查勘點位</h2>
+            <span class="text-xs text-slate-400">共 17 筆</span>
+          </div>
+          <table class="min-w-full text-xs">
+            <thead class="bg-slate-50/80 border-b border-slate-200">
+              <tr>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">稽催日期</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">逾期天數</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">逾期原因</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">高雄市 美濃區</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_003</td><td class="px-5 py-3 text-slate-500">2026-03-15</td><td class="px-5 py-3"><span class="font-bold text-red-600">86 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td><td class="px-5 py-3"><button onclick="showToast('查看公文（雛型示意）')" class="px-3 py-1 text-[10px] font-bold border border-slate-300 text-slate-600 rounded hover:bg-slate-100 transition">查看公文</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">屏東縣 里港鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_007</td><td class="px-5 py-3 text-slate-500">2026-03-22</td><td class="px-5 py-3"><span class="font-bold text-red-600">79 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td><td class="px-5 py-3"><button onclick="showToast('查看公文（雛型示意）')" class="px-3 py-1 text-[10px] font-bold border border-slate-300 text-slate-600 rounded hover:bg-slate-100 transition">查看公文</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">台中市 石岡區</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_021</td><td class="px-5 py-3 text-slate-500">2026-02-10</td><td class="px-5 py-3"><span class="font-bold text-red-600">119 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td><td class="px-5 py-3"><button onclick="showToast('查看公文（雛型示意）')" class="px-3 py-1 text-[10px] font-bold border border-slate-300 text-slate-600 rounded hover:bg-slate-100 transition">查看公文</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">花蓮縣 壽豐鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_034</td><td class="px-5 py-3 text-slate-500">2026-02-28</td><td class="px-5 py-3"><span class="font-bold text-red-600">101 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td><td class="px-5 py-3"><button onclick="showToast('查看公文（雛型示意）')" class="px-3 py-1 text-[10px] font-bold border border-slate-300 text-slate-600 rounded hover:bg-slate-100 transition">查看公文</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">南投縣 仁愛鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_015</td><td class="px-5 py-3 text-slate-500">2026-04-01</td><td class="px-5 py-3"><span class="font-bold text-orange-500">69 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td><td class="px-5 py-3"><button onclick="showToast('查看公文（雛型示意）')" class="px-3 py-1 text-[10px] font-bold border border-slate-300 text-slate-600 rounded hover:bg-slate-100 transition">查看公文</button></td></tr>
+            </tbody>
+          </table>
+          <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
+            <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 17 筆</span>
+            <div class="flex gap-1">
+              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
+              <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
+              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">2</button>
+              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">下一頁</button>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Tab：逾期未查勘 -->
-        <div id="urgework-tab-overdue-content" class="hidden">
-          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
-              <h2 class="text-sm font-bold text-slate-700 flex items-center gap-2"><span class="w-2 h-2 bg-red-500 rounded-full"></span>逾期未查勘點位</h2>
-              <span class="text-xs text-slate-400">共 17 筆</span>
-            </div>
-            <table class="min-w-full text-xs">
-              <thead class="bg-slate-50/80 border-b border-slate-200">
-                <tr>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">稽催日期</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">逾期天數</th>
-                  <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-50">
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">高雄市 美濃區</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_003</td><td class="px-5 py-3 text-slate-500">2026-03-15</td><td class="px-5 py-3"><span class="font-bold text-red-600">86 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">屏東縣 里港鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_007</td><td class="px-5 py-3 text-slate-500">2026-03-22</td><td class="px-5 py-3"><span class="font-bold text-red-600">79 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">台中市 石岡區</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_021</td><td class="px-5 py-3 text-slate-500">2026-02-10</td><td class="px-5 py-3"><span class="font-bold text-red-600">119 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">花蓮縣 壽豐鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_034</td><td class="px-5 py-3 text-slate-500">2026-02-28</td><td class="px-5 py-3"><span class="font-bold text-red-600">101 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td></tr>
-                <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 font-medium">南投縣 仁愛鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_015</td><td class="px-5 py-3 text-slate-500">2026-04-01</td><td class="px-5 py-3"><span class="font-bold text-orange-500">69 天</span></td><td class="px-5 py-3"><button class="px-3 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#007d6d] hover:text-white transition">補發稽催</button></td></tr>
-              </tbody>
-            </table>
-            <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
-              <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 17 筆</span>
-              <div class="flex gap-1">
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
-                <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">2</button>
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">下一頁</button>
-              </div>
+      <!-- ── 歷史稽催紀錄 ── -->
+      <div id="page-urge-history" class="p-8 hidden fade-in">
+        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">歷史稽催紀錄</h1>
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+          <div class="grid grid-cols-4 gap-4">
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">專案年度</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部年度</option><option>115年</option><option>114年</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部縣市</option><option>高雄市</option><option>屏東縣</option><option>台中市</option></select></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">發送日期起</label>
+              <input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2"></div>
+            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">是否已回報</label>
+              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>已回報</option><option>未回報</option></select></div>
+          </div>
+          <div class="flex justify-end mt-4 gap-2">
+            <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
+            <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <table class="min-w-full text-xs">
+            <thead class="bg-slate-50/80 border-b border-slate-200">
+              <tr>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">發送日期</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">發送對象縣市</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">點號數量</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">收件人數</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">是否已回報</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">詳情</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-04-01</td><td class="px-5 py-3">高雄市</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3 text-center">4</td><td class="px-5 py-3"><span class="status-badge status-closed">已回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-03-15</td><td class="px-5 py-3">屏東縣</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-danger">逾期未回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2026-02-20</td><td class="px-5 py-3">台中市</td><td class="px-5 py-3 text-center">4</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-processing">部分回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2025-11-10</td><td class="px-5 py-3">花蓮縣</td><td class="px-5 py-3 text-center">5</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3"><span class="status-badge status-closed">已回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
+              <tr class="hover:bg-slate-50/60"><td class="px-5 py-3 text-slate-500">2025-09-05</td><td class="px-5 py-3">南投縣</td><td class="px-5 py-3 text-center">2</td><td class="px-5 py-3 text-center">3</td><td class="px-5 py-3"><span class="status-badge status-danger">逾期未回報</span></td><td class="px-5 py-3"><button class="text-[#007d6d] text-xs hover:underline">查看</button></td></tr>
+            </tbody>
+          </table>
+          <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
+            <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 5 筆</span>
+            <div class="flex gap-1">
+              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
+              <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
+              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
             </div>
           </div>
         </div>
       </div>
       <!-- ── 稽催管理設定 ── -->
       <div id="page-urge-settings" class="p-8 hidden fade-in">
-        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">稽催管理設定</h1>
+        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">稽催設定</h1>
         <div class="flex border-b border-slate-200 mb-6">
           <button onclick="switchUrgeSettingsTab('template')" id="urgesettings-tab-template" class="tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]">稽催模板維護</button>
           <button onclick="switchUrgeSettingsTab('group')" id="urgesettings-tab-group" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">稽催群組設定</button>
@@ -1075,6 +1088,13 @@
                   <span class="absolute top-0.5 right-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"></span>
                 </button>
               </div>
+              <div class="flex items-center justify-between border-t border-slate-100 pt-5">
+                <div><label class="text-sm font-bold text-slate-700">系統內彈出視窗通知</label>
+                  <p class="text-xs text-slate-400 mt-0.5">逾期時於系統右上角顯示通知提示</p></div>
+                <button onclick="toggleUrgeNotify(this)" class="relative w-12 h-6 bg-[#007d6d] rounded-full" data-on="true">
+                  <span class="absolute top-0.5 right-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform"></span>
+                </button>
+              </div>
               <div><label class="block text-sm font-bold text-slate-700 mb-1">通知對象 Email</label>
                 <p class="text-xs text-slate-400 mb-2">多個 email 請以逗號分隔</p>
                 <textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2.5 h-16 resize-none focus:outline-none focus:border-[#007d6d]">bmgeo_admin@moeacgs.gov.tw</textarea>
@@ -1128,6 +1148,7 @@
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">回報日期</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">狀態</th>
                 <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
+                <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">逾期原因</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-50" id="survey-table-body"></tbody>
@@ -1498,8 +1519,8 @@
 
       </div><!-- /page-gis -->
       <!-- ── 統計分析儀表板 ── -->
-      <div id="page-stats" class="p-8 hidden fade-in">
-        <div class="flex justify-between items-end mb-6">
+      <div id="page-stats" class="p-5 hidden fade-in">
+        <div class="flex justify-between items-end mb-3">
           <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">統計分析儀表板</h1>
           <button onclick="showToast('統計結果匯出（雛型示意）')" class="flex items-center gap-2 px-4 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -1508,7 +1529,7 @@
         </div>
 
         <!-- 篩選區 -->
-        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6">
+        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 mb-3">
           <div class="grid grid-cols-4 gap-4">
             <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label>
               <select id="stats-year" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>115年</option><option>114年</option><option>113年</option></select></div>
@@ -1522,87 +1543,95 @@
         </div>
 
         <!-- Tab 切換 -->
-        <div class="flex border-b border-slate-200 mb-6">
+        <div class="flex border-b border-slate-200 mb-3">
           <button onclick="switchStatsTab('report')" id="stats-tab-report" class="tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]">回報結果統計</button>
+          <button onclick="switchStatsTab('violation')" id="stats-tab-violation" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">違規行為統計</button>
           <button onclick="switchStatsTab('monitor')" id="stats-tab-monitor" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">監測結果統計</button>
         </div>
 
         <!-- Tab：回報結果統計 -->
         <div id="stats-tab-report-content">
-          <!-- 摘要卡片 -->
-          <div class="grid grid-cols-4 gap-4 mb-6">
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <div class="grid grid-cols-4 gap-3 mb-4">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">總查勘點位數</p>
-              <p class="text-3xl font-bold text-slate-800">142</p>
+              <p class="text-2xl font-bold text-slate-800">142</p>
               <p class="text-xs text-slate-400 mt-1">115年度全台</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">無違規行為</p>
-              <p class="text-3xl font-bold text-[#007d6d]">89</p>
+              <p class="text-2xl font-bold text-[#007d6d]">89</p>
               <p class="text-xs text-slate-400 mt-1">佔 62.7%</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">確認違規點位</p>
-              <p class="text-3xl font-bold text-red-600">36</p>
+              <p class="text-2xl font-bold text-red-600">36</p>
               <p class="text-xs text-slate-400 mt-1">佔 25.4%</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">尚未查勘</p>
-              <p class="text-3xl font-bold text-orange-500">17</p>
+              <p class="text-2xl font-bold text-orange-500">17</p>
               <p class="text-xs text-slate-400 mt-1">佔 12.0%</p>
             </div>
           </div>
-
-          <!-- 圖表區 -->
-          <div class="grid grid-cols-2 gap-5 mb-5">
-            <!-- 各縣市成果統計 -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <h3 class="text-sm font-bold text-slate-700 mb-1">各縣市成果統計</h3>
-              <p class="text-xs text-slate-400 mb-4">各縣市違規類型分布（堆疊）</p>
-              <canvas id="chart-county-stack" height="220"></canvas>
-            </div>
-            <!-- 違規類型分布 -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <h3 class="text-sm font-bold text-slate-700 mb-1">違規類型分布</h3>
-              <p class="text-xs text-slate-400 mb-4">115年度全台違規行為比例</p>
-              <canvas id="chart-violation-pie" height="220"></canvas>
+          <!-- 各縣市回報結果圖 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+            <h3 class="text-sm font-bold text-slate-700 mb-1">各縣市回報結果統計</h3>
+            <p class="text-xs text-slate-400 mb-3">各縣市查勘點位數與回報結果分布</p>
+            <div style="height:200px;position:relative">
+              <canvas id="chart-county-stack"></canvas>
             </div>
           </div>
+        </div>
 
-          <!-- 違規後續處理統計表 -->
-          <div class="bg-white rounded-xl shadow-sm border border-slate-200">
-            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
-              <h3 class="text-sm font-bold text-slate-700">違規行為後續處理總表</h3>
-              <span class="text-xs text-slate-400">共 36 筆違規點位</span>
+        <!-- Tab：違規行為統計 -->
+        <div id="stats-tab-violation-content" class="hidden">
+          <!-- Top5 違規縣市 -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4">
+            <h3 class="text-sm font-bold text-slate-700 mb-1">Top 5 違規縣市分布</h3>
+            <p class="text-xs text-slate-400 mb-3">115年度違規點位數前五名縣市</p>
+            <div style="height:160px;position:relative">
+              <canvas id="chart-top5-county"></canvas>
             </div>
-            <div class="overflow-x-auto">
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4" style="max-height:340px">
+              <h3 class="text-sm font-bold text-slate-700 mb-1">違規類型分布</h3>
+              <p class="text-xs text-slate-400 mb-2">115年度全台違規行為比例</p>
+              <div style="height:220px;position:relative">
+                <canvas id="chart-violation-pie"></canvas>
+              </div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+              <div class="px-5 py-3 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-slate-700">違規行為後續處理總表</h3>
+                <span class="text-xs text-slate-400">共 36 筆</span>
+              </div>
               <table class="min-w-full text-xs">
                 <thead class="bg-slate-50/80 border-b border-slate-200">
                   <tr>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">異變點點號</th>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">違反法規</th>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">移交單位</th>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">移交日期</th>
-                    <th class="px-5 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">移交文號</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">縣市/鄉鎮</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">點號</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">違反法規</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">移交單位</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">移交日期</th>
+                    <th class="px-4 py-2.5 text-left text-[10px] font-bold text-slate-500 uppercase">文號</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
-                  <tr class="hover:bg-slate-50/60"><td class="px-5 py-3">高雄市 美濃區</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_1-2_013</td><td class="px-5 py-3 text-red-600 font-medium">砂石盜濫採行為</td><td class="px-5 py-3 text-slate-500">桃園市政府農業局、桃園市政府地政局</td><td class="px-5 py-3 text-slate-500">2026-03-31</td><td class="px-5 py-3 font-mono text-slate-500">1150017488</td></tr>
-                  <tr class="hover:bg-slate-50/60"><td class="px-5 py-3">屏東縣 里港鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q1_KP_2-1_007</td><td class="px-5 py-3 text-orange-600 font-medium">違反區域計畫法</td><td class="px-5 py-3 text-slate-500">屏東縣政府地政處</td><td class="px-5 py-3 text-slate-500">2026-04-15</td><td class="px-5 py-3 font-mono text-slate-500">1150021334</td></tr>
-                  <tr class="hover:bg-slate-50/60"><td class="px-5 py-3">台中市 石岡區</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_3-1_021</td><td class="px-5 py-3 text-red-600 font-medium">砂石盜濫採行為</td><td class="px-5 py-3 text-slate-500">台中市政府農業局</td><td class="px-5 py-3 text-slate-500">2026-05-02</td><td class="px-5 py-3 font-mono text-slate-500">1150029871</td></tr>
-                  <tr class="hover:bg-slate-50/60"><td class="px-5 py-3">花蓮縣 壽豐鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_4-2_034</td><td class="px-5 py-3 text-orange-600 font-medium">違反水土保持法</td><td class="px-5 py-3 text-slate-500">花蓮縣政府水土保持局</td><td class="px-5 py-3 text-slate-500">2026-05-18</td><td class="px-5 py-3 font-mono text-slate-500">1150033245</td></tr>
-                  <tr class="hover:bg-slate-50/60"><td class="px-5 py-3">南投縣 仁愛鄉</td><td class="px-5 py-3 font-mono text-slate-600">115Q2_KP_5-1_015</td><td class="px-5 py-3 text-red-600 font-medium">砂石盜濫採行為</td><td class="px-5 py-3 text-slate-500">南投縣政府農業處</td><td class="px-5 py-3 text-slate-500">2026-05-25</td><td class="px-5 py-3 font-mono text-slate-500">1150038812</td></tr>
+                  <tr class="hover:bg-slate-50/60"><td class="px-4 py-2">高雄市 美濃區</td><td class="px-4 py-2 font-mono text-slate-600 text-[10px]">115Q1_KP_013</td><td class="px-4 py-2 text-red-600 font-medium">砂石盜濫採</td><td class="px-4 py-2 text-slate-500">桃園市政府農業局</td><td class="px-4 py-2 text-slate-500">2026-03-31</td><td class="px-4 py-2 font-mono text-slate-500 text-[10px]">1150017488</td></tr>
+                  <tr class="hover:bg-slate-50/60"><td class="px-4 py-2">屏東縣 里港鄉</td><td class="px-4 py-2 font-mono text-slate-600 text-[10px]">115Q1_KP_007</td><td class="px-4 py-2 text-orange-600 font-medium">違反區域計畫法</td><td class="px-4 py-2 text-slate-500">屏東縣政府地政處</td><td class="px-4 py-2 text-slate-500">2026-04-15</td><td class="px-4 py-2 font-mono text-slate-500 text-[10px]">1150021334</td></tr>
+                  <tr class="hover:bg-slate-50/60"><td class="px-4 py-2">台中市 石岡區</td><td class="px-4 py-2 font-mono text-slate-600 text-[10px]">115Q2_KP_021</td><td class="px-4 py-2 text-red-600 font-medium">砂石盜濫採</td><td class="px-4 py-2 text-slate-500">台中市政府農業局</td><td class="px-4 py-2 text-slate-500">2026-05-02</td><td class="px-4 py-2 font-mono text-slate-500 text-[10px]">1150029871</td></tr>
+                  <tr class="hover:bg-slate-50/60"><td class="px-4 py-2">花蓮縣 壽豐鄉</td><td class="px-4 py-2 font-mono text-slate-600 text-[10px]">115Q2_KP_034</td><td class="px-4 py-2 text-orange-600 font-medium">違反水土保持法</td><td class="px-4 py-2 text-slate-500">花蓮縣政府水土保持局</td><td class="px-4 py-2 text-slate-500">2026-05-18</td><td class="px-4 py-2 font-mono text-slate-500 text-[10px]">1150033245</td></tr>
+                  <tr class="hover:bg-slate-50/60"><td class="px-4 py-2">南投縣 仁愛鄉</td><td class="px-4 py-2 font-mono text-slate-600 text-[10px]">115Q2_KP_015</td><td class="px-4 py-2 text-red-600 font-medium">砂石盜濫採</td><td class="px-4 py-2 text-slate-500">南投縣政府農業處</td><td class="px-4 py-2 text-slate-500">2026-05-25</td><td class="px-4 py-2 font-mono text-slate-500 text-[10px]">1150038812</td></tr>
                 </tbody>
               </table>
-            </div>
-            <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
-              <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 36 筆</span>
-              <div class="flex gap-1">
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
-                <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">2</button>
-                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">下一頁</button>
+              <div class="flex justify-between items-center px-4 py-2.5 border-t border-slate-100">
+                <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 36 筆</span>
+                <div class="flex gap-1">
+                  <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
+                  <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
+                  <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs hover:bg-slate-50">下一頁</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1611,42 +1640,42 @@
         <!-- Tab：監測結果統計 -->
         <div id="stats-tab-monitor-content" class="hidden">
           <!-- 摘要卡片 -->
-          <div class="grid grid-cols-4 gap-4 mb-6">
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <div class="grid grid-cols-4 gap-3 mb-3">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">重點監測區總數</p>
-              <p class="text-3xl font-bold text-slate-800">22</p>
+              <p class="text-2xl font-bold text-slate-800">22</p>
               <p class="text-xs text-slate-400 mt-1">115年度</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">總監測次數</p>
-              <p class="text-3xl font-bold text-[#007d6d]">186</p>
+              <p class="text-2xl font-bold text-[#007d6d]">186</p>
               <p class="text-xs text-slate-400 mt-1">衛星＋航空合計</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">衛星監測天數</p>
-              <p class="text-3xl font-bold text-slate-800">34</p>
+              <p class="text-2xl font-bold text-slate-800">34</p>
               <p class="text-xs text-slate-400 mt-1">各軌道合計</p>
             </div>
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">航空攝影天數</p>
-              <p class="text-3xl font-bold text-slate-800">34</p>
+              <p class="text-2xl font-bold text-slate-800">34</p>
               <p class="text-xs text-slate-400 mt-1">各軌道合計</p>
             </div>
           </div>
 
           <!-- 圖表區 -->
-          <div class="grid grid-cols-2 gap-5 mb-5">
+          <div class="grid grid-cols-2 gap-4 mb-3">
             <!-- 各重點監測區監測次數 -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
               <h3 class="text-sm font-bold text-slate-700 mb-1">各重點監測區監測次數</h3>
               <p class="text-xs text-slate-400 mb-4">快速監測＋精確判釋</p>
-              <canvas id="chart-monitor-area" height="220"></canvas>
+              <div style="height:180px;position:relative"><canvas id="chart-monitor-area"></canvas></div>
             </div>
             <!-- 各衛星軌道監測天數 -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
               <h3 class="text-sm font-bold text-slate-700 mb-1">各衛星軌道監測天數</h3>
               <p class="text-xs text-slate-400 mb-4">快速監測 vs 精確判釋</p>
-              <canvas id="chart-satellite" height="220"></canvas>
+              <div style="height:180px;position:relative"><canvas id="chart-satellite"></canvas></div>
             </div>
           </div>
 
@@ -1904,6 +1933,38 @@
 <div id="toast" class="toast bg-[#007d6d] text-white"></div>
 
 <script>
+// ── 稽催群組假資料 ──
+const allCities = [
+  '台北市','新北市','桃園市','台中市','台南市','高雄市',
+  '基隆市','新竹市','嘉義市','新竹縣','苗栗縣','彰化縣',
+  '南投縣','雲林縣','嘉義縣','屏東縣','宜蘭縣','花蓮縣','台東縣'
+];
+const cityContacts = {
+  '台中市': [
+    { name:'李俊賢', email:'lee@taichung.gov.tw',   title:'科長' },
+    { name:'黃雅琪', email:'huang@taichung.gov.tw', title:'承辦人' },
+    { name:'劉冠廷', email:'liu@taichung.gov.tw',   title:'承辦人' },
+  ],
+  '高雄市': [
+    { name:'陳志豪', email:'chen@kcg.gov.tw',   title:'科長' },
+    { name:'林美華', email:'lin@kcg.gov.tw',    title:'承辦人' },
+    { name:'吳建國', email:'wu@kcg.gov.tw',     title:'技士' },
+  ],
+  '花蓮縣': [
+    { name:'王麗君', email:'wang@hualien.gov.tw', title:'承辦人' },
+    { name:'張文傑', email:'chang@hualien.gov.tw', title:'技士' },
+  ],
+  '南投縣': [
+    { name:'許大維', email:'hsu@nantou.gov.tw',  title:'承辦人' },
+  ],
+  '屏東縣': [
+    { name:'蔡宗憲', email:'tsai@pingtung.gov.tw', title:'科長' },
+    { name:'鄭淑芬', email:'cheng@pingtung.gov.tw', title:'承辦人' },
+  ],
+};
+let selectedCity = null;
+let emailTags = [];
+
 // ── 角色資料 ──
 const roles = {
   'A': { name: '系統管理員', account: 'admin', label: '系統管理員', avatar: '管', scope: '當年度全台' },
@@ -1972,7 +2033,7 @@ function updateRoleUI(role) {
 // ── 頁面切換 ──
 const pageMap = {
   'home': '首頁', 'ai-list': 'AI 判釋列表', 'management-list': '列管點位清單',
-  'suspect-list': '疑似點位清單', 'urge-work': '稽催管理',
+  'suspect-list': '判釋變異點清單', 'urge-overdue': '逾期未查勘', 'urge-history': '歷史稽催紀錄', 'urge-settings': '稽催設定',
   'survey-report': '查勘回報', 'gis': '盜濫採影像圖台', 'stats': '統計分析儀表板',
   'user-mgmt': '使用者管理', 'sys-log': '系統日誌'
 };
@@ -2038,17 +2099,6 @@ function showToast(msg, color) {
 // ── 首頁圖表 ──
 let chartsInit = false;
 
-function switchUrgeWorkTab(tab) {
-  ['history','overdue'].forEach(function(t) {
-    var btn = document.getElementById('urgework-tab-' + t);
-    var cont = document.getElementById('urgework-tab-' + t + '-content');
-    if (!btn || !cont) return;
-    var active = t === tab;
-    var base = 'px-5 py-3 text-sm border-b-2 -mb-px ';
-    btn.className = base + (active ? 'font-bold border-[#007d6d] text-[#007d6d]' : 'text-slate-400 hover:text-slate-600 border-transparent') + (t === 'overdue' ? ' flex items-center gap-2' : '');
-    cont.classList.toggle('hidden', !active);
-  });
-}
 function switchUrgeSettingsTab(tab) {
   ['template','group','notify'].forEach(function(t) {
     var btn = document.getElementById('urgesettings-tab-' + t);
@@ -2133,7 +2183,7 @@ function toggleUrgeNotify(btn) {
   btn.querySelector('span').style.transform = isOn ? 'translateX(0)' : '';
 }
 
-// ── 疑似點位清單資料 ──
+// ── 判釋變異點清單資料 ──
 const suspectData = [
   { id:'115Q2_KP_001', city:'高雄市 美濃區', exec:'2026-03-12', notify:'2026-03-15', urgeCount:2, status:'稽催通知已發送', statusClass:'status-processing',
     dataComplete:true, coord:'X:219847 Y:2528631', latlng:'22.8821N, 120.5432E', land:'美濃段 123-4', approx:'高雄市美濃區廣林里山區', area:'1,250', vol:'3,800',
@@ -2323,7 +2373,7 @@ function toggleSuspectAll(cb) {
 }
 
 function goToUrgeWork() {
-  showPage('urge-work');
+  showPage('urge-overdue');
   showToast('已帶入 ' + document.getElementById('suspect-selected-count').textContent + ' 筆點位至稽催作業');
 }
 
@@ -2469,7 +2519,7 @@ function switchDrawerTab(tab) {
     : 'px-4 py-3 text-xs text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px';
 }
 
-// ── 列管清單資料 ──
+// ── 建議監測點位清單資料 ──
 const mgmtData = [
   { id:'115Q2_KP_001', city:'高雄市 美濃區', date:'2026-03-12', method:'衛星快速監測', status:'--', statusClass:'status-pending' },
   { id:'115Q2_KP_002', city:'屏東縣 里港鄉', date:'2026-03-12', method:'衛星快速監測', status:'建議拍攝', statusClass:'status-processing' },
@@ -2505,7 +2555,7 @@ function renderMgmtTable() {
       '<td class="px-4 py-3"><span class="status-badge ' + d.statusClass + '">' + d.status + '</span></td>' +
       '<td class="px-4 py-3"><div class="flex items-center gap-1">' + opBtn + '</div></td>';
     tbody.appendChild(row);
-    // 詳細資訊展開列（列管清單）
+    // 詳細資訊展開列（建議監測點位清單）
     if (mgmtExpandedRow === i) {
       var detailRow = document.createElement('tr');
       detailRow.className = 'bg-[#f4f7f6]/60';
@@ -2540,7 +2590,7 @@ function renderMgmtTable() {
 
 function getMgmtOpBtn(i, d, role) {
   if (d.status === '已確認') {
-    return '<span class="text-[10px] text-slate-400">已流轉至疑似點位清單</span>';
+    return '<span class="text-[10px] text-slate-400">已流轉至判釋變異點清單</span>';
   }
   var btn = document.createElement('button');
   if (role === 'C') {
@@ -2581,7 +2631,7 @@ function mgmtAction(i, action) {
     showToast(d.id + ' 已取消建議拍攝');
   } else if (action === 'confirm') {
     d.status = '已確認'; d.statusClass = 'status-closed';
-    showToast('已確認 ' + d.id + '，點位已流轉至疑似點位清單', '#2563eb');
+    showToast('已確認 ' + d.id + '，點位已流轉至判釋變異點清單', '#2563eb');
   } else if (action === 'reject') {
     d.status = '僅列管'; d.statusClass = 'status-pending';
     showToast(d.id + ' 已設為僅列管');
@@ -2689,7 +2739,7 @@ function addToManagement(i) {
   aiData[i].status = '已建議列管';
   aiData[i].statusClass = 'status-danger';
   renderAiTable();
-  showToast('已將 ' + aiData[i].id + ' 手動加入列管清單');
+  showToast('已將 ' + aiData[i].id + ' 手動加入建議監測點位清單');
 }
 
 function toggleMgmtDetail(i) {
@@ -2750,7 +2800,7 @@ function initHomeCharts() {
         }]
       },
       options: {
-        responsive: true,
+        responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
           y: { beginAtZero: true, ticks: { font: { size: 11 } }, grid: { color: '#f1f5f9' } },
@@ -3077,18 +3127,20 @@ function exportSurveyReport() {
 let statsChartsInit = { report: false, monitor: false };
 
 function switchStatsTab(tab) {
-  ['report','monitor'].forEach(function(t) {
+  ['report','violation','monitor'].forEach(function(t) {
     var btn = document.getElementById('stats-tab-' + t);
     var cont = document.getElementById('stats-tab-' + t + '-content');
-    if (!btn || !cont) return;
     var active = t === tab;
-    btn.className = active
-      ? 'tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]'
-      : 'px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px';
-    cont.classList.toggle('hidden', !active);
+    if (btn) {
+      btn.className = active
+        ? 'tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]'
+        : 'px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px';
+    }
+    if (cont) cont.classList.toggle('hidden', !active);
   });
-  if (tab === 'report' && !statsChartsInit.report) { initStatsReportCharts(); statsChartsInit.report = true; }
   if (tab === 'monitor' && !statsChartsInit.monitor) { initStatsMonitorCharts(); statsChartsInit.monitor = true; }
+  if (tab === 'report' && !statsChartsInit.report) { initStatsReportCharts(); statsChartsInit.report = true; }
+  if (tab === 'violation' && !statsChartsInit.report) { initStatsReportCharts(); statsChartsInit.report = true; }
 }
 
 function initStatsReportCharts() {
@@ -3106,10 +3158,42 @@ function initStatsReportCharts() {
         { label:'其他違法', data:[1,1,1,1,1,0,0,0], backgroundColor:'rgba(100,116,139,0.5)', borderRadius:3 },
       ]
     },
-    options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10} } } }, scales:{ x:{ stacked:true, grid:{display:false}, ticks:{font:{size:11}} }, y:{ stacked:true, grid:{color:'#f1f5f9'}, ticks:{font:{size:11}} } } }
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10} } } }, scales:{ x:{ stacked:true, grid:{display:false}, ticks:{font:{size:11}} }, y:{ stacked:true, grid:{color:'#f1f5f9'}, ticks:{font:{size:11}} } } }
   });
 
   // 圓餅圖：違規類型分布
+  // Top5 違規縣市長條圖
+  var ctxTop5 = document.getElementById('chart-top5-county');
+  if (ctxTop5) new Chart(ctxTop5, {
+    type: 'bar',
+    data: {
+      labels: ['高雄市', '屏東縣', '台中市', '花蓮縣', '南投縣'],
+      datasets: [{
+        label: '違規點位數',
+        data: [12, 9, 7, 5, 3],
+        backgroundColor: [
+          'rgba(220,38,38,0.8)',
+          'rgba(234,88,12,0.8)',
+          'rgba(202,138,4,0.8)',
+          'rgba(0,125,109,0.75)',
+          'rgba(100,116,139,0.6)'
+        ],
+        borderRadius: 6,
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 12, weight: 'bold' } } }
+      }
+    }
+  });
+
   var ctxPie = document.getElementById('chart-violation-pie');
   if (ctxPie) new Chart(ctxPie, {
     type: 'doughnut',
@@ -3117,7 +3201,7 @@ function initStatsReportCharts() {
       labels: ['無違規行為','砂石盜濫採行為','違反區域計畫法','違反水土保持法','其他違法行為','尚未查勘'],
       datasets: [{ data:[89,34,16,8,5,17], backgroundColor:['rgba(0,125,109,0.8)','rgba(220,38,38,0.8)','rgba(234,88,12,0.8)','rgba(202,138,4,0.8)','rgba(100,116,139,0.6)','rgba(203,213,225,0.8)'], borderWidth:2, borderColor:'#fff' }]
     },
-    options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10}, padding:12 } } } }
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10}, padding:8, boxWidth:10 } } } }
   });
 }
 
@@ -3133,7 +3217,7 @@ function initStatsMonitorCharts() {
         { label:'精確判釋', data:[1,1,1,2,1,1,1,1,1,1], backgroundColor:'rgba(0,125,109,0.3)', borderRadius:4 }
       ]
     },
-    options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10} } } }, scales:{ x:{ stacked:true, grid:{display:false}, ticks:{font:{size:11}}, title:{display:true, text:'重點監測區編號', font:{size:10}} }, y:{ stacked:true, grid:{color:'#f1f5f9'}, ticks:{font:{size:11}} } } }
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:10} } } }, scales:{ x:{ stacked:true, grid:{display:false}, ticks:{font:{size:11}}, title:{display:true, text:'重點監測區編號', font:{size:10}} }, y:{ stacked:true, grid:{color:'#f1f5f9'}, ticks:{font:{size:11}} } } }
   });
 
   // 長條圖：各衛星軌道監測天數
@@ -3245,7 +3329,7 @@ function renderActiveTable() {
       '<td class="px-4 py-3">' + statusBadge + '</td>' +
       '<td class="px-4 py-3 text-slate-500">' + d.email + '</td>' +
       '<td class="px-4 py-3"><div class="flex gap-1">' +
-        '<button onclick="openEditUserDrawer(' + i + ')" class="px-2 py-1 text-[10px] font-bold border border-slate-300 text-slate-500 rounded hover:bg-slate-50">編輯</button>' +
+        '<button onclick="openEditUserDrawer(' + i + ')" class="px-2 py-1 text-[10px] font-bold border border-slate-300 text-slate-500 rounded hover:bg-slate-50">編輯權限</button>' +
         (d.status === '已開通'
           ? '<button onclick="showToast(&quot;帳號已停用&quot;)" class="px-2 py-1 text-[10px] font-bold border border-orange-400 text-orange-500 rounded hover:bg-orange-50">停用</button>'
           : '<button onclick="showToast(&quot;帳號已重新開通&quot;)" class="px-2 py-1 text-[10px] font-bold border border-[#007d6d] text-[#007d6d] rounded hover:bg-[#f4f7f6]">開通</button>') +
@@ -3303,7 +3387,7 @@ const syslogData = [
   { time:'2026-06-08 17:30:00', account:'bmgeo_wang', name:'王大明', type:'登出', typeClass:'status-pending', target:'系統登出', ip:'192.168.1.101', note:'正常登出' },
   { time:'2026-06-08 16:55:21', account:'kaohsiung_chen', name:'陳小華', type:'資料新增', typeClass:'status-closed', target:'查勘回報 115Q2_KP_001', ip:'210.65.32.44', note:'新增查勘回報資料' },
   { time:'2026-06-08 14:12:09', account:'aerial_li', name:'李建志', type:'資料新增', typeClass:'status-closed', target:'疑似點位 115Q2_KP_005', ip:'203.74.12.88', note:'建立新疑似點位' },
-  { time:'2026-06-08 11:28:44', account:'bmgeo_chen', name:'陳志偉', type:'資料修改', typeClass:'status-processing', target:'列管清單 115Q2_KP_002', ip:'192.168.1.102', note:'確認列管點位建議拍攝' },
+  { time:'2026-06-08 11:28:44', account:'bmgeo_chen', name:'陳志偉', type:'資料修改', typeClass:'status-processing', target:'建議監測點位清單 115Q2_KP_002', ip:'192.168.1.102', note:'確認列管點位建議拍攝' },
   { time:'2026-06-08 10:05:17', account:'admin', name:'系統管理員', type:'帳號審核', typeClass:'status-pending', target:'帳號 taichung_wang', ip:'192.168.1.100', note:'拒絕申請：資料不完整' },
   { time:'2026-06-07 15:42:38', account:'bmgeo_wang', name:'王大明', type:'檔案下載', typeClass:'status-warning', target:'查勘結果報告_115Q1.xlsx', ip:'192.168.1.101', note:'匯出查勘結果 Excel' },
   { time:'2026-06-07 14:20:11', account:'aerial_li', name:'李建志', type:'登入', typeClass:'status-closed', target:'系統登入', ip:'203.74.12.88', note:'登入成功' },
