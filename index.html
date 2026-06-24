@@ -13,7 +13,6 @@
   body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
   .brand-primary { background-color: #007d6d; }
   .brand-text { color: #007d6d; }
-  .brand-border { border-color: #007d6d; }
   .brand-bg-light { background-color: #f4f7f6; }
   .sidebar-item-active { background-color: rgba(255,255,255,0.15); border-left: 4px solid #fff; color: #fff; }
   .sidebar-item { transition: all 0.15s; }
@@ -27,7 +26,6 @@
   .status-closed { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
   .status-warning { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
   .status-danger { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
-  .status-blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
   .action-btn { display:flex; align-items:center; justify-content:center; padding:6px; border-radius:4px; transition:all 0.15s; color:#64748b; }
   .action-btn:hover { background:#f1f5f9; }
   .action-btn-primary { color:#007d6d; }
@@ -42,7 +40,6 @@
   .accordion-content.open { max-height: 500px; }
   .toast { position:fixed; bottom:24px; right:24px; z-index:9999; padding:12px 20px; border-radius:8px; font-size:13px; font-weight:500; box-shadow:0 4px 20px rgba(0,0,0,0.15); transform:translateY(80px); opacity:0; transition:all 0.3s ease; }
   .toast.show { transform:translateY(0); opacity:1; }
-  .progress-ring { transform: rotate(-90deg); }
   /* 登入頁 */
   .login-left { background: linear-gradient(145deg, #007d6d 0%, #005a4d 100%); }
 </style>
@@ -201,19 +198,10 @@
       <div id="nav-group-mgmt">
         <div class="my-3 border-t border-white/10"></div>
         <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">管理</p>
-        <div class="mb-0.5">
-          <button onclick="toggleAccordion('acc-user')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white">
-            <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <span class="flex-1 text-left">使用者管理</span>
-            <svg id="acc-user-icon" class="w-3 h-3 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </button>
-          <div id="acc-user" class="accordion-content">
-            <div class="pl-10 pr-2 py-1 space-y-0.5">
-              <a href="javascript:void(0)" onclick="showPage('user-pending')" id="nav-user-pending" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">待審核申請</a>
-              <a href="javascript:void(0)" onclick="showPage('user-active')" id="nav-user-active" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">已開通帳號</a>
-            </div>
-          </div>
-        </div>
+        <a href="javascript:void(0)" onclick="showPage('user-mgmt')" id="nav-user-mgmt" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          使用者管理
+        </a>
         <!-- 系統日誌：A only -->
         <div id="nav-group-sys">
           <a href="javascript:void(0)" onclick="showPage('sys-log')" id="nav-sys-log" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
@@ -1695,158 +1683,112 @@
           </div>
         </div>
       </div>
-      <!-- ── 待審核申請 ── -->
-      <div id="page-user-pending" class="p-8 hidden fade-in">
-        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">待審核申請</h1>
-        <!-- 篩選區 -->
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
-          <div class="grid grid-cols-3 gap-4">
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請日期起</label>
-              <input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請單位</label>
-              <input type="text" placeholder="請輸入申請單位" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請權限</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]">
-                <option>全部</option><option>地礦中心承辦</option><option>空拍廠商</option><option>地方政府人員</option><option>唯讀瀏覽</option>
-              </select></div>
-          </div>
-          <div class="flex justify-end mt-4 gap-2">
-            <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
-            <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
-          </div>
-        </div>
-        <!-- 表格 -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <table class="min-w-full text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200">
-              <tr>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請日期</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">姓名</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請單位</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請權限</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">電話</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">Email</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
-              </tr>
-            </thead>
-            <tbody id="pending-table-body" class="divide-y divide-slate-50"></tbody>
-          </table>
-          <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
-            <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 5 筆</span>
-            <div class="flex gap-1">
-              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
-              <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
-              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- ── 使用者管理 ── -->
+      <div id="page-user-mgmt" class="p-8 hidden fade-in">
+        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">使用者管理</h1>
 
-      <!-- 開通帳號 Modal -->
-      <div id="approve-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-        <div class="bg-white w-[520px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
-          <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-            <h3 class="font-bold text-slate-800">開通帳號</h3>
-            <button onclick="closeApproveModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-200">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </div>
-          <div class="p-6 space-y-4 text-xs">
-            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200" id="approve-user-info"></div>
-            <div>
-              <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">設定權限（可多選）</label>
-              <div class="space-y-2">
-                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded"> <span>系統管理員</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded" checked> <span>地礦中心承辦</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded"> <span>空拍廠商</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded"> <span>地方政府人員</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded"> <span>唯讀瀏覽</span></label>
-              </div>
+        <!-- Tab 切換 -->
+        <div class="flex border-b border-slate-200 mb-6">
+          <button onclick="switchUserMgmtTab('pending')" id="usermgmt-tab-pending"
+            class="tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]">
+            待審核申請
+            <span id="usermgmt-pending-badge" class="ml-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">5</span>
+          </button>
+          <button onclick="switchUserMgmtTab('active')" id="usermgmt-tab-active"
+            class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">已開通帳號</button>
+        </div>
+
+        <!-- ── Tab：待審核申請 ── -->
+        <div id="usermgmt-tab-pending-content">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+            <div class="grid grid-cols-3 gap-4">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請日期起</label>
+                <input type="date" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請單位</label>
+                <input type="text" placeholder="請輸入申請單位" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請權限</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]">
+                  <option>全部</option><option>地礦中心承辦</option><option>空拍廠商</option><option>地方政府人員</option><option>唯讀瀏覽</option>
+                </select></div>
             </div>
-            <div id="approve-city-section">
-              <label class="block text-[10px] font-bold text-slate-500 uppercase mb-2">容許瀏覽縣市（地方政府人員適用）</label>
-              <div class="grid grid-cols-4 gap-2">
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 高雄市</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 屏東縣</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 台中市</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 花蓮縣</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 南投縣</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 宜蘭縣</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 台東縣</label>
-                <label class="flex items-center gap-1 cursor-pointer text-[10px]"><input type="checkbox" class="rounded"> 苗栗縣</label>
+            <div class="flex justify-end mt-4 gap-2">
+              <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
+              <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <table class="min-w-full text-xs">
+              <thead class="bg-slate-50/80 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請日期</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">姓名</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請單位</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">申請權限</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">電話</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">Email</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
+                </tr>
+              </thead>
+              <tbody id="pending-table-body" class="divide-y divide-slate-50"></tbody>
+            </table>
+            <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
+              <span class="text-xs text-slate-400">顯示第 1 到 5 筆，共 5 筆</span>
+              <div class="flex gap-1">
+                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
+                <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
+                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
               </div>
             </div>
           </div>
-          <div class="px-6 py-4 bg-slate-50 border-t flex justify-end gap-3">
-            <button onclick="closeApproveModal()" class="px-4 py-2 text-xs border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-100">取消</button>
-            <button onclick="confirmApprove()" class="px-5 py-2 text-xs bg-[#007d6d] text-white font-bold rounded-lg hover:opacity-90">確認開通</button>
-          </div>
         </div>
-      </div>
 
-      <!-- 拒絕申請 Modal -->
-      <div id="reject-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
-        <div class="bg-white w-[420px] rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
-          <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
-            <h3 class="font-bold text-slate-800">拒絕申請</h3>
+        <!-- ── Tab：已開通帳號 ── -->
+        <div id="usermgmt-tab-active-content" class="hidden">
+          <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
+            <div class="grid grid-cols-4 gap-4">
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">帳號/姓名</label>
+                <input type="text" placeholder="搜尋帳號或姓名" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">所屬縣市</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>高雄市</option><option>屏東縣</option><option>台中市</option></select></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請單位</label>
+                <input type="text" placeholder="請輸入申請單位" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
+              <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">權限類型</label>
+                <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>系統管理員</option><option>地礦中心承辦</option><option>空拍廠商</option><option>地方政府人員</option><option>唯讀瀏覽</option></select></div>
+            </div>
+            <div class="flex justify-end mt-4 gap-2">
+              <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
+              <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
+            </div>
           </div>
-          <div class="p-6 text-xs space-y-3">
-            <p class="text-slate-500">請輸入拒絕原因：</p>
-            <textarea id="reject-reason" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2.5 h-24 resize-none focus:outline-none focus:border-[#007d6d]" placeholder="請輸入拒絕原因..."></textarea>
-          </div>
-          <div class="px-6 py-4 bg-slate-50 border-t flex justify-end gap-3">
-            <button onclick="closeRejectModal()" class="px-4 py-2 text-xs border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-100">取消</button>
-            <button onclick="confirmReject()" class="px-5 py-2 text-xs bg-red-500 text-white font-bold rounded-lg hover:opacity-90">確認拒絕</button>
-          </div>
-        </div>
-      </div>
-      <!-- ── 已開通帳號 ── -->
-      <div id="page-user-active" class="p-8 hidden fade-in">
-        <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4 mb-6">已開通帳號</h1>
-        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-5">
-          <div class="grid grid-cols-4 gap-4">
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">帳號/姓名</label>
-              <input type="text" placeholder="搜尋帳號或姓名" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">所屬縣市</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>高雄市</option><option>屏東縣</option><option>台中市</option></select></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">申請單位</label>
-              <input type="text" placeholder="請輸入申請單位" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">權限類型</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>系統管理員</option><option>地礦中心承辦</option><option>空拍廠商</option><option>地方政府人員</option><option>唯讀瀏覽</option></select></div>
-          </div>
-          <div class="flex justify-end mt-4 gap-2">
-            <button class="px-4 py-1.5 text-xs border border-slate-200 rounded-lg bg-white text-slate-500">重設</button>
-            <button class="px-4 py-1.5 text-xs bg-[#007d6d] text-white rounded-lg hover:opacity-90">查詢</button>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <table class="min-w-full text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200">
-              <tr>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">姓名</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">所屬單位</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">權限</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">容許縣市</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號狀態</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">Email</th>
-                <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
-              </tr>
-            </thead>
-            <tbody id="active-table-body" class="divide-y divide-slate-50"></tbody>
-          </table>
-          <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
-            <span class="text-xs text-slate-400">顯示第 1 到 8 筆，共 8 筆</span>
-            <div class="flex gap-1">
-              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
-              <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
-              <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <table class="min-w-full text-xs">
+              <thead class="bg-slate-50/80 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">姓名</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">所屬單位</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">權限</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">容許縣市</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">帳號狀態</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">Email</th>
+                  <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 uppercase">操作</th>
+                </tr>
+              </thead>
+              <tbody id="active-table-body" class="divide-y divide-slate-50"></tbody>
+            </table>
+            <div class="flex justify-between items-center px-5 py-3 border-t border-slate-100">
+              <span class="text-xs text-slate-400">顯示第 1 到 8 筆，共 8 筆</span>
+              <div class="flex gap-1">
+                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs text-slate-400" disabled>上一頁</button>
+                <button class="px-3 py-1 border border-[#007d6d] rounded bg-[#f4f7f6] text-[#007d6d] text-xs font-bold">1</button>
+                <button class="px-3 py-1 border border-slate-200 rounded bg-white text-xs" disabled>下一頁</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
       <!-- 編輯帳號側拉抽屜 -->
       <div id="edit-user-overlay" class="fixed inset-0 bg-slate-900/40 z-30 hidden" onclick="closeEditUserDrawer()"></div>
       <div id="edit-user-drawer" class="drawer fixed top-0 right-0 h-full w-[480px] bg-white shadow-2xl z-40 overflow-y-auto">
@@ -2014,7 +1956,7 @@ const pageMap = {
   'home': '首頁', 'ai-list': 'AI 判釋列表', 'management-list': '列管清單',
   'suspect-list': '疑似點位清單', 'urge-work': '稽催管理',
   'survey-report': '查勘回報', 'gis': '盜濫採影像圖台', 'stats': '統計分析儀表板',
-  'user-pending': '待審核申請', 'user-active': '已開通帳號', 'sys-log': '系統日誌'
+  'user-mgmt': '使用者管理', 'sys-log': '系統日誌'
 };
 let currentPage = 'home';
 
@@ -2026,16 +1968,17 @@ function showPage(pageId) {
   const nextEl = document.getElementById('page-' + pageId);
   nextEl.classList.remove('hidden');
 
-  // GIS 頁面需要撐滿高度、不用 overflow-y-auto
+  // 全螢幕頁面（不用 overflow-y-auto）
+  const fullscreenPages = ['gis'];
   const wrapper = document.getElementById('page-content-wrapper');
-  if (pageId === 'gis') {
+  if (fullscreenPages.includes(pageId)) {
     wrapper.style.overflow = 'hidden';
     wrapper.style.display = 'flex';
     wrapper.style.flexDirection = 'column';
     nextEl.style.display = 'flex';
     nextEl.style.flex = '1';
     nextEl.style.height = '100%';
-    initGisMap();
+    if (pageId === 'gis') initGisMap();
   } else {
     wrapper.style.overflow = '';
     wrapper.style.display = '';
@@ -2051,8 +1994,7 @@ function showPage(pageId) {
   if (pageId === 'home') initHomeCharts();
   if (pageId === 'survey-report') renderSurveyTable();
   if (pageId === 'stats') { if (!statsChartsInit.report) { initStatsReportCharts(); statsChartsInit.report = true; } }
-  if (pageId === 'user-pending') renderPendingTable();
-  if (pageId === 'user-active') renderActiveTable();
+  if (pageId === 'user-mgmt') { renderPendingTable(); renderActiveTable(); }
   if (pageId === 'sys-log') renderSyslogTable();
   if (pageId === 'suspect-list') renderSuspectTable();
   if (pageId === 'management-list') renderMgmtTable();
@@ -2077,39 +2019,6 @@ function showToast(msg, color) {
 
 // ── 首頁圖表 ──
 let chartsInit = false;
-function initHomeCharts() {
-  if (chartsInit) return;
-  chartsInit = true;
-  // 折線迷你圖
-  new Chart(document.getElementById('chart-trend'), {
-    type: 'line',
-    data: {
-      labels: ['1月','2月','3月','4月','5月','6月'],
-      datasets: [{ data: [28,35,42,38,51,48], borderColor: '#007d6d', backgroundColor: 'rgba(0,125,109,0.08)', borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0 }]
-    },
-    options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } }, animation: false }
-  });
-  // 長條迷你圖（逾期）
-  new Chart(document.getElementById('chart-overdue'), {
-    type: 'bar',
-    data: {
-      labels: ['1月','2月','3月','4月','5月','6月'],
-      datasets: [{ data: [3,5,8,12,15,17], backgroundColor: 'rgba(220,38,38,0.2)', borderColor: '#dc2626', borderWidth: 1.5, borderRadius: 3 }]
-    },
-    options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } }, animation: false }
-  });
-}
-
-// ── 稽催管理 JS ──
-const cityContacts = {
-  '高雄市': [{name:'陳建仁', email:'chen@kcg.gov.tw', title:'科長'}, {name:'林美玲', email:'lin@kcg.gov.tw', title:'承辦人'}, {name:'王志豪', email:'wang@kcg.gov.tw', title:'承辦人'}],
-  '屏東縣': [{name:'張文雄', email:'chang@pthg.gov.tw', title:'課長'}, {name:'吳淑芬', email:'wu@pthg.gov.tw', title:'承辦人'}],
-  '台中市': [{name:'李俊賢', email:'lee@taichung.gov.tw', title:'科長'}, {name:'黃雅琪', email:'huang@taichung.gov.tw', title:'承辦人'}, {name:'劉冠廷', email:'liu@taichung.gov.tw', title:'承辦人'}],
-  '花蓮縣': [{name:'方志遠', email:'fang@hl.gov.tw', title:'課長'}, {name:'許雅婷', email:'hsu@hl.gov.tw', title:'承辦人'}],
-};
-const allCities = ['台北市','新北市','桃園市','台中市','台南市','高雄市','基隆市','新竹市','嘉義市','新竹縣','苗栗縣','彰化縣','南投縣','雲林縣','嘉義縣','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'];
-let selectedCity = null;
-let emailTags = [];
 
 function switchUrgeWorkTab(tab) {
   ['history','overdue'].forEach(function(t) {
@@ -2134,21 +2043,7 @@ function switchUrgeSettingsTab(tab) {
     if (t === 'group' && active) renderCityList();
   });
 }
-function switchUrgeTab(tab) { switchUrgeWorkTab(tab); }
 
-function switchTemplateTab(tab) {
-  ['tmpl','group'].forEach(function(t) {
-    var btn = document.getElementById('tmpl-tab-' + t);
-    var cont = document.getElementById('tmpl-tab-' + t + '-content');
-    if (!btn || !cont) return;
-    var active = t === tab;
-    btn.className = active
-      ? 'tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]'
-      : 'px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px';
-    cont.classList.toggle('hidden', !active);
-    if (t === 'group' && active) renderCityList();
-  });
-}
 
 function renderCityList() {
   var el = document.getElementById('city-list-items');
@@ -2193,30 +2088,7 @@ function showAddContactModal() {
   showToast('新增聯絡人（雛型示意）');
 }
 
-function toggleCityGroup(cb, city) {
-  var contacts = cityContacts[city];
-  if (!contacts) return;
-  if (cb.checked) {
-    contacts.forEach(function(c) {
-      if (!emailTags.find(function(t){ return t.email === c.email; })) {
-        emailTags.push({city: city, email: c.email, name: c.name});
-      }
-    });
-  } else {
-    emailTags = emailTags.filter(function(t){ return t.city !== city; });
-  }
-  renderEmailTags();
-}
 
-function addExtraEmail() {
-  var input = document.getElementById('extra-email-input');
-  var val = input.value.trim();
-  if (val && !emailTags.find(function(t){ return t.email === val; })) {
-    emailTags.push({city:'自訂', email: val, name: val});
-    renderEmailTags();
-    input.value = '';
-  }
-}
 
 function renderEmailTags() {
   var el = document.getElementById('email-tags');
@@ -2234,18 +2106,7 @@ function removeEmailTag(i) {
   renderEmailTags();
 }
 
-function removeUrgePoint(btn) {
-  var row = btn.closest('tr');
-  row.remove();
-  var count = document.querySelectorAll('#urge-points-body tr').length;
-  document.getElementById('urge-point-count').textContent = count;
-}
 
-function sendUrgeNotification() {
-  showToast('稽催通知已發送！');
-  emailTags = [];
-  renderEmailTags();
-}
 
 function toggleUrgeNotify(btn) {
   var isOn = btn.dataset.on === 'true';
@@ -3301,6 +3162,27 @@ const roleColors = {
 
 let pendingActionIdx = null;
 
+// ── 使用者管理 Tab ──
+function switchUserMgmtTab(tab) {
+  var tabs = ['pending', 'active'];
+  tabs.forEach(function(t) {
+    var btn = document.getElementById('usermgmt-tab-' + t);
+    var cont = document.getElementById('usermgmt-tab-' + t + '-content');
+    if (t === tab) {
+      btn.classList.add('tab-active', 'border-[#007d6d]', 'text-[#007d6d]', 'font-bold');
+      btn.classList.remove('text-slate-400', 'border-transparent');
+      btn.style.borderBottomWidth = '2px';
+      btn.style.borderBottomColor = '#007d6d';
+      if (cont) cont.classList.remove('hidden');
+    } else {
+      btn.classList.remove('tab-active', 'border-[#007d6d]', 'text-[#007d6d]', 'font-bold');
+      btn.classList.add('text-slate-400', 'border-transparent');
+      btn.style.borderBottomColor = 'transparent';
+      if (cont) cont.classList.add('hidden');
+    }
+  });
+}
+
 function renderPendingTable() {
   var tbody = document.getElementById('pending-table-body');
   if (!tbody) return;
@@ -3440,6 +3322,9 @@ window.onload = function() {
 // GIS 圖台模組
 // ════════════════════════════════════════
 let gisMap = null;
+let measureMarkers = [];
+let measurePolyline = null;
+let measurePolygon = null;
 let gisEsriLayer = null;
 let gisOsmLayer = null;
 let gisPrevTab = 'layer';
@@ -3514,12 +3399,9 @@ function initGisMap() {
   });
 
   // 量測點擊
-  window._gisMeasureMarkers = [];
-  window._gisMeasurePolyline = null;
-  window._gisMeasurePolygon = null;
-  let measureMarkers = window._gisMeasureMarkers;
-  let measurePolyline = window._gisMeasurePolyline;
-  let measurePolygon = window._gisMeasurePolygon;
+  measureMarkers = [];
+  measurePolyline = null;
+  measurePolygon = null;
 
   gisMap.on('click', e => {
     if (!gisTool) return;
@@ -3563,7 +3445,7 @@ function initGisMap() {
       // 畫多邊形
       if (measurePolygon) gisMap.removeLayer(measurePolygon);
       if (latlngs.length >= 3) {
-        window._gisMeasurePolygon = measurePolygon = L.polygon(latlngs, {
+        measurePolygon = L.polygon(latlngs, {
           color:'#007d6d', weight:2, dashArray:'6,4',
           fillColor:'#007d6d', fillOpacity:0.15
         }).addTo(gisMap);
@@ -3581,7 +3463,7 @@ function initGisMap() {
       } else {
         // 第二點時先畫線
         if (measurePolyline) gisMap.removeLayer(measurePolyline);
-        window._gisMeasurePolyline = measurePolyline = L.polyline(latlngs, {
+        measurePolyline = L.polyline(latlngs, {
           color:'#007d6d', weight:2, dashArray:'6,4'
         }).addTo(gisMap);
         res.textContent = '繼續點擊以框選區域';
@@ -3636,12 +3518,10 @@ function gisClearTools() {
   document.getElementById('gis-measure-bar').style.display = 'none';
   document.getElementById('gis-measure-result').textContent = '';
   // 清除地圖上的量測圖形（透過全域變數）
-  if (window._gisMeasureMarkers) {
-    window._gisMeasureMarkers.forEach(m => { try { gisMap.removeLayer(m); } catch(e){} });
-    window._gisMeasureMarkers = [];
-  }
-  if (window._gisMeasurePolyline) { try { gisMap.removeLayer(window._gisMeasurePolyline); } catch(e){} window._gisMeasurePolyline = null; }
-  if (window._gisMeasurePolygon) { try { gisMap.removeLayer(window._gisMeasurePolygon); } catch(e){} window._gisMeasurePolygon = null; }
+  measureMarkers.forEach(m => { try { gisMap.removeLayer(m); } catch(e){} });
+  measureMarkers = [];
+  if (measurePolyline) { try { gisMap.removeLayer(measurePolyline); } catch(e){} measurePolyline = null; }
+  if (measurePolygon) { try { gisMap.removeLayer(measurePolygon); } catch(e){} measurePolygon = null; }
 }
 
 // Tab 切換
