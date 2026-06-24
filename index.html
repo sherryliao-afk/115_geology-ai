@@ -123,26 +123,44 @@
     <!-- Logo -->
     <div class="p-5 border-b border-white/10">
       <div class="flex items-center gap-2.5 mb-1">
-        <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden bg-black/30">
+          <svg viewBox="60 60 820 820" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7">
+            <!-- 藍色外三角（左側） -->
+            <path d="M120 820 L480 140 L560 280 L240 820 Z" fill="#2b90d9"/>
+            <!-- 藍色底部橫條 -->
+            <path d="M120 820 L560 820 L520 740 L160 740 Z" fill="#2b90d9"/>
+            <!-- 綠色內三角 -->
+            <path d="M400 180 L720 760 L560 760 L320 300 Z" fill="#3aaa7a"/>
+            <!-- 綠色底部 -->
+            <path d="M560 760 L720 760 L720 820 L520 820 Z" fill="#3aaa7a"/>
+            <!-- 錘子（中央偏右） -->
+            <g fill="#2b90d9">
+              <rect x="490" y="540" width="28" height="90" rx="4" transform="rotate(-30 504 585)"/>
+              <rect x="460" y="490" width="80" height="38" rx="6" transform="rotate(-30 500 509)"/>
+            </g>
+          </svg>
         </div>
         <div>
-          <p class="text-white text-xs font-bold leading-tight">防範土石違規採取</p>
-          <p class="text-white/60 text-[10px]">智能應用計畫</p>
+          <p class="text-white text-xs font-bold leading-tight">防範土石盜濫採 AI 應用系統</p>
+          <p class="text-white/60 text-[10px]">經濟部地質調查與礦業管理中心</p>
         </div>
       </div>
     </div>
 
     <!-- Nav -->
     <nav class="flex-1 overflow-y-auto custom-scrollbar py-4 px-2">
-      <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">功能項目</p>
 
+      <!-- 首頁 -->
       <a href="javascript:void(0)" onclick="showPage('home')" id="nav-home" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         首頁
       </a>
 
-      <!-- B/C/A 可見 -->
+      <!-- ── 專案管理 ── -->
+      <div class="my-3 border-t border-white/10 mt-2"></div>
+      <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">專案管理</p>
+
+      <!-- B/C/A -->
       <div id="nav-group-bc">
         <a href="javascript:void(0)" onclick="showPage('ai-list')" id="nav-ai-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -150,7 +168,7 @@
         </a>
         <a href="javascript:void(0)" onclick="showPage('management-list')" id="nav-management-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-          列管清單
+          列管點位清單
         </a>
         <a href="javascript:void(0)" onclick="showPage('suspect-list')" id="nav-suspect-list" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -158,7 +176,7 @@
         </a>
       </div>
 
-      <!-- B/A 可見：稽催管理 -->
+      <!-- B/A：稽催管理 -->
       <div id="nav-group-urge" class="mb-0.5">
         <button onclick="toggleAccordion('acc-urge')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
@@ -173,7 +191,7 @@
         </div>
       </div>
 
-      <!-- B/D/A 可見：查勘回報 -->
+      <!-- B/D/A：查勘回報 -->
       <div id="nav-group-survey">
         <a href="javascript:void(0)" onclick="showPage('survey-report')" id="nav-survey-report" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
@@ -181,7 +199,7 @@
         </a>
       </div>
 
-      <!-- 圖台與分析（全角色） -->
+      <!-- ── 圖台與分析 ── -->
       <div class="my-3 border-t border-white/10"></div>
       <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">圖台與分析</p>
 
@@ -191,13 +209,13 @@
       </a>
       <a href="javascript:void(0)" onclick="showPage('stats')" id="nav-stats" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        統計分析儀表板
+        統計分析儀錶板
       </a>
 
-      <!-- 管理（B/A 可見） -->
+      <!-- ── 帳號管理 ── -->
       <div id="nav-group-mgmt">
         <div class="my-3 border-t border-white/10"></div>
-        <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">管理</p>
+        <p class="px-3 text-[10px] font-bold text-white/40 uppercase mb-2 tracking-wider">帳號管理</p>
         <a href="javascript:void(0)" onclick="showPage('user-mgmt')" id="nav-user-mgmt" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           使用者管理
@@ -1953,7 +1971,7 @@ function updateRoleUI(role) {
 
 // ── 頁面切換 ──
 const pageMap = {
-  'home': '首頁', 'ai-list': 'AI 判釋列表', 'management-list': '列管清單',
+  'home': '首頁', 'ai-list': 'AI 判釋列表', 'management-list': '列管點位清單',
   'suspect-list': '疑似點位清單', 'urge-work': '稽催管理',
   'survey-report': '查勘回報', 'gis': '盜濫採影像圖台', 'stats': '統計分析儀表板',
   'user-mgmt': '使用者管理', 'sys-log': '系統日誌'
