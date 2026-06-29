@@ -256,7 +256,6 @@
             </a>
             <a href="javascript:void(0)" onclick="showPage('urge-history')" id="nav-urge-history" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">歷史稽催紀錄</a>
             <a href="javascript:void(0)" onclick="showPage('urge-settings')" id="nav-urge-settings" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">稽催設定</a>
-            <a href="javascript:void(0)" onclick="showPage('urge-violation-followup')" id="nav-urge-violation-followup" class="sidebar-item flex items-center gap-2 px-3 py-2 rounded text-xs text-white/70 hover:text-white">違規行為後續處理</a>
           </div>
         </div>
       </div>
@@ -266,6 +265,14 @@
         <a href="javascript:void(0)" onclick="showPage('survey-report')" id="nav-survey-report" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
           變異點查勘回報
+        </a>
+      </div>
+
+      <!-- B/A：違規行為後續處理 -->
+      <div id="nav-group-violation">
+        <a href="javascript:void(0)" onclick="showPage('urge-violation-followup')" id="nav-urge-violation-followup" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded text-sm text-white/80 hover:text-white mb-0.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+          違規行為後續處理
         </a>
       </div>
 
@@ -803,7 +810,7 @@
               <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">建議監測範圍列表</h1>
               <span class="text-xs text-slate-400">點擊範圍查看範圍內點位</span>
             </div>
-            <button onclick="openMgmtRangeFolderModal()" class="px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">手動新增監測範圍</button>
+            <button id="btn-mgmt-add-range" onclick="openMgmtRangeFolderModal()" class="px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">手動新增監測範圍</button>
           </div>
 
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -839,7 +846,7 @@
           <div class="flex justify-between items-end mb-5">
             <h1 id="mgmt-point-title" class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">建議監測點位清單</h1>
             <div class="flex items-center gap-2">
-              <button onclick="openTodoAddModal('新增建議拍攝點位')" class="px-3 py-2 text-xs font-bold border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50">新增建議拍攝點位</button>
+              <button id="btn-mgmt-add-point" onclick="openTodoAddModal('新增建議拍攝點位')" class="px-3 py-2 text-xs font-bold border border-blue-500 text-blue-600 rounded-lg hover:bg-blue-50">新增建議拍攝點位</button>
             </div>
           </div>
 
@@ -967,7 +974,7 @@
               <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">判釋變異範圍列表</h1>
               <span class="text-xs text-slate-400">點擊範圍查看範圍內點位</span>
             </div>
-            <button onclick="openTodoAddModal('新增變異範圍')" class="px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">新增變異範圍</button>
+            <button id="btn-suspect-add-range" onclick="openTodoAddModal('新增變異範圍')" class="px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">新增變異範圍</button>
           </div>
 
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -1003,7 +1010,7 @@
 
           <div class="flex justify-between items-end mb-5">
             <h1 id="suspect-point-title" class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">判釋變異點清單</h1>
-            <button onclick="openTodoAddModal('手動新增變異點位')" class="px-3 py-2 text-xs font-bold border border-orange-500 text-orange-600 rounded-lg hover:bg-orange-50">手動新增變異點位</button>
+            <button id="btn-suspect-add-point" onclick="openTodoAddModal('手動新增變異點位')" class="px-3 py-2 text-xs font-bold border border-orange-500 text-orange-600 rounded-lg hover:bg-orange-50">手動新增變異點位</button>
           </div>
 
           <!-- 篩選區 -->
@@ -1166,20 +1173,29 @@
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">空拍判釋報告</p>
             <div id="d-report-area"></div>
           </div>
+          <!-- B/A 角色：空拍照片 -->
           <div id="d-desc-section">
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">現場描述</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">空拍照片</p>
             <div id="d-desc-area"></div>
           </div>
+          <!-- C 角色：現場照片（已改為對 B/A 隱藏） -->
           <div id="d-photo-section">
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">現場照片（最多 5 張）</p>
             <div id="d-photo-area"></div>
           </div>
-          <!-- 狀態 -->
+          <!-- 狀態列：保留供 C 角色使用，B/A 不顯示 -->
           <div id="d-status-section" class="flex items-center gap-3 pt-2 border-t border-slate-100">
             <span class="text-xs text-slate-400">目前狀態：</span>
             <span id="d-status-badge" class="status-badge status-warning">待稽催</span>
             <span class="text-xs text-slate-400 ml-auto">稽催次數：</span>
             <span id="d-urge-count" class="text-xs font-bold text-slate-700">0 次</span>
+          </div>
+          <!-- B/A 角色：行政通知按鈕 -->
+          <div id="d-action-section" class="pt-3 border-t border-slate-100">
+            <button onclick="sendAdminNotice()" class="w-full py-2.5 bg-[#007d6d] text-white text-xs font-bold rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              發送行政通知
+            </button>
           </div>
         </div>
 
@@ -2039,37 +2055,105 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-between items-end mb-3">
+        <div class="mb-3">
           <h1 class="text-2xl font-bold text-slate-800 border-l-4 border-[#007d6d] pl-4">統計分析儀表板</h1>
-          <button onclick="openStatsExportModal()" class="flex items-center gap-2 px-4 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition">
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            匯出統計結果
-          </button>
         </div>
 
-        <!-- 篩選區 -->
-        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 mb-3">
-          <div class="grid grid-cols-4 gap-4">
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label>
-              <select id="stats-year" class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>115年</option><option>114年</option><option>113年</option></select></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部縣市</option><option>高雄市</option><option>屏東縣</option><option>台中市</option><option>花蓮縣</option><option>南投縣</option></select></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">鄉鎮</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部鄉鎮</option></select></div>
-            <div><label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">監測方式</label>
-              <select class="w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 focus:outline-none focus:border-[#007d6d]"><option>全部</option><option>衛星快速監測</option><option>精確判釋</option></select></div>
-          </div>
-        </div>
-
-        <!-- Tab 切換 -->
-        <div class="flex border-b border-slate-200 mb-3">
+        <!-- Tab 切換（緊接標題下方） -->
+        <div class="flex border-b border-slate-200 mb-0">
           <button onclick="switchStatsTab('report')" id="stats-tab-report" class="tab-active px-5 py-3 text-sm font-bold border-b-2 border-[#007d6d] -mb-px text-[#007d6d]">回報結果統計</button>
           <button onclick="switchStatsTab('violation')" id="stats-tab-violation" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">違規行為統計</button>
           <button onclick="switchStatsTab('monitor')" id="stats-tab-monitor" class="px-5 py-3 text-sm text-slate-400 hover:text-slate-600 border-b-2 border-transparent -mb-px">監測結果統計</button>
         </div>
 
         <!-- Tab：回報結果統計 -->
-        <div id="stats-tab-report-content">
+        <div id="stats-tab-report-content" class="pt-4">
+          <!-- 篩選器 + 匯出（同列） -->
+          <div class="bg-white px-4 py-3 rounded-xl shadow-sm border border-slate-200 mb-4">
+            <div class="flex items-end gap-2">
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label>
+                <div class="relative ms-container" id="ms-r-year">
+                  <button type="button" onclick="msToggle('ms-r-year')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-28 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-year')"><span>115年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-year')"><span>114年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-year')"><span>113年</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
+                <div class="relative ms-container" id="ms-r-city">
+                  <button type="button" onclick="msToggle('ms-r-city')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-32 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>高雄市</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>屏東縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>台中市</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>花蓮縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>南投縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>宜蘭縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>台東縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-city')"><span>苗栗縣</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">鄉鎮</label>
+                <div class="relative ms-container" id="ms-r-district">
+                  <button type="button" onclick="msToggle('ms-r-district')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-36 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>美濃區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>里港鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>石岡區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>壽豐鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>仁愛鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>蘇澳鎮</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>桃源區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>三地門鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>和平區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-district')"><span>光復鄉</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">監測方式</label>
+                <div class="relative ms-container" id="ms-r-method">
+                  <button type="button" onclick="msToggle('ms-r-method')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-40 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-method')"><span>衛星快速監測</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-method')"><span>精確判釋</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-method')"><span>航空攝影</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-r-method')"><span>無人載具</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="h-8 w-px bg-slate-200 flex-shrink-0 self-end mb-[1px]"></div>
+              <div class="flex-shrink-0 self-end">
+                <button onclick="openStatsExportModal()"
+                  class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition whitespace-nowrap">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  匯出統計結果
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="grid grid-cols-4 gap-3 mb-4">
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
               <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">總查勘點位數</p>
@@ -2103,7 +2187,93 @@
         </div>
 
         <!-- Tab：違規行為統計 -->
-        <div id="stats-tab-violation-content" class="hidden">
+        <div id="stats-tab-violation-content" class="hidden pt-4">
+          <!-- 篩選器 + 匯出（同列） -->
+          <div class="bg-white px-4 py-3 rounded-xl shadow-sm border border-slate-200 mb-4">
+            <div class="flex items-end gap-2">
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label>
+                <div class="relative ms-container" id="ms-v-year">
+                  <button type="button" onclick="msToggle('ms-v-year')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-28 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-year')"><span>115年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-year')"><span>114年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-year')"><span>113年</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">縣市</label>
+                <div class="relative ms-container" id="ms-v-city">
+                  <button type="button" onclick="msToggle('ms-v-city')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-32 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>高雄市</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>屏東縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>台中市</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>花蓮縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>南投縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>宜蘭縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>台東縣</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-city')"><span>苗栗縣</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">鄉鎮</label>
+                <div class="relative ms-container" id="ms-v-district">
+                  <button type="button" onclick="msToggle('ms-v-district')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-36 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>美濃區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>里港鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>石岡區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>壽豐鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>仁愛鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>蘇澳鎮</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>桃源區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>三地門鄉</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>和平區</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-district')"><span>光復鄉</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">監測方式</label>
+                <div class="relative ms-container" id="ms-v-method">
+                  <button type="button" onclick="msToggle('ms-v-method')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-40 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-method')"><span>衛星快速監測</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-method')"><span>精確判釋</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-method')"><span>航空攝影</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-v-method')"><span>無人載具</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="h-8 w-px bg-slate-200 flex-shrink-0 self-end mb-[1px]"></div>
+              <div class="flex-shrink-0 self-end">
+                <button onclick="openStatsExportModal()"
+                  class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition whitespace-nowrap">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  匯出統計結果
+                </button>
+              </div>
+            </div>
+          </div>
           <!-- Top5 違規縣市 -->
           <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4">
             <h3 class="text-sm font-bold text-slate-700 mb-1">Top 5 違規縣市分布</h3>
@@ -2124,7 +2294,90 @@
         </div>
 
         <!-- Tab：監測結果統計 -->
-        <div id="stats-tab-monitor-content" class="hidden">
+        <div id="stats-tab-monitor-content" class="hidden pt-4">
+          <!-- 篩選器 + 匯出（同列） -->
+          <div class="bg-white px-4 py-3 rounded-xl shadow-sm border border-slate-200 mb-4">
+            <div class="flex items-end gap-2">
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">年度</label>
+                <div class="relative ms-container" id="ms-m-year">
+                  <button type="button" onclick="msToggle('ms-m-year')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-28 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-year')"><span>115年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-year')"><span>114年</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-year')"><span>113年</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">衛星軌道</label>
+                <div class="relative ms-container" id="ms-m-orbit">
+                  <button type="button" onclick="msToggle('ms-m-orbit')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-28 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S1</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S2</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S3</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S4</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S5</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-orbit')"><span>S6</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">監測方式</label>
+                <div class="relative ms-container" id="ms-m-method">
+                  <button type="button" onclick="msToggle('ms-m-method')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-40 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-method')"><span>衛星快速監測</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-method')"><span>精確判釋</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-method')"><span>航空攝影</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1.5">重點監測區</label>
+                <div class="relative ms-container" id="ms-m-zone">
+                  <button type="button" onclick="msToggle('ms-m-zone')"
+                    class="flex items-center justify-between w-full bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 cursor-pointer hover:border-[#007d6d] transition text-left">
+                    <span class="ms-label text-slate-600 truncate">全部</span>
+                    <svg class="w-3 h-3 text-slate-400 ml-1.5 flex-shrink-0 ms-arrow transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                  <div class="ms-panel hidden absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl z-[60] w-28 overflow-y-auto" style="max-height:180px">
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>01</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>02</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>03</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>04</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>05</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>06</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>07</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>08</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>09</span></label>
+                      <label class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 cursor-pointer text-xs text-slate-600 whitespace-nowrap"><input type="checkbox" checked class="rounded accent-[#007d6d] flex-shrink-0" onchange="msUpdate('ms-m-zone')"><span>10</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="h-8 w-px bg-slate-200 flex-shrink-0 self-end mb-[1px]"></div>
+              <div class="flex-shrink-0 self-end">
+                <button onclick="openStatsExportModal()"
+                  class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold border border-[#007d6d] text-[#007d6d] rounded-lg hover:bg-[#f4f7f6] transition whitespace-nowrap">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  匯出統計結果
+                </button>
+              </div>
+            </div>
+          </div>
           <!-- 摘要卡片 -->
           <div class="grid grid-cols-4 gap-3 mb-3">
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3">
@@ -2499,10 +2752,19 @@ function updateSidebarByRole(role) {
   if (el) el.style.display = showUrge ? '' : 'none';
   el = document.getElementById('nav-group-survey');
   if (el) el.style.display = showSurvey ? '' : 'none';
+  el = document.getElementById('nav-group-violation');
+  if (el) el.style.display = showUrge ? '' : 'none';   // B/A 才可見，與稽催管理同權限
   el = document.getElementById('nav-group-mgmt');
   if (el) el.style.display = showMgmt ? '' : 'none';
   el = document.getElementById('nav-group-sys');
   if (el) el.style.display = showSys ? '' : 'none';
+
+  // 新增操作按鈕：僅 B（地礦中心承辦）與 A（系統管理員）可見
+  var showAdd = ['B','A'].indexOf(role) !== -1;
+  ['btn-mgmt-add-range','btn-mgmt-add-point','btn-suspect-add-range','btn-suspect-add-point'].forEach(function(id) {
+    var btn = document.getElementById(id);
+    if (btn) btn.style.display = showAdd ? '' : 'none';
+  });
 }
 
 function updateRoleUI(role) {
@@ -2975,14 +3237,17 @@ function openSuspectDrawer(i) {
   document.getElementById('d-urge-count').textContent = d.urgeCount + ' 次';
 
   var isAerialRole = currentRole === 'C';
-  var kmlSection = document.getElementById('d-kml-section');
-  var descSection = document.getElementById('d-desc-section');
-  var photoSection = document.getElementById('d-photo-section');
-  var statusSection = document.getElementById('d-status-section');
-  if (kmlSection) kmlSection.classList.toggle('hidden', !isAerialRole);
-  if (descSection) descSection.classList.toggle('hidden', isAerialRole);
-  if (photoSection) photoSection.classList.toggle('hidden', isAerialRole);
-  if (statusSection) statusSection.classList.toggle('hidden', isAerialRole);
+  var isBossRole   = (currentRole === 'B' || currentRole === 'A');
+  var kmlSection    = document.getElementById('d-kml-section');
+  var descSection   = document.getElementById('d-desc-section');   // 空拍照片（B/A）
+  var photoSection  = document.getElementById('d-photo-section');   // 現場照片（C only，已棄用）
+  var statusSection = document.getElementById('d-status-section');  // 狀態（C only）
+  var actionSection = document.getElementById('d-action-section');  // 發送行政通知（B/A）
+  if (kmlSection)    kmlSection.classList.toggle('hidden', !isAerialRole);
+  if (descSection)   descSection.classList.toggle('hidden', !isBossRole);
+  if (photoSection)  photoSection.classList.add('hidden');           // 永遠隱藏
+  if (statusSection) statusSection.classList.toggle('hidden', !isAerialRole);
+  if (actionSection) actionSection.classList.toggle('hidden', !isBossRole);
 
   var kmlArea = document.getElementById('d-kml-area');
   if (kmlArea) {
@@ -3007,12 +3272,29 @@ function openSuspectDrawer(i) {
       : '<span class="text-xs text-slate-400">尚未上傳</span>';
   }
 
-  // 現場描述區
+  // 空拍照片區（B/A role）
   var descArea = document.getElementById('d-desc-area');
   if (descArea) {
-    descArea.innerHTML = d.desc
-      ? '<p class="text-xs text-slate-600 bg-slate-50 rounded-lg p-3">' + d.desc + '</p>'
-      : '<p class="text-xs text-slate-400">尚未填寫</p>';
+    if (isBossRole) {
+      var aerialPhotos = [
+        { label:'空拍 01', caption:'河床地貌', bg:'#d6d0c8', dark:'rgba(60,40,10,0.18)' },
+        { label:'空拍 02', caption:'開挖跡象', bg:'#c2b89a', dark:'rgba(80,50,10,0.22)' },
+        { label:'空拍 03', caption:'植被變化', bg:'#b8c8a8', dark:'rgba(20,50,10,0.18)' },
+        { label:'空拍 04', caption:'地表裸露', bg:'#c8bfb0', dark:'rgba(40,30,10,0.20)' },
+      ];
+      var photosHtml = d.hasReport
+        ? '<div class="flex gap-3 flex-wrap">' + aerialPhotos.map(function(p) {
+            return '<div class="flex flex-col items-center gap-1">' +
+              '<div style="width:76px;height:72px;border-radius:8px;background:' + p.bg + ';border:1px solid #cbd5e1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">' +
+              '<div style="position:absolute;inset:0;background:linear-gradient(135deg,' + p.dark + ',rgba(0,0,0,0.05))"></div>' +
+              '<span style="font-size:9px;color:#475569;font-weight:700;position:relative;z-index:1;text-align:center;line-height:1.4">' + p.label + '</span>' +
+              '</div>' +
+              '<span style="font-size:9px;color:#94a3b8">' + p.caption + '</span>' +
+              '</div>';
+          }).join('') + '</div>'
+        : '<p class="text-xs text-slate-400">尚未取得空拍照片</p>';
+      descArea.innerHTML = photosHtml;
+    }
   }
 
   // 現場照片區
@@ -4813,6 +5095,54 @@ function confirmStatsExport() {
   showToast('統計結果匯出中（雛型示意）');
 }
 
+
+// ── 發送行政通知 ──
+function sendAdminNotice() {
+  showToast('已發送行政通知給該地方政府', '#1d4ed8');
+}
+
+// ── Multiselect Dropdown 函式 ──
+function msToggle(id) {
+  var container = document.getElementById(id);
+  var panel = container.querySelector('.ms-panel');
+  var arrow = container.querySelector('.ms-arrow');
+  var isHidden = panel.classList.contains('hidden');
+  // 先關閉所有其他 panel
+  document.querySelectorAll('.ms-panel').forEach(function(p) { p.classList.add('hidden'); });
+  document.querySelectorAll('.ms-arrow').forEach(function(a) { a.style.transform = ''; });
+  if (isHidden) {
+    panel.classList.remove('hidden');
+    arrow.style.transform = 'rotate(180deg)';
+  }
+}
+
+function msUpdate(id) {
+  var container = document.getElementById(id);
+  var all = container.querySelectorAll('input[type=checkbox]');
+  var checked = container.querySelectorAll('input[type=checkbox]:checked');
+  var label = container.querySelector('.ms-label');
+  if (checked.length === 0) {
+    label.textContent = '（未選取）';
+    label.className = 'ms-label text-slate-400 truncate';
+  } else if (checked.length === all.length) {
+    label.textContent = '全部';
+    label.className = 'ms-label text-slate-600 truncate';
+  } else if (checked.length === 1) {
+    label.textContent = checked[0].parentElement.querySelector('span').textContent.trim();
+    label.className = 'ms-label text-slate-600 truncate';
+  } else {
+    label.textContent = checked.length + ' 項已選取';
+    label.className = 'ms-label text-slate-600 truncate';
+  }
+}
+
+// 點擊外部關閉所有 multiselect panel
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.ms-container')) {
+    document.querySelectorAll('.ms-panel').forEach(function(p) { p.classList.add('hidden'); });
+    document.querySelectorAll('.ms-arrow').forEach(function(a) { a.style.transform = ''; });
+  }
+});
 </script>
 </body>
 </html>
