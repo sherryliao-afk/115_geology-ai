@@ -52,5 +52,23 @@
         "bytes":  290201,
         "diff_from_previous":  "1 file changed, 355 insertions(+), 184 deletions(-)",
         "commit_message":  "Publish final geology-ai prototype v8"
+    },
+    {
+        "order":  7,
+        "label":  "v9",
+        "file":  "地礦AI_雛型_v9.html",
+        "modified":  "2026-06-30 11:29:56",
+        "bytes":  699545,
+        "diff_from_previous":  "1 file changed, 1632 insertions(+), 567 deletions(-)",
+        "commit_message":  "Publish v9 prototype to GitHub Pages"
+    },
+    {
+        "order":  8,
+        "label":  "v10",
+        "file":  "地礦AI_雛型_v10.html",
+        "modified":  "2026-07-06 16:14:50",
+        "bytes":  712147,
+        "diff_from_previous":  "1 file changed, 466 insertions(+), 297 deletions(-)",
+        "commit_message":  "Update geology-ai prototype to v10"
     }
 ]
