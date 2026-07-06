@@ -2735,13 +2735,13 @@ function switchRole(role) {
 
 function updateSidebarByRole(role) {
   // nav-group-bc: B(地礦中心), C(空拍廠商), A(系統管理員)
-  var showBC = ['B','C','A'].indexOf(role) !== -1;
+  var showBC = ['B','C','A'].includes(role);
   // nav-group-urge: B, A
-  var showUrge = ['B','A'].indexOf(role) !== -1;
+  var showUrge = ['B','A'].includes(role);
   // nav-group-survey: B, D, A
-  var showSurvey = ['B','D','A'].indexOf(role) !== -1;
+  var showSurvey = ['B','D','A'].includes(role);
   // nav-group-mgmt（使用者管理）: B, A
-  var showMgmt = ['B','A'].indexOf(role) !== -1;
+  var showMgmt = ['B','A'].includes(role);
   // nav-group-sys（系統管理）: A only
   var showSys = role === 'A';
 
@@ -2760,7 +2760,7 @@ function updateSidebarByRole(role) {
   if (el) el.style.display = showSys ? '' : 'none';
 
   // 新增操作按鈕：僅 B（地礦中心承辦）與 A（系統管理員）可見
-  var showAdd = ['B','A'].indexOf(role) !== -1;
+  var showAdd = ['B','A'].includes(role);
   ['btn-mgmt-add-range','btn-mgmt-add-point','btn-suspect-add-range','btn-suspect-add-point'].forEach(function(id) {
     var btn = document.getElementById(id);
     if (btn) btn.style.display = showAdd ? '' : 'none';
@@ -2833,6 +2833,16 @@ function toggleAccordion(id) {
   const icon = document.getElementById(id + '-icon');
   el.classList.toggle('open');
   icon.style.transform = el.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+// ── 通用 Modal 開關 ──
+function closeModal(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+}
+function openModal(id) {
+  var el = document.getElementById(id);
+  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
 }
 
 // ── Toast ──
@@ -2982,17 +2992,14 @@ const suspectRangeData = [
 let currentSuspectProjectYear = '115';
 let currentSuspectRangeId = null;
 
-function formatSuspectRangeDate(dateStr) {
-  return dateStr ? dateStr.replace(/-/g, '.') : '待補';
-}
-
 function getSuspectRangeDateText(pointIds) {
-  var points = suspectData.filter(function(d) { return pointIds.indexOf(d.id) >= 0; });
+  var points = suspectData.filter(function(d) { return pointIds.includes(d.id); });
   if (!points.length) return '待補';
   var starts = points.map(function(d) { return d.exec; }).filter(Boolean).sort();
   var ends = points.map(function(d) { return d.notify; }).filter(Boolean).sort();
   if (!starts.length || !ends.length) return '待補';
-  return formatSuspectRangeDate(starts[0]) + '~' + formatSuspectRangeDate(ends[ends.length - 1]);
+  var fmt = function(s) { return s ? s.replace(/-/g, '.') : '待補'; };
+  return fmt(starts[0]) + '~' + fmt(ends[ends.length - 1]);
 }
 
 function renderSuspectRangeTable() {
@@ -3024,7 +3031,7 @@ function renderSuspectTable() {
   const role = currentRole;
   const selectedRange = suspectRangeData.find(function(r) { return r.id === currentSuspectRangeId; });
   const visibleSuspectData = suspectData.map(function(d, i) { return { d: d, i: i }; }).filter(function(item) {
-    return !selectedRange || selectedRange.pointIds.indexOf(item.d.id) >= 0;
+    return !selectedRange || selectedRange.pointIds.includes(item.d.id);
   });
 
   // 依角色渲染不同表頭
@@ -3150,9 +3157,7 @@ function addUrgeModalEmail() {
   }
 }
 
-function closeUrgeModal() {
-  document.getElementById('urge-modal-overlay').classList.add('hidden');
-}
+function closeUrgeModal() { closeModal('urge-modal-overlay'); }
 
 function confirmUrgeModal() {
   if (urgeModalIdx === null) return;
@@ -3172,10 +3177,10 @@ function updateSuspectToolbar() {
   else { toolbar.classList.add('hidden'); }
 }
 
-function toggleSuspectAll(cb) {
-  document.querySelectorAll('#suspect-table-body input[type=checkbox]').forEach(function(c){ c.checked = cb.checked; });
-  updateSuspectToolbar();
+function toggleAll(tbodyId, cb) {
+  document.querySelectorAll('#' + tbodyId + ' input[type=checkbox]').forEach(function(c){ c.checked = cb.checked; });
 }
+function toggleSuspectAll(cb) { toggleAll('suspect-table-body', cb); updateSuspectToolbar(); }
 
 function goToUrgeWork() {
   showPage('urge-overdue');
@@ -3313,22 +3318,23 @@ function handleFileSelect(input, labelId) {
   }
 }
 
-function handlePhotoSelect(input) {
+function handlePhotoSelect(input, labelId, previewId) {
+  // ponytail: labelId/previewId 預設值供舊呼叫方相容
+  var lId = labelId || 'photo-filenames';
+  var pId = previewId || 'photo-preview';
   var files = Array.from(input.files).slice(0, 5);
-  var label = document.getElementById('photo-filenames');
-  var preview = document.getElementById('photo-preview');
-  if (files.length > 0) {
-    label.textContent = '已選取 ' + files.length + ' 張照片';
+  var label = document.getElementById(lId);
+  var preview = document.getElementById(pId);
+  if (!files.length) return;
+  if (label) label.textContent = '已選取 ' + files.length + ' 張照片';
+  if (preview) {
     preview.innerHTML = '';
     files.forEach(function(file) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.src = e.target.result;
-        img.className = 'w-16 h-16 object-cover rounded-lg border border-slate-200';
-        preview.appendChild(img);
-      };
-      reader.readAsDataURL(file);
+      var img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.className = 'w-16 h-16 object-cover rounded-lg border border-slate-200';
+      img.onload = function() { URL.revokeObjectURL(img.src); };
+      preview.appendChild(img);
     });
   }
 }
@@ -3419,7 +3425,7 @@ function renderMgmtTable() {
   const role = currentRole;
   const selectedRange = mgmtRangeData.find(function(r) { return r.id === currentMgmtRangeId; });
   const visibleMgmtData = mgmtData.map(function(d, i) { return { d: d, i: i }; }).filter(function(item) {
-    return !selectedRange || selectedRange.pointIds.indexOf(item.d.id) >= 0;
+    return !selectedRange || selectedRange.pointIds.includes(item.d.id);
   });
   visibleMgmtData.forEach(function(item) {
     var d = item.d;
@@ -3533,9 +3539,7 @@ function mgmtAction(i, action) {
   renderMgmtTable();
 }
 
-function toggleMgmtAll(cb) {
-  document.querySelectorAll('#mgmt-table-body input[type=checkbox]').forEach(function(c){ c.checked = cb.checked; });
-}
+function toggleMgmtAll(cb) { toggleAll('mgmt-table-body', cb); }
 
 function showMgmtProject(year) {
   currentMgmtProjectYear = year;
@@ -3657,7 +3661,7 @@ function renderAiTable() {
   const range = aiRangeData.find(function(r) { return r.id === currentAiRangeId; });
   const visibleData = aiData
     .map(function(d, i) { return { d, i }; })
-    .filter(function(item) { return !range || range.pointIds.indexOf(item.d.id) !== -1; });
+    .filter(function(item) { return !range || range.pointIds.includes(item.d.id); });
   tbody.innerHTML = '';
   visibleData.forEach(function(item) {
     const d = item.d;
@@ -4112,25 +4116,7 @@ function toggleOverdueSection() {
   if (cb && sec) sec.classList.toggle('hidden', !cb.checked);
 }
 
-function handleSurveyPhoto(input) {
-  var files = Array.from(input.files).slice(0, 5);
-  var label = document.getElementById('survey-photo-label');
-  var preview = document.getElementById('survey-photo-preview');
-  if (files.length > 0 && label) {
-    label.textContent = '已選取 ' + files.length + ' 張照片';
-    preview.innerHTML = '';
-    files.forEach(function(file) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.src = e.target.result;
-        img.className = 'w-16 h-16 object-cover rounded-lg border border-slate-200';
-        preview.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-}
+function handleSurveyPhoto(input) { handlePhotoSelect(input, 'survey-photo-label', 'survey-photo-preview'); }
 
 function submitSurveyReport(i) {
   surveyData[i].status = '查勘完成';
@@ -4378,9 +4364,9 @@ function openApproveModal(i) {
     '<div><span class="text-slate-400">姓名：</span><span>' + d.name + '</span></div>' +
     '<div class="col-span-2"><span class="text-slate-400">申請單位：</span><span>' + d.unit + '</span></div>' +
     '</div>';
-  document.getElementById('approve-modal').classList.remove('hidden');
+  openModal('approve-modal');
 }
-function closeApproveModal() { document.getElementById('approve-modal').classList.add('hidden'); }
+function closeApproveModal() { closeModal('approve-modal'); }
 function confirmApprove() {
   closeApproveModal();
   showToast('帳號已開通', '#007d6d');
@@ -4388,9 +4374,9 @@ function confirmApprove() {
 
 function openRejectModal(i) {
   pendingActionIdx = i;
-  document.getElementById('reject-modal').classList.remove('hidden');
+  openModal('reject-modal');
 }
-function closeRejectModal() { document.getElementById('reject-modal').classList.add('hidden'); }
+function closeRejectModal() { closeModal('reject-modal'); }
 function confirmReject() {
   closeRejectModal();
   showToast('申請已拒絕');
@@ -4518,7 +4504,7 @@ function initGisMap() {
     { name:'排除禁航區範圍', color:'#7c3aed', coords:[[23.42,121.10],[23.49,121.15],[23.51,121.22],[23.45,121.29],[23.37,121.25],[23.34,121.16]] }
   ].forEach(function(layer) {
     const group = L.layerGroup();
-    L.polygon(layer.coords, { color:layer.color, fillColor:layer.color, fillOpacity:0.16, weight:2, dashArray:layer.name.indexOf('排除') >= 0 ? '6 6' : null })
+    L.polygon(layer.coords, { color:layer.color, fillColor:layer.color, fillOpacity:0.16, weight:2, dashArray:layer.name.includes('排除') ? '6 6' : null })
       .addTo(group)
       .bindTooltip(layer.name, { sticky:true });
     gisLayerGroups[layer.name] = group;
@@ -5021,13 +5007,9 @@ function toggleTodoNotice() {
 function openAiRangeFolderModal() {
   var input = document.getElementById('ai-range-folder-name');
   if (input) input.value = '';
-  var el = document.getElementById('ai-range-folder-modal');
-  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+  openModal('ai-range-folder-modal');
 }
-function closeAiRangeFolderModal() {
-  var el = document.getElementById('ai-range-folder-modal');
-  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-}
+function closeAiRangeFolderModal() { closeModal('ai-range-folder-modal'); }
 function submitAiRangeFolderModal() {
   var input = document.getElementById('ai-range-folder-name');
   var name = input && input.value.trim() ? input.value.trim() : currentAiProjectYear + 'Q2_RG_' + String(aiRangeData.length + 1).padStart(3, '0');
@@ -5041,13 +5023,9 @@ function openMgmtRangeFolderModal() {
   var cityInput = document.getElementById('mgmt-range-folder-city');
   if (codeInput) codeInput.value = '';
   if (cityInput) cityInput.value = '';
-  var el = document.getElementById('mgmt-range-folder-modal');
-  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+  openModal('mgmt-range-folder-modal');
 }
-function closeMgmtRangeFolderModal() {
-  var el = document.getElementById('mgmt-range-folder-modal');
-  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-}
+function closeMgmtRangeFolderModal() { closeModal('mgmt-range-folder-modal'); }
 function submitMgmtRangeFolderModal() {
   var codeInput = document.getElementById('mgmt-range-folder-code');
   var cityInput = document.getElementById('mgmt-range-folder-city');
@@ -5061,26 +5039,16 @@ function submitMgmtRangeFolderModal() {
 function openTodoAddModal(title) {
   document.getElementById('todo-add-title').textContent = title;
   document.getElementById('todo-add-source').value = title;
-  var el = document.getElementById('todo-add-modal');
-  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+  openModal('todo-add-modal');
 }
-function closeTodoAddModal() {
-  var el = document.getElementById('todo-add-modal');
-  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-}
+function closeTodoAddModal() { closeModal('todo-add-modal'); }
 function submitTodoAddModal() {
   var title = document.getElementById('todo-add-title').textContent;
   closeTodoAddModal();
   showToast(title + ' 已新增（雛型示意）');
 }
-function openStatsExportModal() {
-  var el = document.getElementById('stats-export-modal');
-  if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
-}
-function closeStatsExportModal() {
-  var el = document.getElementById('stats-export-modal');
-  if (el) { el.classList.add('hidden'); el.classList.remove('flex'); }
-}
+function openStatsExportModal() { openModal('stats-export-modal'); }
+function closeStatsExportModal() { closeModal('stats-export-modal'); }
 function confirmStatsExport() {
   closeStatsExportModal();
   showToast('統計結果匯出中（雛型示意）');
