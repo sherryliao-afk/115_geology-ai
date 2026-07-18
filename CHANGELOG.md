@@ -12,3 +12,5 @@ Versions are sorted by source file modification time.
 | 6 | v8 | `地礦AI_雛型_v8.html` | 2026-06-24 16:32:37 | 1 file changed, 355 insertions(+), 184 deletions(-) | Publish final geology-ai prototype v8 |
 | 7 | v9 | `地礦AI_雛型_v9.html` | 2026-06-30 11:29:56 | 1 file changed, 1632 insertions(+), 567 deletions(-) | Publish v9 prototype to GitHub Pages |
 | 8 | v10 | `地礦AI_雛型_v10.html` | 2026-07-06 16:14:50 | 1 file changed, 466 insertions(+), 297 deletions(-) | Update geology-ai prototype to v10 |
+| 9 | v11 | `地礦AI_雛型_v11.html` | 2026-07-10 22:36:34 | 1 file changed, 275 insertions(+), 41 deletions(-) | Add v11 geology AI prototype |
+| 10 | v12 | `地礦AI_雛型_v12_0714_feedback.html` | 2026-07-18 17:24:01 | 1 file changed, 363 insertions(+), 337 deletions(-) | Publish v12 stakeholder feedback prototype |

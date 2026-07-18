@@ -70,5 +70,23 @@
         "bytes":  712147,
         "diff_from_previous":  "1 file changed, 466 insertions(+), 297 deletions(-)",
         "commit_message":  "Update geology-ai prototype to v10"
+    },
+    {
+        "order":  9,
+        "label":  "v11",
+        "file":  "地礦AI_雛型_v11.html",
+        "modified":  "2026-07-10 22:36:34",
+        "bytes":  2219328,
+        "diff_from_previous":  "1 file changed, 275 insertions(+), 41 deletions(-)",
+        "commit_message":  "Add v11 geology AI prototype"
+    },
+    {
+        "order":  10,
+        "label":  "v12",
+        "file":  "地礦AI_雛型_v12_0714_feedback.html",
+        "modified":  "2026-07-18 17:24:01",
+        "bytes":  2219346,
+        "diff_from_previous":  "1 file changed, 363 insertions(+), 337 deletions(-)",
+        "commit_message":  "Publish v12 stakeholder feedback prototype"
     }
 ]
