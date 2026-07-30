@@ -2782,7 +2782,7 @@ function updateSidebarByRole(role) {
   var suspectAddPointBtn = document.getElementById('btn-suspect-add-point');
   if (suspectAddPointBtn) suspectAddPointBtn.style.display = role === 'C' ? '' : 'none';
   var mgmtAddPointBtn = document.getElementById('btn-mgmt-add-point');
-  if (mgmtAddPointBtn) mgmtAddPointBtn.style.display = ['B','C','A'].indexOf(role) !== -1 ? '' : 'none';
+  if (mgmtAddPointBtn) mgmtAddPointBtn.style.display = role === 'C' ? '' : 'none';
   var mgmtConfirmRangeBtn = document.getElementById('btn-mgmt-confirm-range-shooting');
   if (mgmtConfirmRangeBtn) mgmtConfirmRangeBtn.style.display = showAdminAdd ? '' : 'none';
   var mgmtEditRangeNoticeBtn = document.getElementById('btn-mgmt-edit-range-notice');
