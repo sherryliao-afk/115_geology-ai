@@ -1809,10 +1809,7 @@
           </div>
         </div>
 
-        <!-- T1 覆蓋層（左半）-->
-        <div id="gis-t1-overlay" style="display:none;position:absolute;inset:0;pointer-events:none;z-index:15;background-color:rgba(59,130,246,0.18);background-size:cover;background-position:center;border:none;clip-path:inset(0 50% 0 0)"></div>
-        <!-- T2 覆蓋層（右半）-->
-        <div id="gis-t2-overlay" style="display:none;position:absolute;inset:0;pointer-events:none;z-index:15;background-color:rgba(245,158,11,0.18);background-size:cover;background-position:center;clip-path:inset(0 0 0 50%)"></div>
+        <!-- T1/T2 比對影像改由 Leaflet 影像 pane 呈現，保持業務點位與範圍在上層。 -->
 
         <!-- T1/T2 角落日期標籤 -->
         <div id="gis-t1-label" style="display:none;position:absolute;bottom:56px;left:16px;z-index:30;background:rgba(37,99,235,0.9);color:white;font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px" id="gis-t1-label">T1：—（前期）</div>
@@ -5307,6 +5304,22 @@ let gisTool = null;
 let gisMeasureCount = 0;
 const gisLayerGroups = {};
 const gisOtherLayerGroups = {};
+const GIS_LAYER_PANES = {
+  imagery: { name:'gis-imagery-pane', zIndex:300 },
+  reference: { name:'gis-reference-pane', zIndex:400 },
+  businessRange: { name:'gis-business-range-pane', zIndex:500 },
+  businessPoint: { name:'gis-business-point-pane', zIndex:600 }
+};
+let gisCompareT1Overlay = null;
+let gisCompareT2Overlay = null;
+
+function gisInitDataPanes() {
+  Object.keys(GIS_LAYER_PANES).forEach(function(key) {
+    const def = GIS_LAYER_PANES[key];
+    const pane = gisMap.getPane(def.name) || gisMap.createPane(def.name);
+    pane.style.zIndex = String(def.zIndex);
+  });
+}
 
 const GIS_POINTS = [
   { id:'HUA-2026-001', year:'115 年度', city:'花蓮縣', district:'壽豐鄉', land:'壽豐段 201-3', lat:23.82, lng:121.48, status:'pending',  variation:'高',  imgdate:'2026/03/15', coord:'X: 310245.8，Y: 2641092.1' },
@@ -5339,6 +5352,8 @@ function initGisMap() {
   if (gisMap) { setTimeout(() => gisMap.invalidateSize(), 100); return; }
 
   gisMap = L.map('gis-map', { zoomControl:false }).setView([23.7, 121.5], 9);
+  gisInitDataPanes();
+  gisMap.on('moveend', gisSyncCompareOverlayBounds);
 
   gisEsriLayer = L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -5424,7 +5439,7 @@ function initGisMap() {
   ].forEach(function(layer) {
     const group = L.layerGroup();
     if (layer.image) {
-      const overlay = L.imageOverlay(layer.image, gisTaiwanServiceBounds, { opacity:0.62, interactive:true, className:'gis-reference-service-overlay' })
+      const overlay = L.imageOverlay(layer.image, gisTaiwanServiceBounds, { opacity:0.62, interactive:true, className:'gis-reference-service-overlay', pane:GIS_LAYER_PANES.reference.name })
         .addTo(group)
         .bindTooltip(layer.name + '（示意圖資服務）', { sticky:true });
       const overlayEl = overlay.getElement();
@@ -5439,6 +5454,7 @@ function initGisMap() {
     const geometries = layer.geometries || [{ type:'polygon', coords:layer.coords }];
     geometries.forEach(function(geometry) {
       const options = {
+        pane:GIS_LAYER_PANES.businessRange.name,
         color:layer.color,
         fillColor:layer.color,
         fillOpacity:geometry.fillOpacity ?? (geometry.type === 'polyline' ? 0 : 0.14),
@@ -5467,7 +5483,7 @@ function initGisMap() {
       html: `<div style="width:14px;height:14px;background:${color};border:2.5px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>`,
       iconSize:[14,14], iconAnchor:[7,7], className:''
     });
-    const m = L.marker([p.lat, p.lng], { icon });
+    const m = L.marker([p.lat, p.lng], { icon, pane:GIS_LAYER_PANES.businessPoint.name });
     m.bindTooltip(`<div style="font-family:'Noto Sans TC',sans-serif;font-size:11px;line-height:1.8;min-width:160px">
       <div style="font-weight:700;color:#1e293b;margin-bottom:2px">${p.id}</div>
       <div style="color:#64748b;margin-bottom:4px">${p.city} ${p.district}</div>
@@ -5512,7 +5528,7 @@ function initGisMap() {
       measureMarkers.forEach(m => gisMap.removeLayer(m));
       measureMarkers = [];
       const dot = L.circleMarker(e.latlng, {
-        radius:7, color:'white', weight:2, fillColor:'#ef4444', fillOpacity:1
+        pane:GIS_LAYER_PANES.businessPoint.name, radius:7, color:'white', weight:2, fillColor:'#ef4444', fillOpacity:1
       }).addTo(gisMap);
       measureMarkers.push(dot);
       document.getElementById('gis-measure-text').textContent = '定位完成';
@@ -5522,7 +5538,7 @@ function initGisMap() {
 
     // 量測：加節點標記
     const dot = L.circleMarker(e.latlng, {
-      radius:4, color:'#007d6d', weight:2, fillColor:'white', fillOpacity:1
+      pane:GIS_LAYER_PANES.businessPoint.name, radius:4, color:'#007d6d', weight:2, fillColor:'white', fillOpacity:1
     }).addTo(gisMap);
     measureMarkers.push(dot);
     gisMeasureCount++;
@@ -5532,7 +5548,7 @@ function initGisMap() {
       // 畫折線
       if (measurePolyline) gisMap.removeLayer(measurePolyline);
       measurePolyline = L.polyline(latlngs, {
-        color:'#007d6d', weight:2, dashArray:'6,4'
+        pane:GIS_LAYER_PANES.businessRange.name, color:'#007d6d', weight:2, dashArray:'6,4'
       }).addTo(gisMap);
       // 計算總距離
       let total = 0;
@@ -5546,7 +5562,7 @@ function initGisMap() {
       if (measurePolygon) gisMap.removeLayer(measurePolygon);
       if (latlngs.length >= 3) {
         measurePolygon = L.polygon(latlngs, {
-          color:'#007d6d', weight:2, dashArray:'6,4',
+          pane:GIS_LAYER_PANES.businessRange.name, color:'#007d6d', weight:2, dashArray:'6,4',
           fillColor:'#007d6d', fillOpacity:0.15
         }).addTo(gisMap);
         // shoelace formula 估算面積（平面近似）
@@ -5567,7 +5583,7 @@ function initGisMap() {
         // 第二點時先畫線
         if (measurePolyline) gisMap.removeLayer(measurePolyline);
         measurePolyline = L.polyline(latlngs, {
-          color:'#007d6d', weight:2, dashArray:'6,4'
+          pane:GIS_LAYER_PANES.businessRange.name, color:'#007d6d', weight:2, dashArray:'6,4'
         }).addTo(gisMap);
         res.textContent = '繼續點擊以框選區域';
       }
@@ -5630,7 +5646,7 @@ function beginGisRangeTask() {
       iconAnchor:[9,9],
       className:''
     });
-    const marker = L.marker(item.latlng, { icon:icon })
+    const marker = L.marker(item.latlng, { icon:icon, pane:GIS_LAYER_PANES.businessPoint.name })
       .addTo(gisMap)
       .bindTooltip(item.point.id + '｜' + item.point.city, { direction:'top', offset:[0,-8] });
     gisPendingRangeMarkers.push(marker);
@@ -5672,6 +5688,7 @@ function saveGisPendingRange() {
     try { gisMap.removeLayer(gisPendingSavedRangeLayer); } catch(e) {}
   }
   gisPendingSavedRangeLayer = L.polygon(latlngs, {
+    pane:GIS_LAYER_PANES.businessRange.name,
     color:'#0f766e',
     weight:2,
     fillColor:'#14b8a6',
@@ -5920,15 +5937,18 @@ function gisToggleOtherLayer(idx, btn) {
   if (!gisOtherLayerGroups[label]) {
     const color = ['#0ea5e9','#22c55e','#64748b','#a855f7','#f97316','#ef4444','#2563eb'][idx] || '#007d6d';
     const offset = idx * 0.045;
+    const paneName = idx >= 3 ? GIS_LAYER_PANES.imagery.name : GIS_LAYER_PANES.reference.name;
     const group = L.layerGroup();
     L.rectangle([[23.22 + offset, 121.02 + offset], [23.38 + offset, 121.26 + offset]], {
       color: color,
       fillColor: color,
       fillOpacity: 0.12,
       weight: 2,
-      dashArray: '5 5'
+      dashArray: '5 5',
+      pane:paneName
     }).addTo(group).bindTooltip(label, { sticky:true });
     L.marker([23.38 + offset, 121.02 + offset], {
+      pane:paneName,
       icon: L.divIcon({
         html: '<div style="background:white;border:1px solid '+ color +';color:'+ color +';font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.18)">'+ label +'</div>',
         className:'',
@@ -5979,7 +5999,8 @@ function gisShowAerialOverlay(a) {
   const overlay = L.imageOverlay(a.image || GIS_AERIAL_IMAGE, bounds, {
     opacity:0.94,
     interactive:true,
-    className:'gis-aerial-photo-overlay'
+    className:'gis-aerial-photo-overlay',
+    pane:GIS_LAYER_PANES.imagery.name
   }).addTo(gisMap);
   overlay.getElement().style.boxShadow = '0 12px 28px rgba(15,23,42,0.28)';
   overlay.getElement().style.border = '1px solid rgba(255,255,255,0.65)';
@@ -6134,6 +6155,20 @@ function gisUpdateCompareSelection() {
   gisDetailT2Image = t2 ? t2.image : '';
 }
 
+function gisRemoveCompareOverlays() {
+  if (gisMap && gisCompareT1Overlay) gisMap.removeLayer(gisCompareT1Overlay);
+  if (gisMap && gisCompareT2Overlay) gisMap.removeLayer(gisCompareT2Overlay);
+  gisCompareT1Overlay = null;
+  gisCompareT2Overlay = null;
+}
+
+function gisSyncCompareOverlayBounds() {
+  if (!gisMap || !gisCompareActive) return;
+  const bounds = gisMap.getBounds();
+  if (gisCompareT1Overlay) gisCompareT1Overlay.setBounds(bounds);
+  if (gisCompareT2Overlay) gisCompareT2Overlay.setBounds(bounds);
+}
+
 function gisApplyCompare() {
   const t1val = gisDetailT1;
   const t2val = gisDetailT2;
@@ -6153,13 +6188,21 @@ function gisApplyCompare() {
   t2label.textContent = 'T2：' + t2val + '（後期）';
   t2label.style.display = 'block';
 
-  // 顯示覆蓋層
-  const ov1 = document.getElementById('gis-t1-overlay');
-  const ov2 = document.getElementById('gis-t2-overlay');
-  ov1.style.backgroundImage = 'url(' + gisDetailT1Image + ')';
-  ov2.style.backgroundImage = 'url(' + gisDetailT2Image + ')';
-  ov1.style.display = 'block';
-  ov2.style.display = 'block';
+  // 比對影像置於影像 pane，低於參考圖層與業務點位／範圍。
+  gisRemoveCompareOverlays();
+  const compareBounds = gisMap.getBounds();
+  gisCompareT1Overlay = L.imageOverlay(gisDetailT1Image, compareBounds, {
+    pane:GIS_LAYER_PANES.imagery.name,
+    opacity:1,
+    interactive:false,
+    className:'gis-compare-overlay gis-compare-t1'
+  }).addTo(gisMap);
+  gisCompareT2Overlay = L.imageOverlay(gisDetailT2Image, compareBounds, {
+    pane:GIS_LAYER_PANES.imagery.name,
+    opacity:1,
+    interactive:false,
+    className:'gis-compare-overlay gis-compare-t2'
+  }).addTo(gisMap);
   gisUpdateOverlayOpacity();
 
   document.getElementById('gis-swipe-line').style.display = 'block';
@@ -6173,8 +6216,8 @@ function gisApplyCompare() {
 function gisStopCompare() {
   gisCompareActive = false;
   document.getElementById('gis-swipe-line').style.display = 'none';
-  document.getElementById('gis-t1-overlay').style.display = 'none';
-  document.getElementById('gis-t2-overlay').style.display = 'none';
+  gisRemoveCompareOverlays();
+
   document.getElementById('gis-t1-label').style.display = 'none';
   document.getElementById('gis-t2-label').style.display = 'none';
   document.getElementById('gis-apply-compare-btn').style.display = 'block';
@@ -6185,8 +6228,10 @@ function gisUpdateSwipe(pct) {
   gisSwipePercent = pct;
   const line = document.getElementById('gis-swipe-line');
   line.style.left = pct + '%';
-  document.getElementById('gis-t1-overlay').style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
-  document.getElementById('gis-t2-overlay').style.clipPath = `inset(0 0 0 ${pct}%)`;
+  const t1El = gisCompareT1Overlay && gisCompareT1Overlay.getElement();
+  const t2El = gisCompareT2Overlay && gisCompareT2Overlay.getElement();
+  if (t1El) t1El.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+  if (t2El) t2El.style.clipPath = `inset(0 0 0 ${pct}%)`;
 }
 
 function gisUpdateOverlayOpacity() {
@@ -6195,8 +6240,8 @@ function gisUpdateOverlayOpacity() {
   if (!t1Range || !t2Range) return;
   const t1opa = t1Range.value / 100;
   const t2opa = t2Range.value / 100;
-  document.getElementById('gis-t1-overlay').style.opacity = t1opa;
-  document.getElementById('gis-t2-overlay').style.opacity = t2opa;
+  if (gisCompareT1Overlay) gisCompareT1Overlay.setOpacity(t1opa);
+  if (gisCompareT2Overlay) gisCompareT2Overlay.setOpacity(t2opa);
 }
 
 // Swipe 拖拉事件（在 initGisMap 外部設定，避免重複綁定）
