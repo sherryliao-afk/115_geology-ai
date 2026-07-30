@@ -2773,12 +2773,12 @@ function updateSidebarByRole(role) {
   el = document.getElementById('nav-group-sys');
   if (el) el.style.display = showSys ? '' : 'none';
 
-  // 新增操作按鈕：範圍新增限 B/A；手動新增變異點位僅限空拍廠商 C。
+  // 新增操作按鈕：手動新增監測範圍僅限空拍廠商 C；其他新增權限維持原角色設定。
   var showAdminAdd = ['B','A'].indexOf(role) !== -1;
-  ['btn-mgmt-add-range','btn-suspect-add-range'].forEach(function(id) {
-    var btn = document.getElementById(id);
-    if (btn) btn.style.display = showAdminAdd ? '' : 'none';
-  });
+  var mgmtAddRangeBtn = document.getElementById('btn-mgmt-add-range');
+  if (mgmtAddRangeBtn) mgmtAddRangeBtn.style.display = role === 'C' ? '' : 'none';
+  var suspectAddRangeBtn = document.getElementById('btn-suspect-add-range');
+  if (suspectAddRangeBtn) suspectAddRangeBtn.style.display = showAdminAdd ? '' : 'none';
   var suspectAddPointBtn = document.getElementById('btn-suspect-add-point');
   if (suspectAddPointBtn) suspectAddPointBtn.style.display = role === 'C' ? '' : 'none';
   var mgmtAddPointBtn = document.getElementById('btn-mgmt-add-point');
