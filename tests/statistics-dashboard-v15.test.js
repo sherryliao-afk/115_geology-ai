@@ -84,6 +84,19 @@ test('盜濫採砂石統計表符合附圖欄位與加總規則', () => {
   }
 });
 
+test('盜濫採砂石統計表沿用原本灰白 UI 樣式', () => {
+  const table = sliceBetween(
+    html,
+    '<table id="stats-sand-mining-table"',
+    '</table>'
+  );
+  assert.match(table, /<thead class="bg-slate-50\/80 border-b border-slate-200">/);
+  assert.doesNotMatch(table, /bg-(?:amber|blue)-50/);
+  assert.doesNotMatch(table, /border-l-2/);
+  assert.match(table, /<tbody class="divide-y divide-slate-50">/);
+  assert.match(table, /<tfoot class="bg-slate-50\/70 border-t border-slate-200">/);
+});
+
 let failed = 0;
 for (const { name, fn } of tests) {
   try {
