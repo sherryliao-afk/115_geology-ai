@@ -59,6 +59,31 @@ test('確認違規摘要拆成砂石盜濫採與其他違法行為', () => {
   assert.match(report, /id="stats-report-other-card"[\s\S]*?其他違法行為[\s\S]*?>6</);
 });
 
+test('盜濫採砂石統計表符合附圖欄位與加總規則', () => {
+  const table = sliceBetween(
+    html,
+    '<table id="stats-sand-mining-table"',
+    '</table>'
+  );
+  const rows = extractRows(table);
+  assert.deepEqual(rows[0], [
+    '縣市',
+    '變異點總數',
+    '已查勘',
+    '未查勘',
+    '涉及其他機關權責之變異點',
+    '已移送續處',
+    '尚未移送續處'
+  ]);
+  assert.deepEqual(rows.at(-1), ['合計', '30', '18', '12', '12', '7', '5']);
+
+  for (const row of rows.slice(1)) {
+    const [, total, inspected, uninspected, external, transferred, pendingTransfer] = row;
+    assert.equal(Number(total), Number(inspected) + Number(uninspected), `${row[0]}查勘數不平`);
+    assert.equal(Number(external), Number(transferred) + Number(pendingTransfer), `${row[0]}移送數不平`);
+  }
+});
+
 let failed = 0;
 for (const { name, fn } of tests) {
   try {
