@@ -35,6 +35,18 @@ test('v15 保留統計分析儀表板三個頁籤', () => {
   assert.match(html, /id="stats-tab-violation"/);
 });
 
+test('監測統計只保留總監測次數摘要', () => {
+  const monitor = sliceBetween(
+    html,
+    '<div id="stats-tab-monitor-content"',
+    '<!-- ── 使用者管理 ── -->'
+  );
+  assert.doesNotMatch(monitor, /監測縣市數/);
+  assert.match(monitor, /id="stats-monitor-summary"/);
+  assert.match(monitor, /id="stats-monitor-total-card"/);
+  assert.match(monitor, /總監測次數/);
+});
+
 let failed = 0;
 for (const { name, fn } of tests) {
   try {
