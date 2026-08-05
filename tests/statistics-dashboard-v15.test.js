@@ -47,6 +47,18 @@ test('監測統計只保留總監測次數摘要', () => {
   assert.match(monitor, /總監測次數/);
 });
 
+test('確認違規摘要拆成砂石盜濫採與其他違法行為', () => {
+  const report = sliceBetween(
+    html,
+    '<div id="stats-tab-report-content"',
+    '<!-- Tab：違規行為統計 -->'
+  );
+  assert.doesNotMatch(report, />確認違規點位</);
+  assert.match(report, /id="stats-report-summary"/);
+  assert.match(report, /id="stats-report-sand-card"[\s\S]*?砂石盜濫採[\s\S]*?>30</);
+  assert.match(report, /id="stats-report-other-card"[\s\S]*?其他違法行為[\s\S]*?>6</);
+});
+
 let failed = 0;
 for (const { name, fn } of tests) {
   try {
