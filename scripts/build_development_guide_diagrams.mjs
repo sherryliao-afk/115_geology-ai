@@ -181,47 +181,122 @@ function flowNode(x, y, width, height, number, titleLines, owner, detailLines, s
 }
 
 function buildFlowSvg() {
-  const width = 1900;
-  const height = 1110;
-  const nodeW = 300;
-  const nodeH = 230;
-  const y1 = 170;
-  const y2 = 520;
-  const xsTop = [60, 420, 780, 1140, 1500];
-  const xsBottom = [1500, 1140, 780, 420, 60];
+  const width = 1600;
+  const height = 2050;
+  const laneTop = 220;
+  const laneBottom = 1970;
+  const laneWidth = 325;
+  const laneStart = 260;
+  const laneCenters = [422.5, 747.5, 1072.5, 1397.5];
   const parts = [];
 
   parts.push(`<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,8 L10,4 z" fill="${colors.primary}"/></marker></defs>`);
-  parts.push(text(60, 72, "地礦 AI 核心業務與資料流", { size: 40, weight: 500, fill: colors.navy }));
-  parts.push(text(60, 116, "由 AI 建議點位開始，經監測、空拍、查勘與後續處理，最後形成統計與首頁摘要。", { size: 22, fill: colors.muted }));
+  parts.push(text(40, 68, "地礦 AI 角色業務流程", { size: 38, weight: 500, fill: colors.navy }));
+  parts.push(text(40, 110, "功能模組依實際操作角色排列；箭頭表示案件與資料的交接方向。", { size: 21, fill: colors.muted }));
 
-  parts.push(flowNode(xsTop[0], y1, nodeW, nodeH, "1", ["AI 判釋"], "忠晏", ["輸入：歷史資料", "輸出：建議監測點位"]));
-  parts.push(flowNode(xsTop[1], y1, nodeW, nodeH, "2", ["建議監測點位"], "育萱", ["依專案年度列入清單", "可補充手動建議點位"]));
-  parts.push(flowNode(xsTop[2], y1, nodeW, nodeH, "3", ["圖台圈繪"], "金億", ["帶入選取點位", "輸出：監測範圍圖資"]));
-  parts.push(flowNode(xsTop[3], y1, nodeW, nodeH, "4", ["監測區位選定"], "育萱", ["地礦中心確認拍攝區位", "可新增欲空拍點位"]));
-  parts.push(flowNode(xsTop[4], y1, nodeW, nodeH, "5", ["空拍通知與作業"], "育萱", ["輸入：拍攝區位與通知", "執行者：空拍廠商"]));
+  const laneLabels = ["地礦中心承辦", "空拍廠商", "地方政府人員", "系統自動作業"];
+  parts.push(roundedRect(40, 140, 200, 70, colors.primaryDark, "none", 8));
+  parts.push(text(140, 184, "流程階段", { size: 23, weight: 500, fill: colors.white, anchor: "middle" }));
+  laneLabels.forEach((label, index) => {
+    const x = laneStart + index * laneWidth;
+    parts.push(roundedRect(x + 4, 140, laneWidth - 8, 70, colors.primary, "none", 8));
+    parts.push(text(x + laneWidth / 2, 184, label, { size: 22, weight: 500, fill: colors.white, anchor: "middle" }));
+    parts.push(`<rect x="${x}" y="${laneTop}" width="${laneWidth}" height="${laneBottom - laneTop}" fill="${index % 2 === 0 ? colors.white : colors.soft}" stroke="${colors.line}"/>`);
+  });
+  parts.push(`<rect x="40" y="${laneTop}" width="200" height="${laneBottom - laneTop}" fill="${colors.soft}" stroke="${colors.line}"/>`);
+  const stageLabels = [
+    { label: "監測規劃", y: 430 },
+    { label: "空拍與通報", y: 850 },
+    { label: "查勘與稽催", y: 1300 },
+    { label: "後續處理／結案", y: 1770 },
+  ];
+  stageLabels.forEach(({ label, y }) => {
+    parts.push(text(140, y, label, { size: 19, weight: 500, fill: colors.navy, anchor: "middle" }));
+  });
 
-  parts.push(flowNode(xsBottom[0], y2, nodeW, nodeH, "6", ["報告／KML 上傳"], "育萱", ["空拍廠商提供成果", "輸出：變異點與附件"]));
-  parts.push(flowNode(xsBottom[1], y2, nodeW, nodeH, "7", ["地礦中心通報"], "育萱", ["填寫通報查勘日期", "通知地方政府承辦"]));
-  parts.push(flowNode(xsBottom[2], y2, nodeW, nodeH, "8", ["地方政府查勘"], "育萱", ["回報結果與現場照片", "逾期可上傳原因公文"]));
-  parts.push(flowNode(xsBottom[3], y2, nodeW, nodeH, "9", ["稽催／違規後續"], "金億", ["未回報：產生稽催紀錄", "確認違規：形成後續結果"], "育萱"));
-  parts.push(flowNode(xsBottom[4], y2, nodeW, nodeH, "10", ["統計與首頁摘要"], "守陽", ["彙整監測、回報與違規", "依角色顯示資料範圍"]));
-
-  for (let i = 0; i < xsTop.length - 1; i += 1) {
-    parts.push(arrowPath(xsTop[i] + nodeW, y1 + nodeH / 2, xsTop[i + 1] - 16, y1 + nodeH / 2));
+  function node(x, y, widthValue, heightValue, lines, options = {}) {
+    const fill = options.fill ?? colors.white;
+    const stroke = options.stroke ?? colors.primary;
+    const fontSize = options.fontSize ?? 20;
+    const lineHeight = options.lineHeight ?? 29;
+    const startY = y + heightValue / 2 - ((lines.length - 1) * lineHeight) / 2 + 7;
+    return `${roundedRect(x, y, widthValue, heightValue, fill, stroke, 10, 2)}${text(x + widthValue / 2, startY, "", {
+      size: fontSize,
+      weight: 500,
+      fill: colors.text,
+      anchor: "middle",
+      lines,
+      lineHeight,
+    })}`;
   }
-  parts.push(`<path d="M ${xsTop[4] + nodeW / 2} ${y1 + nodeH} L ${xsTop[4] + nodeW / 2} ${y2 - 18}" fill="none" stroke="${colors.primary}" stroke-width="4" marker-end="url(#arrow)"/>`);
-  for (let i = 0; i < xsBottom.length - 1; i += 1) {
-    parts.push(arrowPath(xsBottom[i], y2 + nodeH / 2, xsBottom[i + 1] + nodeW + 16, y2 + nodeH / 2));
+
+  function diamond(cx, cy, widthValue, heightValue, lines) {
+    const points = `${cx},${cy - heightValue / 2} ${cx + widthValue / 2},${cy} ${cx},${cy + heightValue / 2} ${cx - widthValue / 2},${cy}`;
+    const startY = cy - ((lines.length - 1) * 24) / 2 + 6;
+    return `<polygon points="${points}" fill="${colors.primarySoft}" stroke="${colors.primary}" stroke-width="2"/>${text(cx, startY, "", {
+      size: 18,
+      weight: 500,
+      fill: colors.text,
+      anchor: "middle",
+      lines,
+      lineHeight: 24,
+    })}`;
   }
 
-  parts.push(roundedRect(60, 825, 1740, 190, colors.soft, colors.line, 20, 1));
-  parts.push(text(90, 870, "橫向共用能力", { size: 24, weight: 500, fill: colors.navy }));
-  parts.push(ownerTag(90, 894, "守陽"));
-  parts.push(text(214, 920, "登入／註冊、使用者管理與系統日誌支援各角色進入系統，但不改變業務資料的角色範圍。", { size: 20 }));
-  parts.push(text(90, 972, "工程介接重點：忠晏 → 育萱（AI 點位）；育萱 ↔ 金億（清單與圖台）；育萱／金億 → 守陽（統計與首頁摘要）。", { size: 20, fill: colors.muted }));
+  function connector(pathData, label = "", labelX = 0, labelY = 0, dashed = false, marker = true) {
+    return `<path d="${pathData}" fill="none" stroke="${colors.primary}" stroke-width="3"${dashed ? ' stroke-dasharray="8 7"' : ""}${marker ? ' marker-end="url(#arrow)"' : ""}/>${label ? text(labelX, labelY, label, { size: 17, weight: 500, fill: colors.primaryDark, anchor: "middle" }) : ""}`;
+  }
 
-  return svgDocument(width, height, parts.join("\n"), "地礦 AI 核心業務流程與資料流向");
+  const sharedX = 310;
+  const sharedWidth = 550;
+  parts.push(text(585, 252, "地礦中心承辦＋空拍廠商共同使用", { size: 18, fill: colors.primaryDark, anchor: "middle" }));
+  parts.push(node(sharedX, 270, sharedWidth, 74, ["建議監測點位"], { fill: colors.primarySoft }));
+  parts.push(connector("M 585 344 L 585 374"));
+  parts.push(node(sharedX, 385, sharedWidth, 74, ["地圖圈繪"], { fill: colors.primarySoft }));
+  parts.push(connector("M 585 459 L 585 489"));
+  parts.push(node(sharedX, 500, sharedWidth, 74, ["區位選定"], { fill: colors.primarySoft }));
+
+  parts.push(connector("M 585 574 L 585 610 L 422.5 610 L 422.5 640"));
+  parts.push(node(297.5, 650, 250, 78, ["空拍通知作業"]));
+  parts.push(connector("M 422.5 728 L 422.5 760 L 747.5 760 L 747.5 790"));
+  parts.push(node(622.5, 800, 250, 92, ["上傳 KML", "空拍判釋報告"]));
+  parts.push(connector("M 747.5 892 L 747.5 925 L 422.5 925 L 422.5 955"));
+  parts.push(node(297.5, 965, 250, 92, ["通報地方政府人員", "進行查勘"]));
+  parts.push(connector("M 422.5 1057 L 422.5 1085 L 1072.5 1085 L 1072.5 1105"));
+
+  parts.push(diamond(1072.5, 1160, 220, 100, ["14 天內", "完成查勘？"]));
+  parts.push(connector("M 1072.5 1210 L 1072.5 1240", "否", 1048, 1230));
+  parts.push(diamond(1072.5, 1290, 220, 92, ["有公文說明？"]));
+
+  parts.push(connector("M 1182.5 1160 L 1215 1160 L 1215 1470 L 1197.5 1470", "是", 1200, 1145));
+  parts.push(connector("M 962.5 1290 L 930 1290 L 930 1340 L 947.5 1340", "是", 930, 1275));
+  parts.push(node(947.5, 1350, 250, 88, ["上傳公文說明", "不觸發自動稽催"], { fontSize: 18 }));
+  parts.push(connector("M 1072.5 1438 L 1072.5 1470"));
+
+  parts.push(connector("M 1182.5 1290 L 1397.5 1290 L 1397.5 1340", "否", 1270, 1275));
+  parts.push(node(1272.5, 1350, 250, 100, ["自動寄送稽催信", "＋系統通知"], { fill: colors.primarySoft, fontSize: 18 }));
+  parts.push(connector("M 1397.5 1450 L 1397.5 1470 L 1197.5 1470"));
+
+  parts.push(node(947.5, 1480, 250, 82, ["上傳查勘回報"]));
+  parts.push(connector("M 1072.5 1562 L 1072.5 1590"));
+  parts.push(diamond(1072.5, 1640, 230, 96, ["需要後續處理？"]));
+
+  parts.push(connector("M 1072.5 1688 L 1072.5 1720", "是", 1046, 1710));
+  parts.push(node(297.5, 1740, 250, 86, ["違規行為後續處理", "可查看"], { fontSize: 18 }));
+  parts.push(node(947.5, 1740, 250, 86, ["違規行為後續處理", "可查看"], { fontSize: 18 }));
+  parts.push(connector("M 947.5 1783 L 547.5 1783", "同一張表", 747.5, 1768, true, false));
+
+  parts.push(connector("M 957.5 1640 L 900 1640 L 900 1875 L 547.5 1875", "否", 925, 1625));
+  parts.push(connector("M 422.5 1826 L 422.5 1860"));
+  parts.push(node(297.5, 1880, 250, 74, ["視情況結案"], { fill: colors.primarySoft }));
+
+  parts.push(text(40, 2015, "規則：超過查勘天數 14 天且沒有公文說明時，系統才自動寄送稽催信與系統通知。", {
+    size: 20,
+    weight: 500,
+    fill: colors.primaryDark,
+  }));
+
+  return svgDocument(width, height, parts.join("\n"), "地礦 AI 四角色業務泳道流程");
 }
 
 async function writeDiagram(baseName, svg) {
