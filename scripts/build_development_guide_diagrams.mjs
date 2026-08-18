@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, "..");
-const outputDir = path.join(projectRoot, "documents", "development", "assets", "diagrams");
+const outputDir = path.join(projectRoot, "spec", "assets", "diagrams");
 await fs.mkdir(outputDir, { recursive: true });
 
 const colors = {

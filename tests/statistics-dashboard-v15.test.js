@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
-const htmlPath = path.join(root, '地礦AI_雛型_v15_0805_feedback.html');
+const htmlPath = path.join(root, 'archive', 'original', '地礦AI_雛型_v15_0805_feedback.html');
 const html = fs.readFileSync(htmlPath, 'utf8');
 const tests = [];
 
