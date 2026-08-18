@@ -124,6 +124,8 @@
 
 **負責工程師：育萱；AI 成果提供：忠晏**
 
+![地礦中心建議監測點位](assets/screenshots/09-center-suggested-points.png)
+
 業務邏輯：AI 點位及廠商手動點位依專案／年度形成清單；勾選後可加入建議監測並帶入圖台圈繪。地方政府與系統管理員不顯示本模組。
 
 | 按鈕／控制項 | 地礦中心承辦 | 空拍廠商 | 行為 |
@@ -144,7 +146,7 @@
 
 **負責工程師：育萱；圖台圈繪介接：金億**
 
-![監測位置管理](assets/screenshots/03-center-monitoring.png)
+![地礦中心監測區位選定](assets/screenshots/03-center-monitoring-selection.png)
 
 業務邏輯：地礦中心承辦檢視圖台圈繪成果、確認整區拍攝，必要時新增欲空拍點位，並填寫空拍廠商通知資訊。空拍廠商只能處理被指派的專案／範圍。
 
@@ -167,7 +169,7 @@
 
 **負責工程師：金億**
 
-![盜濫採影像圖台](assets/screenshots/04-map-platform.png)
+![盜濫採影像圖台](assets/screenshots/04-center-map.png)
 
 業務邏輯：圖台接收建議點位或監測範圍，提供底圖、圖層、定位、量測、圈繪、影像套疊及查勘紀錄檢視。所有圖層與點位查詢仍須套用角色資料範圍。
 
@@ -193,7 +195,7 @@
 
 **負責工程師：育萱**
 
-![地方政府查勘回報](assets/screenshots/06-local-government-report.png)
+![地方政府通報與查勘表單](assets/screenshots/12-local-government-survey-form.png)
 
 業務邏輯：空拍廠商上傳判釋報告與 KML；地礦中心承辦確認成果、填寫地方政府通報資訊；地方政府填寫查勘結果及附件；地礦中心可依結果結案。匯出需支援依縣市及整區輸出 PDF、Word、Excel。
 
@@ -224,6 +226,12 @@
 
 **負責工程師：金億**
 
+![地礦中心逾期未查勘](assets/screenshots/11-center-reminder-management.png)
+
+![地礦中心歷史稽催紀錄](assets/screenshots/15-center-reminder-history.png)
+
+![地礦中心稽催設定](assets/screenshots/16-center-reminder-settings.png)
+
 業務邏輯：只提供地礦中心承辦使用，包含逾期未查勘、歷史稽催紀錄及稽催設定。第三次以上或需人工處理的通知由承辦補發，所有寄送都需留存歷程。
 
 | 子功能 | 按鈕／控制項 | 地礦中心承辦行為 |
@@ -247,6 +255,10 @@
 
 **負責工程師：育萱**
 
+![地礦中心違規行為後續處理](assets/screenshots/17-center-violation-followup.png)
+
+![地方政府違規行為後續處理](assets/screenshots/13-local-government-violation-followup.png)
+
 業務邏輯：呈現已確認違規案件的後續處理結果。地礦中心承辦可查看全國，地方政府只能查看授權縣市。依目前工作項目規畫及 v15 證據，本階段以查詢與檢視為主；未明列的新增／編輯能力不自行推定。
 
 | 按鈕／控制項 | 地礦中心承辦 | 地方政府人員 | 行為 |
@@ -259,7 +271,7 @@
 
 **負責工程師：守陽**
 
-![統計分析儀錶板](assets/screenshots/05-statistics-dashboard.png)
+![統計分析儀錶板](assets/screenshots/05-center-statistics.png)
 
 業務邏輯：彙整監測、回報及違規資料。所有統計數值、圖表及匯出檔都必須使用同一個角色資料範圍；不得只在畫面隱藏明細但回傳全國統計。
 
@@ -277,7 +289,9 @@
 
 **負責工程師：守陽**
 
-![系統管理員使用者管理](assets/screenshots/07-admin-user-management.png)
+![使用者管理待審核清單](assets/screenshots/07-center-user-management.png)
+
+![系統管理員編輯角色與縣市範圍](assets/screenshots/14-admin-role-scope-edit.png)
 
 業務邏輯：地礦中心承辦與系統管理員都可管理使用者；空拍廠商及地方政府人員不可進入。角色或縣市授權變更需記錄異動前後值。
 
