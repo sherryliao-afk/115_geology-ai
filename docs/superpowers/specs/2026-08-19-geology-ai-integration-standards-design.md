@@ -1,6 +1,6 @@
 # 地礦 AI 跨模組整合規格文件設計
 
-> 文件狀態：已完成口頭方向確認，待書面審閱
+> 文件狀態：已確認
 >
 > 設計日期：2026-08-19
 >
@@ -25,12 +25,12 @@
 
 ## 3. 預定交付物
 
-文件放在 `spec/development-standards/`：
+文件直接放在 repository 的 `spec/`：
 
-1. `README.md`：閱讀入口、文件定位、技術選型與模組對照。
-2. `01-frontend-design-system.md`：Design System、Vue/Vite 結構、daisyUI 與 Chart.js 規格。
-3. `02-rest-api-guidelines.md`：API 前綴、資源命名、功能模組路由、回傳與錯誤格式。
-4. `03-authentication-authorization.md`：帳號生命週期、RBAC、資料範圍、JWT 發放與儲存原則。
+1. `地礦AI_開發規格索引.md`：閱讀入口、文件定位、技術選型與模組對照。
+2. `地礦AI_前端DesignSystem開發規範.md`：Design System、Vue/Vite 結構、daisyUI 與 Chart.js 規格。
+3. `地礦AI_REST_API開發規範.md`：API 前綴、資源命名、功能模組路由、回傳與錯誤格式。
+4. `地礦AI_身分驗證與權限規範.md`：帳號生命週期、RBAC、資料範圍、JWT 發放與儲存原則。
 
 每份文件以能快速查表為主，避免教科書式背景說明。必要範例保留，其餘細節連結至官方文件。
 
