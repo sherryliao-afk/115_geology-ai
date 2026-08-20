@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">地礦 AI 全系統抽象 ERD</title>
+  <desc id="desc">以 projects 與 points 為核心，連接帳號權限、範圍、拍攝、附件、通報查勘、稽催及稽核資料。</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5e7773"/></marker>
+    <style>
+      .t{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#183d37}.sub{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#56716d}.domain{fill:#f7faf9;stroke:#b8cbc7;stroke-width:2}.box{fill:#fff;stroke:#769f98;stroke-width:2}.core{fill:#007d6d;stroke:#00665a;stroke-width:2}.coretext{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#fff}.line{stroke:#5e7773;stroke-width:2;fill:none;marker-end:url(#arr)}.dash{stroke:#8b9c99;stroke-width:2;fill:none;stroke-dasharray:7 6;marker-end:url(#arr)}
+    </style>
+  </defs>
+  <rect width="1800" height="1200" fill="#f3f7f6"/>
+  <text class="t" x="55" y="54" font-size="30" font-weight="700">地礦 AI 全系統抽象 ERD</text>
+  <text class="sub" x="55" y="86" font-size="16">邏輯關係總覽；points 是建議監測、監測區位與判釋變異共用的唯一核心點位表</text>
+
+  <rect class="domain" x="45" y="120" width="420" height="1015" rx="18"/>
+  <text class="t" x="70" y="158" font-size="20" font-weight="700">帳號、組織與行政區</text>
+  <g class="t" font-size="15">
+    <g><rect class="box" x="80" y="190" width="350" height="82" rx="10"/><text x="100" y="220" font-weight="700">COUNTIES</text><text class="sub" x="100" y="248">county_id · county_code · county_name</text></g>
+    <g><rect class="box" x="80" y="305" width="350" height="82" rx="10"/><text x="100" y="335" font-weight="700">TOWNSHIPS</text><text class="sub" x="100" y="363">township_id · county_id · name</text></g>
+    <g><rect class="box" x="80" y="420" width="350" height="82" rx="10"/><text x="100" y="450" font-weight="700">ORGANIZATIONS</text><text class="sub" x="100" y="478">中心 · 地方政府 · 空拍廠商</text></g>
+    <g><rect class="box" x="80" y="535" width="350" height="82" rx="10"/><text x="100" y="565" font-weight="700">USER_APPLICATIONS</text><text class="sub" x="100" y="593">申請資料 · 審核狀態</text></g>
+    <g><rect class="box" x="80" y="650" width="350" height="82" rx="10"/><text x="100" y="680" font-weight="700">USERS</text><text class="sub" x="100" y="708">帳號 · 單位 · 帳號狀態</text></g>
+    <g><rect class="box" x="80" y="765" width="165" height="82" rx="10"/><text x="100" y="795" font-weight="700">ROLES</text><text class="sub" x="100" y="823">角色定義</text></g>
+    <g><rect class="box" x="265" y="765" width="165" height="82" rx="10"/><text x="285" y="795" font-weight="700">USER_ROLES</text><text class="sub" x="285" y="823">多角色關聯</text></g>
+    <g><rect class="box" x="80" y="880" width="350" height="82" rx="10"/><text x="100" y="910" font-weight="700">USER_COUNTY_SCOPES</text><text class="sub" x="100" y="938">帳號可存取的縣市</text></g>
+    <g><rect class="box" x="80" y="995" width="350" height="82" rx="10"/><text x="100" y="1025" font-weight="700">AUDIT_LOGS</text><text class="sub" x="100" y="1053">操作者 · 對象 · 前後值 · IP</text></g>
+  </g>
+
+  <rect class="domain" x="500" y="120" width="610" height="1015" rx="18"/>
+  <text class="t" x="525" y="158" font-size="20" font-weight="700">專案、點位、範圍與成果</text>
+  <g class="t" font-size="15">
+    <g><rect class="box" x="540" y="190" width="250" height="82" rx="10"/><text x="560" y="220" font-weight="700">PROJECTS</text><text class="sub" x="560" y="248">年度專案 · 狀態</text></g>
+    <g><rect class="box" x="820" y="190" width="250" height="82" rx="10"/><text x="840" y="220" font-weight="700">POINT_IMPORT_BATCHES</text><text class="sub" x="840" y="248">AI 成果匯入批次</text></g>
+    <g><rect class="core" x="630" y="325" width="350" height="130" rx="14"/><text class="coretext" x="655" y="365" font-size="24" font-weight="700">POINTS</text><text class="coretext" x="655" y="398" font-size="15">點號 · 位置 · 座標 · 判釋資料</text><text class="coretext" x="655" y="426" font-size="15">各階段狀態 · current_stage</text></g>
+    <g><rect class="box" x="540" y="500" width="250" height="82" rx="10"/><text x="560" y="530" font-weight="700">POINT_STAGE_HISTORY</text><text class="sub" x="560" y="558">篩選與狀態異動歷程</text></g>
+    <g><rect class="box" x="820" y="500" width="250" height="82" rx="10"/><text x="840" y="530" font-weight="700">POINT_ATTACHMENTS</text><text class="sub" x="840" y="558">影像 · KML · 報告 · 公文</text></g>
+    <g><rect class="box" x="540" y="625" width="250" height="82" rx="10"/><text x="560" y="655" font-weight="700">MONITORING_RANGES</text><text class="sub" x="560" y="683">點位群組與監測範圍</text></g>
+    <g><rect class="box" x="820" y="625" width="250" height="82" rx="10"/><text x="840" y="655" font-weight="700">RANGE_GEOMETRIES</text><text class="sub" x="840" y="683">Polygon 版本</text></g>
+    <g><rect class="box" x="540" y="750" width="250" height="82" rx="10"/><text x="560" y="780" font-weight="700">POINT_RANGE_MEMBERSHIPS</text><text class="sub" x="560" y="808">點位與範圍多對多</text></g>
+    <g><rect class="box" x="820" y="750" width="250" height="82" rx="10"/><text x="840" y="780" font-weight="700">CAPTURE_ASSIGNMENTS</text><text class="sub" x="840" y="808">廠商 · 拍攝 · 報告日期</text></g>
+    <g><rect class="box" x="680" y="875" width="250" height="82" rx="10"/><text x="700" y="905" font-weight="700">IMAGERY_RECORDS</text><text class="sub" x="700" y="933">T1／T2 · 類型 · 提供單位</text></g>
+    <g><rect class="box" x="680" y="1000" width="250" height="82" rx="10"/><text x="700" y="1030" font-weight="700">GIS_LAYERS</text><text class="sub" x="700" y="1058">底圖 · 參考 · 業務圖層</text></g>
+  </g>
+
+  <rect class="domain" x="1145" y="120" width="610" height="1015" rx="18"/>
+  <text class="t" x="1170" y="158" font-size="20" font-weight="700">通報、查勘、續處與稽催</text>
+  <g class="t" font-size="15">
+    <g><rect class="box" x="1190" y="205" width="250" height="82" rx="10"/><text x="1210" y="235" font-weight="700">SURVEY_NOTIFICATIONS</text><text class="sub" x="1210" y="263">通報日期 · 查勘期限</text></g>
+    <g><rect class="box" x="1470" y="205" width="250" height="82" rx="10"/><text x="1490" y="235" font-weight="700">SURVEY_REPORTS</text><text class="sub" x="1490" y="263">查勘結果 · 違規類型</text></g>
+    <g><rect class="box" x="1470" y="330" width="250" height="82" rx="10"/><text x="1490" y="360" font-weight="700">SURVEY_REPORT_PHOTOS</text><text class="sub" x="1490" y="388">現場照片關聯</text></g>
+    <g><rect class="box" x="1470" y="455" width="250" height="82" rx="10"/><text x="1490" y="485" font-weight="700">VIOLATION_FOLLOWUPS</text><text class="sub" x="1490" y="513">移交 · 文號 · 處分情形</text></g>
+    <g><rect class="box" x="1190" y="590" width="250" height="82" rx="10"/><text x="1210" y="620" font-weight="700">REMINDER_SETTINGS</text><text class="sub" x="1210" y="648">逾期門檻與通知開關</text></g>
+    <g><rect class="box" x="1470" y="590" width="250" height="82" rx="10"/><text x="1490" y="620" font-weight="700">REMINDER_TEMPLATES</text><text class="sub" x="1490" y="648">主旨與內文</text></g>
+    <g><rect class="box" x="1190" y="715" width="250" height="82" rx="10"/><text x="1210" y="745" font-weight="700">REMINDER_CONTACTS</text><text class="sub" x="1210" y="773">縣市聯絡群組</text></g>
+    <g><rect class="box" x="1470" y="715" width="250" height="82" rx="10"/><text x="1490" y="745" font-weight="700">REMINDER_RECORDS</text><text class="sub" x="1490" y="773">每次寄送不可覆寫</text></g>
+    <g><rect class="box" x="1470" y="840" width="250" height="82" rx="10"/><text x="1490" y="870" font-weight="700">REMINDER_RECIPIENTS</text><text class="sub" x="1490" y="898">收件人快照與結果</text></g>
+  </g>
+
+  <g class="line">
+    <path d="M255 272V305"/><path d="M255 387V420"/><path d="M255 502V535"/><path d="M255 617V650"/>
+    <path d="M245 806H265"/><path d="M345 847V880"/><path d="M255 962V995"/>
+    <path d="M665 272L750 325"/><path d="M945 272L865 325"/>
+    <path d="M805 455L665 500"/><path d="M805 455L945 500"/>
+    <path d="M665 582V625"/><path d="M790 666H820"/><path d="M665 707V750"/><path d="M945 707V750"/><path d="M805 455V875"/>
+    <path d="M980 390C1090 390 1110 246 1190 246"/><path d="M1440 246H1470"/><path d="M1595 287V330"/><path d="M1595 412V455"/>
+    <path d="M1315 287C1315 470 1540 500 1595 715"/><path d="M1440 631H1470"/><path d="M1315 672V715"/><path d="M1595 797V840"/>
+  </g>
+  <g class="dash">
+    <path d="M430 691C510 691 560 390 630 390"/><path d="M430 921C520 921 550 420 630 420"/><path d="M430 1036C900 1130 1200 1020 1470 881"/>
+  </g>
+
+  <text class="sub" x="515" y="1168" font-size="14">實線：主要業務關聯　　虛線：資料範圍或稽核關聯　　圖中省略欄位型別與索引</text>
+</svg>

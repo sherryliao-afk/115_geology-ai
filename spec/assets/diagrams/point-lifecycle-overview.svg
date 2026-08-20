@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-labelledby="title desc">
+  <title id="title">地礦 AI 點位一條龍流程</title>
+  <desc id="desc">AI 判釋點位匯入同一張 points 表後，依序經過建議監測、監測區位、拍攝、變異判釋、通報、查勘與後續處理；被排除的點位仍保留。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3d5a56"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#173d37" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="560" fill="#f7faf9"/>
+  <text x="60" y="58" font-family="Arial, Microsoft JhengHei, sans-serif" font-size="30" font-weight="700" fill="#163b36">點位資料一條龍流程</text>
+  <text x="60" y="92" font-family="Arial, Microsoft JhengHei, sans-serif" font-size="17" fill="#52716c">所有模組操作同一筆 points；模組差異來自狀態註記與查詢條件</text>
+
+  <g font-family="Arial, Microsoft JhengHei, sans-serif" filter="url(#shadow)">
+    <rect x="55" y="170" width="170" height="92" rx="14" fill="#e7f3f1" stroke="#77aaa2" stroke-width="2"/>
+    <text x="140" y="205" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">AI 判釋成果</text>
+    <text x="140" y="235" text-anchor="middle" font-size="14" fill="#52716c">檔案匯入</text>
+
+    <rect x="270" y="150" width="190" height="132" rx="16" fill="#007d6d" stroke="#00685b" stroke-width="2"/>
+    <text x="365" y="194" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">points</text>
+    <text x="365" y="224" text-anchor="middle" font-size="15" fill="#dff4f0">唯一核心點位表</text>
+    <text x="365" y="250" text-anchor="middle" font-size="13" fill="#dff4f0">同一 point_id 貫穿全流程</text>
+
+    <rect x="510" y="170" width="160" height="92" rx="14" fill="#ffffff" stroke="#77aaa2" stroke-width="2"/>
+    <text x="590" y="207" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">建議監測</text>
+    <text x="590" y="235" text-anchor="middle" font-size="13" fill="#52716c">納入／排除</text>
+
+    <rect x="715" y="170" width="160" height="92" rx="14" fill="#ffffff" stroke="#77aaa2" stroke-width="2"/>
+    <text x="795" y="207" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">監測區位</text>
+    <text x="795" y="235" text-anchor="middle" font-size="13" fill="#52716c">選定／不納入</text>
+
+    <rect x="920" y="170" width="160" height="92" rx="14" fill="#ffffff" stroke="#77aaa2" stroke-width="2"/>
+    <text x="1000" y="207" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">拍攝與成果</text>
+    <text x="1000" y="235" text-anchor="middle" font-size="13" fill="#52716c">影像／KML／報告</text>
+
+    <rect x="1125" y="170" width="160" height="92" rx="14" fill="#ffffff" stroke="#77aaa2" stroke-width="2"/>
+    <text x="1205" y="207" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">變異判釋</text>
+    <text x="1205" y="235" text-anchor="middle" font-size="13" fill="#52716c">確認變異／無變異</text>
+
+    <rect x="1330" y="150" width="210" height="132" rx="16" fill="#e7f3f1" stroke="#77aaa2" stroke-width="2"/>
+    <text x="1435" y="190" text-anchor="middle" font-size="18" font-weight="700" fill="#163b36">通報與查勘</text>
+    <text x="1435" y="220" text-anchor="middle" font-size="14" fill="#52716c">稽催／違規續處</text>
+    <text x="1435" y="248" text-anchor="middle" font-size="14" fill="#52716c">結案／重新開啟</text>
+  </g>
+
+  <g stroke="#3d5a56" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M225 216 H270"/>
+    <path d="M460 216 H510"/>
+    <path d="M670 216 H715"/>
+    <path d="M875 216 H920"/>
+    <path d="M1080 216 H1125"/>
+    <path d="M1285 216 H1330"/>
+  </g>
+
+  <g font-family="Arial, Microsoft JhengHei, sans-serif">
+    <rect x="410" y="350" width="500" height="126" rx="16" fill="#fff4df" stroke="#d59b3d" stroke-width="2"/>
+    <text x="440" y="390" font-size="18" font-weight="700" fill="#72501b">未通過篩選的點位</text>
+    <text x="440" y="423" font-size="15" fill="#72501b">不刪除、不建立另一筆資料，只更新階段狀態與排除原因</text>
+    <text x="440" y="452" font-size="14" fill="#8c692f">例如：suggestion_status = 不建議監測</text>
+
+    <rect x="980" y="350" width="480" height="126" rx="16" fill="#eef0f8" stroke="#7782b6" stroke-width="2"/>
+    <text x="1010" y="390" font-size="18" font-weight="700" fill="#343d72">point_stage_history</text>
+    <text x="1010" y="423" font-size="15" fill="#4e5789">記錄每次通過、排除、退回、重開及原因</text>
+    <text x="1010" y="452" font-size="14" fill="#626b9b">核心 points 保存現況，歷程表保存變化</text>
+  </g>
+
+  <g stroke="#a06e20" stroke-width="2.5" fill="none" stroke-dasharray="8 7" marker-end="url(#arrow)">
+    <path d="M590 262 C590 315 570 325 570 350"/>
+    <path d="M795 262 C795 315 750 325 750 350"/>
+    <path d="M1205 262 C1205 315 1195 325 1195 350"/>
+  </g>
+</svg>

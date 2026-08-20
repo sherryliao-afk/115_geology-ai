@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">地礦 AI 查勘稽催與違規續處 ERD</title>
+  <desc id="desc">點位通報地方政府後形成查勘期限；查勘可產生照片及違規續處，逾期時依設定、模板及聯絡人產生不可覆寫的稽催紀錄。</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#58736f"/></marker>
+    <style>.t{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#183d37}.s{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#5a7470}.b{fill:#fff;stroke:#799f98;stroke-width:2}.c{fill:#007d6d;stroke:#00675b;stroke-width:2}.ct{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#fff}.r{fill:#fff4df;stroke:#d39a40;stroke-width:2}.l{stroke:#58736f;stroke-width:2.5;fill:none;marker-end:url(#a)}.d{stroke:#91703c;stroke-width:2.5;fill:none;stroke-dasharray:8 6;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1600" height="900" fill="#f5f9f8"/>
+  <text class="t" x="50" y="55" font-size="30" font-weight="700">查勘、稽催與違規續處 ERD</text>
+  <text class="s" x="50" y="88" font-size="16">通報是查勘與逾期計算的起點；每次稽催寄送獨立保存</text>
+
+  <g class="t" font-size="15">
+    <g><rect class="c" x="70" y="175" width="250" height="115" rx="14"/><text class="ct" x="95" y="217" font-size="23" font-weight="700">POINTS</text><text class="ct" x="95" y="250">同一筆核心點位</text><text class="ct" x="95" y="276">目前階段與狀態</text></g>
+    <g><rect class="b" x="405" y="175" width="300" height="115" rx="13"/><text x="430" y="215" font-size="19" font-weight="700">SURVEY_NOTIFICATIONS</text><text class="s" x="430" y="247">通報日期 · 查勘期限</text><text class="s" x="430" y="273">通報縣市 · 通報狀態</text></g>
+    <g><rect class="b" x="800" y="175" width="300" height="115" rx="13"/><text x="825" y="215" font-size="19" font-weight="700">SURVEY_REPORTS</text><text class="s" x="825" y="247">查勘日期 · 查勘結果</text><text class="s" x="825" y="273">違規類型 · 說明 · 是否續處</text></g>
+    <g><rect class="b" x="1210" y="115" width="300" height="115" rx="13"/><text x="1235" y="155" font-size="19" font-weight="700">SURVEY_REPORT_PHOTOS</text><text class="s" x="1235" y="187">回報與現場照片關聯</text><text class="s" x="1235" y="213">最多張數由應用規則限制</text></g>
+    <g><rect class="b" x="1210" y="275" width="300" height="125" rx="13"/><text x="1235" y="315" font-size="19" font-weight="700">VIOLATION_FOLLOWUPS</text><text class="s" x="1235" y="347">移交單位 · 移交日期 · 文號</text><text class="s" x="1235" y="374">處分情形 · 後續處理狀態</text></g>
+    <g><rect class="b" x="800" y="380" width="300" height="105" rx="13"/><text x="825" y="418" font-size="19" font-weight="700">POINT_ATTACHMENTS</text><text class="s" x="825" y="450">公文 · 現場照片 · 其他附件</text></g>
+
+    <g><rect class="r" x="405" y="555" width="300" height="115" rx="13"/><text x="430" y="595" font-size="19" font-weight="700">REMINDER_RECORDS</text><text class="s" x="430" y="627">稽催輪次 · 發送時間 · 結果</text><text class="s" x="430" y="653">主旨與內文快照，不覆寫</text></g>
+    <g><rect class="b" x="70" y="555" width="250" height="115" rx="13"/><text x="95" y="595" font-size="19" font-weight="700">REMINDER_SETTINGS</text><text class="s" x="95" y="627">第一次／累次逾期門檻</text><text class="s" x="95" y="653">Email 與系統通知開關</text></g>
+    <g><rect class="b" x="70" y="720" width="250" height="105" rx="13"/><text x="95" y="758" font-size="19" font-weight="700">REMINDER_TEMPLATES</text><text class="s" x="95" y="790">模板名稱 · 主旨 · 內文</text></g>
+    <g><rect class="b" x="800" y="555" width="300" height="115" rx="13"/><text x="825" y="595" font-size="19" font-weight="700">REMINDER_RECIPIENTS</text><text class="s" x="825" y="627">收件人姓名／Email 快照</text><text class="s" x="825" y="653">收件類型 · 寄送結果</text></g>
+    <g><rect class="b" x="1210" y="555" width="300" height="115" rx="13"/><text x="1235" y="595" font-size="19" font-weight="700">REMINDER_CONTACTS</text><text class="s" x="1235" y="627">縣市 · 姓名 · Email · 職稱</text><text class="s" x="1235" y="653">聯絡群組的目前設定</text></g>
+    <g><rect class="b" x="1210" y="720" width="300" height="105" rx="13"/><text x="1235" y="758" font-size="19" font-weight="700">COUNTIES</text><text class="s" x="1235" y="790">縣市代碼 · 縣市名稱</text></g>
+  </g>
+
+  <g class="l">
+    <path d="M320 232H405"/><path d="M705 232H800"/><path d="M1100 215L1210 180"/><path d="M1100 250L1210 330"/><path d="M950 290V380"/>
+    <path d="M555 290V555"/><path d="M705 612H800"/><path d="M1100 612H1210"/><path d="M1360 670V720"/>
+  </g>
+  <g class="d">
+    <path d="M320 612H405"/><path d="M320 772C370 772 380 670 450 650"/>
+  </g>
+
+  <g class="t" font-size="13" font-weight="700">
+    <text x="335" y="220">通報</text><text x="730" y="220">回報</text><text x="1130" y="178">照片</text><text x="1130" y="315">需要續處</text><text x="565" y="420">逾期觸發多次稽催</text><text x="720" y="600">每次寄送多位收件人</text>
+  </g>
+</svg>

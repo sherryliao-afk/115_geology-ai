@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">地礦 AI 帳號權限抽象 ERD</title>
+  <desc id="desc">使用者由申請核准建立，透過多對多角色與縣市授權限制功能與資料範圍。</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#57736e"/></marker>
+    <style>.t{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#183d37}.s{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#59736f}.b{fill:#fff;stroke:#799f98;stroke-width:2}.c{fill:#007d6d;stroke:#00675b;stroke-width:2}.ct{font-family:Arial,'Microsoft JhengHei',sans-serif;fill:#fff}.l{stroke:#57736e;stroke-width:2.5;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1400" height="760" fill="#f5f9f8"/>
+  <text class="t" x="50" y="55" font-size="30" font-weight="700">帳號與資料範圍 ERD</text>
+  <text class="s" x="50" y="88" font-size="16">登入權限由帳號狀態、角色及縣市範圍共同決定</text>
+
+  <g class="t" font-size="15">
+    <g><rect class="b" x="60" y="155" width="280" height="105" rx="13"/><text x="85" y="190" font-size="18" font-weight="700">USER_APPLICATIONS</text><text class="s" x="85" y="220">申請帳號 · 單位 · 聯絡方式</text><text class="s" x="85" y="245">申請角色 · 審核結果</text></g>
+    <g><rect class="c" x="440" y="145" width="290" height="125" rx="14"/><text class="ct" x="465" y="187" font-size="22" font-weight="700">USERS</text><text class="ct" x="465" y="220">帳號 · 姓名 · 單位</text><text class="ct" x="465" y="247">開通／停用／註銷／鎖定</text></g>
+    <g><rect class="b" x="830" y="155" width="260" height="105" rx="13"/><text x="855" y="190" font-size="18" font-weight="700">ORGANIZATIONS</text><text class="s" x="855" y="220">地礦中心 · 地方政府</text><text class="s" x="855" y="245">空拍廠商 · 其他單位</text></g>
+
+    <g><rect class="b" x="120" y="385" width="250" height="105" rx="13"/><text x="145" y="420" font-size="18" font-weight="700">ROLES</text><text class="s" x="145" y="450">角色代碼 · 角色名稱</text><text class="s" x="145" y="475">角色啟用狀態</text></g>
+    <g><rect class="b" x="440" y="385" width="290" height="105" rx="13"/><text x="465" y="420" font-size="18" font-weight="700">USER_ROLES</text><text class="s" x="465" y="450">user_id · role_id</text><text class="s" x="465" y="475">授權人 · 授權時間</text></g>
+    <g><rect class="b" x="800" y="385" width="320" height="105" rx="13"/><text x="825" y="420" font-size="18" font-weight="700">USER_COUNTY_SCOPES</text><text class="s" x="825" y="450">user_id · county_id</text><text class="s" x="825" y="475">地方政府可存取縣市</text></g>
+    <g><rect class="b" x="1180" y="385" width="170" height="105" rx="13"/><text x="1205" y="420" font-size="18" font-weight="700">COUNTIES</text><text class="s" x="1205" y="450">縣市代碼</text><text class="s" x="1205" y="475">縣市名稱</text></g>
+
+    <g><rect class="b" x="440" y="595" width="290" height="105" rx="13"/><text x="465" y="630" font-size="18" font-weight="700">AUDIT_LOGS</text><text class="s" x="465" y="660">帳號 · 操作 · 對象 · IP</text><text class="s" x="465" y="685">權限異動前後值</text></g>
+  </g>
+
+  <g class="l">
+    <path d="M340 207H440"/>
+    <path d="M830 207H730"/>
+    <path d="M585 270V385"/>
+    <path d="M370 437H440"/>
+    <path d="M730 437H800"/>
+    <path d="M1120 437H1180"/>
+    <path d="M585 490V595"/>
+  </g>
+
+  <g class="t" font-size="13" font-weight="700">
+    <text x="365" y="195">核准建立</text><text x="744" y="195">所屬單位</text><text x="595" y="330">一人多角色</text><text x="835" y="366">一人多縣市</text><text x="590" y="555">留下稽核</text>
+  </g>
+</svg>
